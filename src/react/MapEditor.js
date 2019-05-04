@@ -16,6 +16,12 @@ export default function MapEditor ({ map }) {
     draw()
   }, [ctx, mousePosition])
 
+  function handleClick () {
+    // const size = map.tileSize
+    // const x = Math.floor(mousePosition.x / size) * size
+    // const y = Math.floor(mousePosition.y / size) * size
+  }
+
   function draw () {
     if (!ctx) return
     const width = map.width * map.tileSize
@@ -23,30 +29,15 @@ export default function MapEditor ({ map }) {
     const size = map.tileSize
     ctx.fillStyle = '#AAAAAA'
     ctx.fillRect(0, 0, width, height)
-    ctx.strokeStyle = '#c9c9c9'
-    ctx.translate(0.5, 0.5)
 
-    for (let y = size; y < height; y += size) {
-      ctx.moveTo(0, y)
-      ctx.lineTo(width, y)
-    }
+    drawTiles(ctx, map)
 
-    for (let x = size; x < width; x += size) {
-      ctx.moveTo(x, 0)
-      ctx.lineTo(x, height)
-    }
-
-    ctx.stroke()
-    ctx.translate(-0.5, -0.5)
+    drawGrid(ctx, width, height, size)
 
     if (mousePosition) {
-      const dx = Math.floor(mousePosition.x / size) * size
-      const dy = Math.floor(mousePosition.y / size) * size
-
-      const { tileset } = map
-      const [sx, sy] = getPositionFromTileIndex(selectedTile, tileset)
-
-      ctx.drawImage(tileset.image, sx, sy, tileset.tileSize, tileset.tileSize, dx, dy, tileset.tileSize, tileset.tileSize)
+      const x = Math.floor(mousePosition.x / size) * size
+      const y = Math.floor(mousePosition.y / size) * size
+      drawCursor(ctx, x, y, selectedTile, map.tileset)
     }
   }
 
@@ -57,7 +48,59 @@ export default function MapEditor ({ map }) {
         className={styles.canvas}
         width={map.width * map.tileSize}
         height={map.height * map.tileSize}
+        onClick={handleClick}
       />
     </div>
   )
+}
+
+
+function drawGrid (ctx, width, height, size) {
+
+  ctx.translate(0.5, 0.5)
+  ctx.strokeStyle = '#c9c9c9'
+
+  for (let y = size; y < height; y += size) {
+    ctx.moveTo(0, y)
+    ctx.lineTo(width, y)
+  }
+
+  for (let x = size; x < width; x += size) {
+    ctx.moveTo(x, 0)
+    ctx.lineTo(x, height)
+  }
+
+  ctx.stroke()
+  ctx.translate(-0.5, -0.5)
+}
+
+function drawCursor (ctx, dx, dy, selectedTile, tileset) {
+
+  const [sx, sy] = getPositionFromTileIndex(selectedTile, tileset)
+
+  ctx.drawImage(tileset.image, sx, sy, tileset.tileSize, tileset.tileSize, dx, dy, tileset.tileSize, tileset.tileSize)
+}
+
+function drawTiles (ctx, map) {
+  for (let y = 0; y < map.height; y++) {
+    for (let x = 0; x < map.width; x++) {
+      const ix = (y * map.width) + x
+      const tile = map.data[ix]
+      if (tile === 0) continue
+      const dx = x * map.tileSize
+      const dy = y * map.tileSize
+      const [sx, sy] = getPositionFromTileIndex(tile, map.tileset)
+      ctx.drawImage(
+        map.tileset.image,
+        sx,
+        sy,
+        map.tileset.tileSize,
+        map.tileset.tileSize,
+        dx,
+        dy,
+        map.tileSize,
+        map.tileSize
+      )
+    }
+  }
 }

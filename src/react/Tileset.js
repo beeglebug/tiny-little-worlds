@@ -17,7 +17,7 @@ export default function Tileset ({ tileset }) {
     draw()
   }, [ctx, selectedTile])
 
-  function handleClick (e) {
+  function handleClick () {
     const tile = getTileIndexFromPosition(mousePosition, tileset)
     dispatch(selectTileAction(tile))
   }
