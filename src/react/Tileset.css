@@ -1,0 +1,10 @@
+.container {
+    background-color: #aaaaaa   ;
+    display: inline-block;
+    border: 1px solid #333333;
+    margin: 10px;
+}
+
+.canvas {
+    display: block;
+}
