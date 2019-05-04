@@ -1,14 +1,17 @@
 import React, { createRef, useEffect } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import styles from './MapEditor.css'
 import useCanvasWithMousePosition from './hooks/useCanvasWithMousePosition'
-import { selectedTileSelector } from './state/selectors'
+import { mapSelector, selectedTileSelector } from './state/selectors'
 import { getPositionFromTileIndex } from './util/tileset'
+import { setMapTileAction } from './state/actions'
 
-export default function MapEditor ({ map, backgroundColor = '#7a7a7a', gridColor = '#959595' }) {
+export default function MapEditor ({ tileset, backgroundColor = '#7a7a7a', gridColor = '#959595' }) {
   const canvasRef = createRef()
 
+  const dispatch = useDispatch()
   const selectedTile = useSelector(selectedTileSelector)
+  const map = useSelector(mapSelector)
 
   const [ctx, mousePosition] = useCanvasWithMousePosition(canvasRef)
 
@@ -17,9 +20,10 @@ export default function MapEditor ({ map, backgroundColor = '#7a7a7a', gridColor
   }, [ctx, mousePosition])
 
   function handleClick () {
-    // const size = map.tileSize
-    // const x = Math.floor(mousePosition.x / size) * size
-    // const y = Math.floor(mousePosition.y / size) * size
+    const size = map.tileSize
+    const x = Math.floor(mousePosition.x / size)
+    const y = Math.floor(mousePosition.y / size)
+    dispatch(setMapTileAction(x, y, selectedTile))
   }
 
   function draw () {
@@ -30,14 +34,14 @@ export default function MapEditor ({ map, backgroundColor = '#7a7a7a', gridColor
     ctx.fillStyle = backgroundColor
     ctx.fillRect(0, 0, width, height)
 
-    drawTiles(ctx, map)
+    drawTiles(ctx, map, tileset)
 
     drawGrid(ctx, width, height, size, gridColor)
 
     if (mousePosition) {
       const x = Math.floor(mousePosition.x / size) * size
       const y = Math.floor(mousePosition.y / size) * size
-      drawCursor(ctx, x, y, selectedTile, map.tileset)
+      drawCursor(ctx, x, y, selectedTile, map, tileset)
     }
   }
 
@@ -74,14 +78,17 @@ function drawGrid (ctx, width, height, size, gridColor) {
   ctx.translate(-0.5, -0.5)
 }
 
-function drawCursor (ctx, dx, dy, selectedTile, tileset) {
+function drawCursor (ctx, dx, dy, selectedTile, map, tileset) {
 
   const [sx, sy] = getPositionFromTileIndex(selectedTile, tileset)
 
-  ctx.drawImage(tileset.image, sx, sy, tileset.tileSize, tileset.tileSize, dx, dy, tileset.tileSize, tileset.tileSize)
+  ctx.drawImage(tileset.image, sx, sy, map.tileSize, map.tileSize, dx, dy, tileset.tileSize, tileset.tileSize)
+
+  ctx.fillStyle = 'rgba(255, 255, 255, 0.3)'
+  ctx.fillRect(dx, dy, map.tileSize, map.tileSize)
 }
 
-function drawTiles (ctx, map) {
+function drawTiles (ctx, map, tileset) {
   for (let y = 0; y < map.height; y++) {
     for (let x = 0; x < map.width; x++) {
       const ix = (y * map.width) + x
@@ -89,13 +96,13 @@ function drawTiles (ctx, map) {
       if (tile === 0) continue
       const dx = x * map.tileSize
       const dy = y * map.tileSize
-      const [sx, sy] = getPositionFromTileIndex(tile, map.tileset)
+      const [sx, sy] = getPositionFromTileIndex(tile, tileset)
       ctx.drawImage(
-        map.tileset.image,
+        tileset.image,
         sx,
         sy,
-        map.tileset.tileSize,
-        map.tileset.tileSize,
+        tileset.tileSize,
+        tileset.tileSize,
         dx,
         dy,
         map.tileSize,

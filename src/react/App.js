@@ -11,42 +11,19 @@ export default function App () {
   const image = new Image()
   image.src = imagePath
 
-  const map = {
-    width: 16,
-    height: 16,
+  const tileset = {
+    width: 64,
+    height: 32,
     tileSize: 16,
-    data: [
-      0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-      0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-      0,0,0,2,2,2,2,2,2,2,2,0,0,0,0,0,
-      0,0,0,2,1,1,1,1,1,1,2,2,2,2,2,0,
-      0,0,0,2,1,1,1,1,1,1,1,0,0,0,2,0,
-      0,0,0,2,1,1,1,1,1,1,2,2,2,0,2,0,
-      0,0,0,2,1,1,1,1,1,1,2,0,2,0,2,0,
-      0,0,0,2,2,2,2,2,2,2,2,0,2,0,2,0,
-      0,0,0,0,0,0,0,0,0,0,0,0,2,0,2,0,
-      0,0,0,0,0,0,0,0,0,0,0,0,2,0,2,0,
-      0,0,0,0,0,0,0,0,2,2,2,2,2,0,2,0,
-      0,0,0,0,0,0,0,0,2,0,0,0,0,0,2,0,
-      0,0,0,0,0,0,0,0,2,0,0,0,0,0,2,0,
-      0,0,0,0,0,0,0,0,2,0,0,0,0,0,2,0,
-      0,0,0,0,0,0,0,0,2,2,2,2,2,2,2,0,
-      0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-    ],
-    tileset: {
-      width: 64,
-      height: 32,
-      tileSize: 16,
-      imagePath,
-      image,
-    }
+    imagePath,
+    image,
   }
 
   return (
     <div className={styles.container}>
       <Provider store={store}>
-        <MapEditor map={map} />
-        <Tileset tileset={map.tileset} />
+        <MapEditor tileset={tileset} />
+        <Tileset tileset={tileset} />
       </Provider>
     </div>
   )
