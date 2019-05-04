@@ -1,9 +1,13 @@
 import React, { createRef, useEffect } from 'react'
+import { useSelector } from 'react-redux'
 import styles from './MapEditor.css'
 import useCanvasWithMousePosition from './hooks/useCanvasWithMousePosition'
+import { selectedTileSelector } from './state/selectors'
 
 export default function MapEditor ({ map }) {
   const canvasRef = createRef()
+
+  const selectedTile = useSelector(selectedTileSelector)
 
   const [ctx, mousePosition] = useCanvasWithMousePosition(canvasRef)
 

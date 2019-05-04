@@ -7,7 +7,6 @@ export default function useCanvasWithMousePosition (canvasRef) {
   const [ mousePosition, setMousePosition ] = useState(null)
 
   useEffect(() => {
-    console.log('ue1')
     const canvas = canvasRef.current
     const ctx = canvas.getContext('2d')
     setCtx(ctx)

@@ -47,7 +47,7 @@
     "file-loader": "^2.0.0",
     "kruskal": "^0.0.5",
     "lodash": "^4.17.11",
-    "react-redux": "^7.0.3",
+    "react-redux": "^7.1.0-alpha.4",
     "redux": "^4.0.1"
   }
 }

@@ -2,6 +2,8 @@ import React from 'react'
 import styles from './App.css'
 import MapEditor from './MapEditor'
 import Tileset from './Tileset'
+import { Provider } from 'react-redux'
+import store from './state/store'
 
 export default function App () {
 
@@ -24,8 +26,10 @@ export default function App () {
 
   return (
     <div className={styles.container}>
-      <MapEditor map={map} />
-      <Tileset tileset={map.tileset}/>
+      <Provider store={store}>
+        <MapEditor map={map} />
+        <Tileset tileset={map.tileset} />
+      </Provider>
     </div>
   )
 }
