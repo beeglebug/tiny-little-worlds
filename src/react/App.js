@@ -1,9 +1,12 @@
 import React from 'react'
+import { Provider } from 'react-redux'
+import { PersistGate } from 'redux-persist/integration/react'
 import styles from './App.css'
 import MapEditor from './MapEditor'
 import Tileset from './Tileset'
-import { Provider } from 'react-redux'
-import store from './state/store'
+import createStore from './state/store'
+
+const [ store, persistor ] = createStore()
 
 export default function App () {
 
@@ -22,8 +25,10 @@ export default function App () {
   return (
     <div className={styles.container}>
       <Provider store={store}>
-        <MapEditor tileset={tileset} />
-        <Tileset tileset={tileset} />
+        <PersistGate persistor={persistor}>
+          <MapEditor tileset={tileset} />
+          <Tileset tileset={tileset} />
+        </PersistGate>
       </Provider>
     </div>
   )
