@@ -2,9 +2,10 @@ import React, { createRef, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styles from './MapEditor.css'
 import useCanvasWithMouse from './hooks/useCanvasWithMouse'
-import { mapSelector, selectedTileSelector } from './state/selectors'
+import { mapSelector, selectedTileSelector, selectedToolSelector } from './state/selectors'
 import { getPositionFromTileIndex } from './util/tileset'
 import { setMapTileAction } from './state/actions'
+import { TOOLS } from './consts'
 
 export default function MapEditor ({ tileset, backgroundColor = '#7a7a7a', gridColor = '#959595' }) {
   const canvasRef = createRef()
@@ -12,13 +13,14 @@ export default function MapEditor ({ tileset, backgroundColor = '#7a7a7a', gridC
   const dispatch = useDispatch()
   const selectedTile = useSelector(selectedTileSelector)
   const map = useSelector(mapSelector)
+  const selectedTool = useSelector(selectedToolSelector)
   const [ currentTileIndex, setCurrentTileIndex ] = useState(null)
 
   const [ctx, mousePosition, mouseDown] = useCanvasWithMouse(canvasRef)
 
   useEffect(() => {
     draw()
-  }, [ctx, mousePosition])
+  }, [ctx, map, mousePosition])
 
   function handleMouseDown () {
     paintCurrentMapTile()
@@ -36,10 +38,16 @@ export default function MapEditor ({ tileset, backgroundColor = '#7a7a7a', gridC
   }
 
   function paintCurrentMapTile () {
+    let tile
+    if (selectedTool === TOOLS.PAINT) {
+      tile = selectedTile
+    } else if (selectedTool === TOOLS.ERASE) {
+      tile = 0
+    }
     const size = map.tileSize
     const x = Math.floor(mousePosition.x / size)
     const y = Math.floor(mousePosition.y / size)
-    dispatch(setMapTileAction(x, y, selectedTile))
+    dispatch(setMapTileAction(x, y, tile))
   }
 
   function draw () {
@@ -54,7 +62,7 @@ export default function MapEditor ({ tileset, backgroundColor = '#7a7a7a', gridC
     if (mousePosition) {
       const x = Math.floor(mousePosition.x / size) * size
       const y = Math.floor(mousePosition.y / size) * size
-      drawCursor(ctx, x, y, selectedTile, map, tileset)
+      drawCursor(ctx, x, y, selectedTile, selectedTool, map, tileset)
     }
   }
 
@@ -91,11 +99,13 @@ function drawGrid (ctx, width, height, size, gridColor) {
   ctx.translate(-0.5, -0.5)
 }
 
-function drawCursor (ctx, dx, dy, selectedTile, map, tileset) {
+function drawCursor (ctx, dx, dy, selectedTile, selectedTool, map, tileset) {
 
   const [sx, sy] = getPositionFromTileIndex(selectedTile, tileset)
 
-  ctx.drawImage(tileset.image, sx, sy, map.tileSize, map.tileSize, dx, dy, tileset.tileSize, tileset.tileSize)
+  if (selectedTool === TOOLS.PAINT) {
+    ctx.drawImage(tileset.image, sx, sy, map.tileSize, map.tileSize, dx, dy, tileset.tileSize, tileset.tileSize)
+  }
 
   ctx.fillStyle = 'rgba(255, 255, 255, 0.3)'
   ctx.fillRect(dx, dy, map.tileSize, map.tileSize)

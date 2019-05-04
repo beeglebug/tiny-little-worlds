@@ -5,6 +5,7 @@ import styles from './App.css'
 import MapEditor from './MapEditor'
 import Tileset from './Tileset'
 import createStore from './state/store'
+import Tools from './Tools'
 
 const [ store, persistor ] = createStore()
 
@@ -28,6 +29,7 @@ export default function App () {
         <PersistGate persistor={persistor}>
           <MapEditor tileset={tileset} />
           <Tileset tileset={tileset} />
+          <Tools />
         </PersistGate>
       </Provider>
     </div>
