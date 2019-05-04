@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux'
 import styles from './MapEditor.css'
 import useCanvasWithMousePosition from './hooks/useCanvasWithMousePosition'
 import { selectedTileSelector } from './state/selectors'
+import { getPositionFromTileIndex } from './util/tileset'
 
 export default function MapEditor ({ map }) {
   const canvasRef = createRef()
@@ -20,7 +21,7 @@ export default function MapEditor ({ map }) {
     const width = map.width * map.tileSize
     const height = map.height * map.tileSize
     const size = map.tileSize
-    ctx.fillStyle = '#e9f0fc'
+    ctx.fillStyle = '#AAAAAA'
     ctx.fillRect(0, 0, width, height)
     ctx.strokeStyle = '#c9c9c9'
     ctx.translate(0.5, 0.5)
@@ -39,10 +40,13 @@ export default function MapEditor ({ map }) {
     ctx.translate(-0.5, -0.5)
 
     if (mousePosition) {
-      const x = Math.floor(mousePosition.x / size) * size
-      const y = Math.floor(mousePosition.y / size) * size
-      ctx.fillStyle = '#FF0000'
-      ctx.fillRect(x, y, size, size)
+      const dx = Math.floor(mousePosition.x / size) * size
+      const dy = Math.floor(mousePosition.y / size) * size
+
+      const { tileset } = map
+      const [sx, sy] = getPositionFromTileIndex(selectedTile, tileset)
+
+      ctx.drawImage(tileset.image, sx, sy, tileset.tileSize, tileset.tileSize, dx, dy, tileset.tileSize, tileset.tileSize)
     }
   }
 
