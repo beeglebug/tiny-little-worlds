@@ -1,7 +1,7 @@
-import React, { createRef, useEffect } from 'react'
+import React, { createRef, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styles from './MapEditor.css'
-import useCanvasWithMousePosition from './hooks/useCanvasWithMousePosition'
+import useCanvasWithMouse from './hooks/useCanvasWithMouse'
 import { mapSelector, selectedTileSelector } from './state/selectors'
 import { getPositionFromTileIndex } from './util/tileset'
 import { setMapTileAction } from './state/actions'
@@ -12,14 +12,30 @@ export default function MapEditor ({ tileset, backgroundColor = '#7a7a7a', gridC
   const dispatch = useDispatch()
   const selectedTile = useSelector(selectedTileSelector)
   const map = useSelector(mapSelector)
+  const [ currentTileIndex, setCurrentTileIndex ] = useState(null)
 
-  const [ctx, mousePosition] = useCanvasWithMousePosition(canvasRef)
+  const [ctx, mousePosition, mouseDown] = useCanvasWithMouse(canvasRef)
 
   useEffect(() => {
     draw()
   }, [ctx, mousePosition])
 
-  function handleClick () {
+  function handleMouseDown () {
+    paintCurrentMapTile()
+  }
+
+  function handleMouseMove () {
+    const size = map.tileSize
+    const x = Math.floor(mousePosition.x / size)
+    const y = Math.floor(mousePosition.y / size)
+    const index = (y * map.width) + x
+    if (mouseDown && currentTileIndex !== index) {
+      paintCurrentMapTile()
+    }
+    setCurrentTileIndex(index)
+  }
+
+  function paintCurrentMapTile () {
     const size = map.tileSize
     const x = Math.floor(mousePosition.x / size)
     const y = Math.floor(mousePosition.y / size)
@@ -28,16 +44,13 @@ export default function MapEditor ({ tileset, backgroundColor = '#7a7a7a', gridC
 
   function draw () {
     if (!ctx) return
-    const width = map.width * map.tileSize
-    const height = map.height * map.tileSize
     const size = map.tileSize
+    const width = map.width * size
+    const height = map.height * size
     ctx.fillStyle = backgroundColor
     ctx.fillRect(0, 0, width, height)
-
     drawTiles(ctx, map, tileset)
-
     drawGrid(ctx, width, height, size, gridColor)
-
     if (mousePosition) {
       const x = Math.floor(mousePosition.x / size) * size
       const y = Math.floor(mousePosition.y / size) * size
@@ -52,12 +65,12 @@ export default function MapEditor ({ tileset, backgroundColor = '#7a7a7a', gridC
         className={styles.canvas}
         width={map.width * map.tileSize}
         height={map.height * map.tileSize}
-        onClick={handleClick}
+        onMouseDown={handleMouseDown}
+        onMouseMove={handleMouseMove}
       />
     </div>
   )
 }
-
 
 function drawGrid (ctx, width, height, size, gridColor) {
 
