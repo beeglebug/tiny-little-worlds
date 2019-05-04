@@ -5,7 +5,7 @@ import useCanvasWithMousePosition from './hooks/useCanvasWithMousePosition'
 import { selectedTileSelector } from './state/selectors'
 import { getPositionFromTileIndex } from './util/tileset'
 
-export default function MapEditor ({ map }) {
+export default function MapEditor ({ map, backgroundColor = '#7a7a7a', gridColor = '#959595' }) {
   const canvasRef = createRef()
 
   const selectedTile = useSelector(selectedTileSelector)
@@ -27,12 +27,12 @@ export default function MapEditor ({ map }) {
     const width = map.width * map.tileSize
     const height = map.height * map.tileSize
     const size = map.tileSize
-    ctx.fillStyle = '#AAAAAA'
+    ctx.fillStyle = backgroundColor
     ctx.fillRect(0, 0, width, height)
 
     drawTiles(ctx, map)
 
-    drawGrid(ctx, width, height, size)
+    drawGrid(ctx, width, height, size, gridColor)
 
     if (mousePosition) {
       const x = Math.floor(mousePosition.x / size) * size
@@ -55,10 +55,10 @@ export default function MapEditor ({ map }) {
 }
 
 
-function drawGrid (ctx, width, height, size) {
+function drawGrid (ctx, width, height, size, gridColor) {
 
   ctx.translate(0.5, 0.5)
-  ctx.strokeStyle = '#c9c9c9'
+  ctx.strokeStyle = gridColor
 
   for (let y = size; y < height; y += size) {
     ctx.moveTo(0, y)
