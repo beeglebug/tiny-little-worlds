@@ -6,6 +6,7 @@ import MapEditor from './MapEditor'
 import Tileset from './Tileset'
 import createStore from './state/store'
 import Tools from './Tools'
+import Preview from './Preview'
 
 const [ store, persistor ] = createStore()
 
@@ -30,6 +31,7 @@ export default function App () {
           <MapEditor tileset={tileset} />
           <Tileset tileset={tileset} />
           <Tools />
+          <Preview />
         </PersistGate>
       </Provider>
     </div>

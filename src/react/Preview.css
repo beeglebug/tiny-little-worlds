@@ -1,0 +1,9 @@
+.container {
+    background-color: #aaaaaa;
+    margin: 10px;
+}
+
+.canvas {
+    display: block;
+    background-color: #333333;
+}
