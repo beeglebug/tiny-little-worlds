@@ -7,15 +7,13 @@ export default function createWorld (map) {
 
   const world = new Object3D()
 
-  const SCALE = 8
-
   for (let y = 0; y < map.height; y++) {
     for (let x = 0; x < map.width; x++) {
       const ix = (y * map.width) + x
       const tile = map.data[ix]
       if (tile === 0) continue
-      const dx = x * SCALE
-      const dz = y * SCALE
+      const dx = x * TILE_SIZE
+      const dz = y * TILE_SIZE
       let mesh
       if (tile === 2) {
         mesh = createWall()
