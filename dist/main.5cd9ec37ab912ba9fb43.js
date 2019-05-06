@@ -510,7 +510,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _consts__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./consts */ "uER/");
 
 function findPlayerPosition(map) {
-  var TILE_TYPE_PLAYER = 5;
+  var TILE_TYPE_PLAYER = 3;
   var index = map.data.findIndex(function (tile) {
     return tile === TILE_TYPE_PLAYER;
   });
@@ -1014,12 +1014,7 @@ function Tools() {
       return selectTool(_consts__WEBPACK_IMPORTED_MODULE_4__["TOOLS"].ERASE);
     },
     className: classnames__WEBPACK_IMPORTED_MODULE_2___default()(_Tools_css__WEBPACK_IMPORTED_MODULE_3___default.a.button, selectedTool === _consts__WEBPACK_IMPORTED_MODULE_4__["TOOLS"].ERASE && _Tools_css__WEBPACK_IMPORTED_MODULE_3___default.a.selected)
-  }, "erase"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-    onClick: function onClick() {
-      return selectTool(_consts__WEBPACK_IMPORTED_MODULE_4__["TOOLS"].INSPECT);
-    },
-    className: classnames__WEBPACK_IMPORTED_MODULE_2___default()(_Tools_css__WEBPACK_IMPORTED_MODULE_3___default.a.button, selectedTool === _consts__WEBPACK_IMPORTED_MODULE_4__["TOOLS"].INSPECT && _Tools_css__WEBPACK_IMPORTED_MODULE_3___default.a.selected)
-  }, "inspect"));
+  }, "erase"));
 }
 
 /***/ }),
@@ -1202,10 +1197,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return createWorld; });
 /* harmony import */ var three__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! three */ "Womt");
 /* harmony import */ var _consts__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./consts */ "uER/");
+/* harmony import */ var _physics_geometry_Rect__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./physics/geometry/Rect */ "2pqL");
+/* harmony import */ var _Physics__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Physics */ "xIh9");
+
+
 
 
 function createWorld(map) {
   var world = new three__WEBPACK_IMPORTED_MODULE_0__["Object3D"]();
+  var colliders = [];
 
   for (var y = 0; y < map.height; y++) {
     for (var x = 0; x < map.width; x++) {
@@ -1213,33 +1213,48 @@ function createWorld(map) {
       var tile = map.data[ix];
       if (tile === 0) continue;
       var dx = x * _consts__WEBPACK_IMPORTED_MODULE_1__["TILE_SIZE"];
-      var dz = y * _consts__WEBPACK_IMPORTED_MODULE_1__["TILE_SIZE"];
+      var dy = y * _consts__WEBPACK_IMPORTED_MODULE_1__["TILE_SIZE"];
       var mesh = void 0;
 
       if (tile === 2) {
         mesh = wallMesh.clone();
+        var collider = new _physics_geometry_Rect__WEBPACK_IMPORTED_MODULE_2__["default"](dx - _consts__WEBPACK_IMPORTED_MODULE_1__["TILE_SIZE"] / 2, dy - _consts__WEBPACK_IMPORTED_MODULE_1__["TILE_SIZE"] / 2, _consts__WEBPACK_IMPORTED_MODULE_1__["TILE_SIZE"], _consts__WEBPACK_IMPORTED_MODULE_1__["TILE_SIZE"]);
+        colliders.push(collider);
       } else {
         mesh = floorMesh.clone();
-      }
+      } // 2d to 3d
 
-      mesh.position.set(dx, 0, dz);
+
+      mesh.position.set(dx, 0, dy);
       world.add(mesh);
     }
   }
 
+  _Physics__WEBPACK_IMPORTED_MODULE_3__["default"].setColliders(colliders);
   return world;
 }
-var wallMaterial = new three__WEBPACK_IMPORTED_MODULE_0__["MeshLambertMaterial"]({
-  color: new three__WEBPACK_IMPORTED_MODULE_0__["Color"]('#5f606e')
+var loader = new three__WEBPACK_IMPORTED_MODULE_0__["TextureLoader"]();
+var wallTexture = loader.load('./assets/wall.png');
+wallTexture.magFilter = three__WEBPACK_IMPORTED_MODULE_0__["NearestFilter"];
+wallTexture.minFilter = three__WEBPACK_IMPORTED_MODULE_0__["NearestFilter"];
+var floorTexture = loader.load('./assets/floor.png');
+floorTexture.magFilter = three__WEBPACK_IMPORTED_MODULE_0__["NearestFilter"];
+floorTexture.minFilter = three__WEBPACK_IMPORTED_MODULE_0__["NearestFilter"];
+var wallMaterial = new three__WEBPACK_IMPORTED_MODULE_0__["MeshBasicMaterial"]({
+  map: wallTexture
 });
 var wallGeometry = new three__WEBPACK_IMPORTED_MODULE_0__["BoxGeometry"](_consts__WEBPACK_IMPORTED_MODULE_1__["TILE_SIZE"], _consts__WEBPACK_IMPORTED_MODULE_1__["WALL_HEIGHT"], _consts__WEBPACK_IMPORTED_MODULE_1__["TILE_SIZE"]);
 wallGeometry.translate(0, _consts__WEBPACK_IMPORTED_MODULE_1__["WALL_HEIGHT"] / 2, 0);
 var wallMesh = new three__WEBPACK_IMPORTED_MODULE_0__["Mesh"](wallGeometry, wallMaterial);
-var floorMaterial = new three__WEBPACK_IMPORTED_MODULE_0__["MeshLambertMaterial"]({
-  color: new three__WEBPACK_IMPORTED_MODULE_0__["Color"]('#6a6e7c')
+var floorMaterial = new three__WEBPACK_IMPORTED_MODULE_0__["MeshBasicMaterial"]({
+  map: floorTexture
 });
 var floorGeometry = new three__WEBPACK_IMPORTED_MODULE_0__["PlaneGeometry"](_consts__WEBPACK_IMPORTED_MODULE_1__["TILE_SIZE"], _consts__WEBPACK_IMPORTED_MODULE_1__["TILE_SIZE"]);
 floorGeometry.rotateX(-Math.PI / 2);
+var ceilingGeometry = new three__WEBPACK_IMPORTED_MODULE_0__["PlaneGeometry"](_consts__WEBPACK_IMPORTED_MODULE_1__["TILE_SIZE"], _consts__WEBPACK_IMPORTED_MODULE_1__["TILE_SIZE"]);
+ceilingGeometry.rotateX(Math.PI / 2);
+ceilingGeometry.translate(0, _consts__WEBPACK_IMPORTED_MODULE_1__["WALL_HEIGHT"], 0);
+three__WEBPACK_IMPORTED_MODULE_0__["GeometryUtils"].merge(floorGeometry, ceilingGeometry);
 var floorMesh = new three__WEBPACK_IMPORTED_MODULE_0__["Mesh"](floorGeometry, floorMaterial);
 
 /***/ }),
@@ -1325,7 +1340,7 @@ function (_Object3D) {
 
     _this.pitch.add(camera);
 
-    _this.collider = new _physics_geometry_Circle__WEBPACK_IMPORTED_MODULE_4__["default"](0, 0, 1);
+    _this.collider = new _physics_geometry_Circle__WEBPACK_IMPORTED_MODULE_4__["default"](0, 0, 0.6);
     _this.controls = {
       forward: _input_Input__WEBPACK_IMPORTED_MODULE_2__["default"].createButton('forward', _input_KeyCode__WEBPACK_IMPORTED_MODULE_1__["default"].W, _input_KeyCode__WEBPACK_IMPORTED_MODULE_1__["default"].UpArrow),
       back: _input_Input__WEBPACK_IMPORTED_MODULE_2__["default"].createButton('back', _input_KeyCode__WEBPACK_IMPORTED_MODULE_1__["default"].S, _input_KeyCode__WEBPACK_IMPORTED_MODULE_1__["default"].DownArrow),
@@ -2146,7 +2161,12 @@ function () {
   }, {
     key: "stop",
     value: function stop() {
+      var _this2 = this;
+
       _input_Input__WEBPACK_IMPORTED_MODULE_3__["default"].unbind(this.canvas);
+      this.world.children.forEach(function (child) {
+        _this2.world.remove(child);
+      });
       this.canvas.blur();
       this.cancelLoop();
       this.onStop();
@@ -2154,15 +2174,15 @@ function () {
   }, {
     key: "setupPointerLock",
     value: function setupPointerLock(domElement) {
-      var _this2 = this;
+      var _this3 = this;
 
       var handlePointerLockChange = function handlePointerLockChange() {
         if (document.pointerLockElement === domElement) {
-          _this2.controller.enabled = true;
+          _this3.controller.enabled = true;
         } else {
-          _this2.controller.enabled = false;
+          _this3.controller.enabled = false;
 
-          _this2.stop();
+          _this3.stop();
         }
       };
 
@@ -2601,7 +2621,7 @@ __webpack_require__.r(__webpack_exports__);
 
 function createScene() {
   var scene = new three__WEBPACK_IMPORTED_MODULE_0__["Scene"]();
-  scene.background = new three__WEBPACK_IMPORTED_MODULE_0__["Color"]('#424552');
+  scene.background = new three__WEBPACK_IMPORTED_MODULE_0__["Color"]('#ffffff');
   scene.fog = new three__WEBPACK_IMPORTED_MODULE_0__["Fog"](scene.background, 0, 100);
   var light = new three__WEBPACK_IMPORTED_MODULE_0__["AmbientLight"](new three__WEBPACK_IMPORTED_MODULE_0__["Color"]('#ffffff'));
   scene.add(light);
@@ -2633,15 +2653,19 @@ function () {
   function Physics() {
     _classCallCheck(this, Physics);
 
-    _defineProperty(this, "_lastColliders", []);
+    _defineProperty(this, "colliders", []);
   }
 
   _createClass(Physics, [{
+    key: "setColliders",
+    value: function setColliders(colliders) {
+      this.colliders = colliders;
+    }
+  }, {
     key: "getColliders",
     value: function getColliders(player) {
-      var colliders = [];
-      this._lastColliders = colliders;
-      return colliders;
+      // TODO filter by player position
+      return this.colliders;
     }
   }]);
 
@@ -2737,7 +2761,7 @@ function App() {
   image.src = imagePath;
   var tileset = {
     width: 48,
-    height: 32,
+    height: 16,
     tileSize: 16,
     imagePath: imagePath,
     image: image
@@ -2748,7 +2772,7 @@ function App() {
     persistor: persistor
   }, loading && 'loading...', !loading && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_MapEditor__WEBPACK_IMPORTED_MODULE_3__["default"], {
     tileset: tileset
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Inspector__WEBPACK_IMPORTED_MODULE_8__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Tileset__WEBPACK_IMPORTED_MODULE_4__["default"], {
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Tileset__WEBPACK_IMPORTED_MODULE_4__["default"], {
     tileset: tileset
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Tools__WEBPACK_IMPORTED_MODULE_6__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Preview__WEBPACK_IMPORTED_MODULE_7__["default"], null))));
 }
@@ -2756,4 +2780,4 @@ function App() {
 /***/ })
 
 },[["tjUo","runtime","vendor"]]]);
-//# sourceMappingURL=main.b3212873ebfa93ea850f.js.map
+//# sourceMappingURL=main.5cd9ec37ab912ba9fb43.js.map
