@@ -1,18 +1,27 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { mapSelector } from './state/selectors'
-import { initGame } from '../engine/initGame'
+import Game from '../engine/Game'
 import styles from './Preview.css'
 
 export default function Preview () {
 
   const canvasRef = useRef(null)
   const [ running, setRunning ] = useState(false)
+  const [ game, setGame ] = useState(null)
   const map = useSelector(mapSelector)
+
+  useEffect(() => {
+    const game = new Game(canvasRef.current)
+    setGame(game)
+  }, [])
 
   function handlePlay () {
     setRunning(true)
-    initGame(canvasRef.current, map)
+    game.start(map)
+    game.onStop = () => {
+      setRunning(false)
+    }
   }
 
   return (
