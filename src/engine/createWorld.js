@@ -10,11 +10,15 @@ import {
 } from 'three'
 
 import { TILE_SIZE, WALL_HEIGHT } from './consts'
+import Rect from './physics/geometry/Rect'
+import Physics from './Physics'
 
 
 export default function createWorld (map) {
 
   const world = new Object3D()
+
+  const colliders = []
 
   for (let y = 0; y < map.height; y++) {
     for (let x = 0; x < map.width; x++) {
@@ -22,17 +26,27 @@ export default function createWorld (map) {
       const tile = map.data[ix]
       if (tile === 0) continue
       const dx = x * TILE_SIZE
-      const dz = y * TILE_SIZE
+      const dy = y * TILE_SIZE
       let mesh
       if (tile === 2) {
         mesh = wallMesh.clone()
+        const collider = new Rect(
+          dx - TILE_SIZE / 2,
+          dy - TILE_SIZE / 2,
+          TILE_SIZE,
+          TILE_SIZE
+        )
+        colliders.push(collider)
       } else {
         mesh = floorMesh.clone()
       }
-      mesh.position.set(dx, 0, dz)
+      // 2d to 3d
+      mesh.position.set(dx, 0, dy)
       world.add(mesh)
     }
   }
+
+  Physics.setColliders(colliders)
 
   return world
 }

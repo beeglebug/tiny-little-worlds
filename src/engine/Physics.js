@@ -1,15 +1,15 @@
 
 class Physics {
 
-  _lastColliders = []
+  colliders = []
+
+  setColliders (colliders) {
+    this.colliders = colliders
+  }
 
   getColliders (player) {
-
-    const colliders = []
-
-    this._lastColliders = colliders
-
-    return colliders
+    // TODO filter by player position
+    return this.colliders
   }
 }
 

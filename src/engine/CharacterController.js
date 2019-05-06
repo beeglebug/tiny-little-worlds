@@ -29,7 +29,7 @@ export default class CharacterController extends Object3D {
     this.add(this.pitch)
     this.pitch.add(camera)
 
-    this.collider = new Circle(0, 0, 1)
+    this.collider = new Circle(0, 0, 0.6)
 
     this.controls = {
       forward: Input.createButton('forward', KeyCode.W, KeyCode.UpArrow),
