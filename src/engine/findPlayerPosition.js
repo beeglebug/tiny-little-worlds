@@ -2,7 +2,7 @@ import { TILE_SIZE } from './consts'
 
 export default function findPlayerPosition (map) {
 
-  const TILE_TYPE_PLAYER = 5
+  const TILE_TYPE_PLAYER = 3
 
   const index = map.data.findIndex(tile => tile === TILE_TYPE_PLAYER)
 

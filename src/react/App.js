@@ -23,7 +23,7 @@ export default function App () {
 
   const tileset = {
     width: 48,
-    height: 32,
+    height: 16,
     tileSize: 16,
     imagePath,
     image,
@@ -36,7 +36,7 @@ export default function App () {
         {!loading && (
           <Fragment>
             <MapEditor tileset={tileset} />
-            <Inspector />
+            {/*<Inspector />*/}
             <Tileset tileset={tileset} />
             <Tools />
             <Preview />

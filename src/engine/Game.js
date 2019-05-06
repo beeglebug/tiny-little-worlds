@@ -42,6 +42,9 @@ export default class Game {
 
   stop () {
     Input.unbind(this.canvas)
+    this.world.children.forEach(child => {
+      this.world.remove(child)
+    })
     this.canvas.blur()
     this.cancelLoop()
     this.onStop()

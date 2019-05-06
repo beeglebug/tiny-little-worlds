@@ -32,12 +32,12 @@ export default function Tools () {
       >
         erase
       </button>
-      <button
-        onClick={() => selectTool(TOOLS.INSPECT)}
-        className={classnames(styles.button, selectedTool === TOOLS.INSPECT && styles.selected)}
-      >
-        inspect
-      </button>
+      {/*<button*/}
+      {/*  onClick={() => selectTool(TOOLS.INSPECT)}*/}
+      {/*  className={classnames(styles.button, selectedTool === TOOLS.INSPECT && styles.selected)}*/}
+      {/*>*/}
+      {/*  inspect*/}
+      {/*</button>*/}
     </Window>
   )
 }

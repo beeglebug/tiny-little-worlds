@@ -1,4 +1,13 @@
-import { BoxGeometry, Color, Mesh, MeshLambertMaterial, Object3D, PlaneGeometry } from 'three'
+import {
+  BoxGeometry,
+  Color, GeometryUtils,
+  Mesh,
+  MeshBasicMaterial,
+  NearestFilter,
+  Object3D,
+  PlaneGeometry,
+  TextureLoader
+} from 'three'
 
 import { TILE_SIZE, WALL_HEIGHT } from './consts'
 
@@ -28,13 +37,30 @@ export default function createWorld (map) {
   return world
 }
 
+const loader = new TextureLoader()
 
-const wallMaterial = new MeshLambertMaterial({ color: new Color('#5f606e') })
+const wallTexture = loader.load('./assets/wall.png')
+wallTexture.magFilter = NearestFilter
+wallTexture.minFilter = NearestFilter
+
+const floorTexture = loader.load('./assets/floor.png')
+floorTexture.magFilter = NearestFilter
+floorTexture.minFilter = NearestFilter
+
+const wallMaterial = new MeshBasicMaterial({ map: wallTexture })
 const wallGeometry = new BoxGeometry(TILE_SIZE, WALL_HEIGHT, TILE_SIZE)
 wallGeometry.translate(0, WALL_HEIGHT / 2, 0)
 const wallMesh = new Mesh(wallGeometry, wallMaterial)
 
-const floorMaterial = new MeshLambertMaterial({ color: new Color('#6a6e7c') })
+const floorMaterial = new MeshBasicMaterial({ map: floorTexture })
+
 const floorGeometry = new PlaneGeometry(TILE_SIZE, TILE_SIZE)
 floorGeometry.rotateX(-Math.PI / 2)
+
+const ceilingGeometry = new PlaneGeometry(TILE_SIZE, TILE_SIZE)
+ceilingGeometry.rotateX(Math.PI / 2)
+ceilingGeometry.translate(0, WALL_HEIGHT, 0)
+
+GeometryUtils.merge(floorGeometry, ceilingGeometry)
+
 const floorMesh = new Mesh(floorGeometry, floorMaterial)

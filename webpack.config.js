@@ -85,6 +85,8 @@ module.exports = {
     }),
     new CopyPlugin([
       { from: './src/assets/tileset.png', to: 'assets/tileset.png' },
+      { from: './src/assets/wall.png', to: 'assets/wall.png' },
+      { from: './src/assets/floor.png', to: 'assets/floor.png' },
     ]),
     new webpack.HashedModuleIdsPlugin(),
   ],
