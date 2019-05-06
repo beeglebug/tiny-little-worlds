@@ -19,8 +19,8 @@ export default function useCanvasWithMouse (canvasRef) {
 
     function handleMouseMove (e) {
       const mousePosition = {
-        x: e.clientX - rect.x,
-        y: e.clientY - rect.y,
+        x: e.pageX - rect.x,
+        y: e.pageY - rect.y,
       }
       setMousePosition(mousePosition)
     }
