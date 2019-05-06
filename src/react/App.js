@@ -7,6 +7,7 @@ import Tileset from './Tileset'
 import createStore from './state/store'
 import Tools from './Tools'
 import Preview from './Preview'
+import Inspector from './Inspector'
 
 const [ store, persistor ] = createStore()
 
@@ -17,7 +18,7 @@ export default function App () {
   image.src = imagePath
 
   const tileset = {
-    width: 64,
+    width: 48,
     height: 32,
     tileSize: 16,
     imagePath,
@@ -29,6 +30,7 @@ export default function App () {
       <Provider store={store}>
         <PersistGate persistor={persistor}>
           <MapEditor tileset={tileset} />
+          <Inspector />
           <Tileset tileset={tileset} />
           <Tools />
           <Preview />

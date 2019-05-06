@@ -6,6 +6,7 @@ import { selectTileAction, selectToolAction } from './state/actions'
 import { selectedTileSelector, selectedToolSelector } from './state/selectors'
 import { getPositionFromTileIndex, getTileIndexFromPosition } from './util/tileset'
 import { TOOLS } from './consts'
+import Window from './Window'
 
 export default function Tileset ({ tileset }) {
 
@@ -47,7 +48,7 @@ export default function Tileset ({ tileset }) {
   }
 
   return (
-    <div className={styles.container}>
+    <Window title={'tileset'}>
       <canvas
         ref={canvasRef}
         className={styles.canvas}
@@ -55,6 +56,6 @@ export default function Tileset ({ tileset }) {
         height={tileset.height}
         onClick={handleClick}
       />
-    </div>
+    </Window>
   )
 }

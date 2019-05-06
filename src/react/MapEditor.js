@@ -6,6 +6,7 @@ import { mapSelector, selectedTileSelector, selectedToolSelector } from './state
 import { getPositionFromTileIndex } from './util/tileset'
 import { setMapTileAction } from './state/actions'
 import { TOOLS } from './consts'
+import Window from './Window'
 
 export default function MapEditor ({ tileset, backgroundColor = '#7a7a7a', gridColor = '#959595' }) {
 
@@ -22,7 +23,11 @@ export default function MapEditor ({ tileset, backgroundColor = '#7a7a7a', gridC
   }, [ctx, map, mousePosition])
 
   function handleMouseDown () {
-    paintCurrentMapTile()
+    if (selectedTool === TOOLS.INSPECT) {
+      console.log(1)
+    } else {
+      paintCurrentMapTile()
+    }
   }
 
   function handleMouseMove () {
@@ -66,7 +71,7 @@ export default function MapEditor ({ tileset, backgroundColor = '#7a7a7a', gridC
   }
 
   return (
-    <div className={styles.container}>
+    <Window title={'Editor'}>
       <canvas
         ref={canvasRef}
         className={styles.canvas}
@@ -75,7 +80,7 @@ export default function MapEditor ({ tileset, backgroundColor = '#7a7a7a', gridC
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
       />
-    </div>
+    </Window>
   )
 }
 

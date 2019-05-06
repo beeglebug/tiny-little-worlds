@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux'
 import { mapSelector } from './state/selectors'
 import Game from '../engine/Game'
 import styles from './Preview.css'
+import Window from './Window'
 
 export default function Preview () {
 
@@ -25,7 +26,7 @@ export default function Preview () {
   }
 
   return (
-    <div className={styles.container}>
+    <Window title={'Preview'}>
       <canvas
         ref={canvasRef}
         tabIndex={1}
@@ -33,11 +34,7 @@ export default function Preview () {
         width={320}
         height={180}
       />
-      {!running && (
-        <div className={styles.overlay}>
-          <button onClick={handlePlay}>play</button>
-        </div>
-      )}
-    </div>
+      <button onClick={handlePlay}>{running ? 'pause' : 'play'}</button>
+    </Window>
   )
 }

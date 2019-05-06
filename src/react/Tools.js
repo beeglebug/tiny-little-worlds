@@ -5,6 +5,7 @@ import styles from './Tools.css'
 import { TOOLS } from './consts'
 import { selectToolAction } from './state/actions'
 import { selectedToolSelector } from './state/selectors'
+import Window from './Window'
 
 export default function Tools () {
 
@@ -18,7 +19,7 @@ export default function Tools () {
   }
 
   return (
-    <div className={styles.container}>
+    <Window title={'Tools'}>
       <button
         onClick={() => selectTool(TOOLS.PAINT)}
         className={classnames(styles.button, selectedTool === TOOLS.PAINT && styles.selected)}
@@ -31,6 +32,12 @@ export default function Tools () {
       >
         erase
       </button>
-    </div>
+      <button
+        onClick={() => selectTool(TOOLS.INSPECT)}
+        className={classnames(styles.button, selectedTool === TOOLS.INSPECT && styles.selected)}
+      >
+        inspect
+      </button>
+    </Window>
   )
 }

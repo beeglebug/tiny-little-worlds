@@ -80,7 +80,7 @@ module.exports = {
   plugins: [
     // new CleanWebpackPlugin(['dist']),
     new HtmlWebpackPlugin({
-      title: 'Template',
+      title: 'Tiny First Person',
       meta: { viewport: 'width=device-width, initial-scale=1, shrink-to-fit=no' },
       filename: 'index.html',
     }),

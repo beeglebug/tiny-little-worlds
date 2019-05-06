@@ -1,21 +1,5 @@
-.container {
-    background-color: #aaaaaa;
-    margin: 10px;
-    position: relative;
-}
 
 .canvas {
     display: block;
     background-color: #333333;
-}
-
-.overlay {
-    position: absolute;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    top: 0;
-    left: 0;
-    width: 320px;
 }
