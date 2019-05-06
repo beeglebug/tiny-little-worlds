@@ -6,7 +6,6 @@ const CleanWebpackPlugin = require('clean-webpack-plugin')
 const outputDirectory = path.resolve(__dirname, 'dist')
 const nodeModulesDirectory = path.resolve(__dirname, 'node_modules')
 const nodeEnv = process.env.NODE_ENV
-const baseUrl = '/'
 
 module.exports = {
   mode: nodeEnv || 'development',
@@ -14,7 +13,6 @@ module.exports = {
   output: {
     path: outputDirectory,
     filename: '[name].[contenthash].js',
-    publicPath: baseUrl,
   },
   module: {
     rules: [
