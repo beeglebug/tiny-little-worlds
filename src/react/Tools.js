@@ -12,7 +12,9 @@ export default function Tools () {
   const dispatch = useDispatch()
 
   function selectTool (tool) {
-    dispatch(selectToolAction(tool))
+    if (tool !== selectedTool) {
+      dispatch(selectToolAction(tool))
+    }
   }
 
   return (

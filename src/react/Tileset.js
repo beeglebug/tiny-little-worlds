@@ -3,7 +3,7 @@ import styles from './Tileset.css'
 import useCanvasWithMouse from './hooks/useCanvasWithMouse'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectTileAction, selectToolAction } from './state/actions'
-import { selectedTileSelector } from './state/selectors'
+import { selectedTileSelector, selectedToolSelector } from './state/selectors'
 import { getPositionFromTileIndex, getTileIndexFromPosition } from './util/tileset'
 import { TOOLS } from './consts'
 
@@ -13,6 +13,7 @@ export default function Tileset ({ tileset }) {
   const [ctx, mousePosition] = useCanvasWithMouse(canvasRef)
   const dispatch = useDispatch()
   const selectedTile = useSelector(selectedTileSelector)
+  const selectedTool = useSelector(selectedToolSelector)
 
   useEffect(() => {
     draw()
@@ -22,7 +23,9 @@ export default function Tileset ({ tileset }) {
     const tile = getTileIndexFromPosition(mousePosition, tileset)
     dispatch(selectTileAction(tile))
     // reset tool selection
-    dispatch(selectToolAction(TOOLS.PAINT))
+    if (selectedTool !== TOOLS.PAINT) {
+      dispatch(selectToolAction(TOOLS.PAINT))
+    }
   }
 
   function draw () {
