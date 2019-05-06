@@ -69,6 +69,12 @@ const bind = target => {
   target.addEventListener('mousemove', handleMouseMove)
 }
 
+const unbind = target => {
+  target.removeEventListener('keydown', handleKeyDown)
+  target.removeEventListener('keyup', handleKeyUp)
+  target.removeEventListener('mousemove', handleMouseMove)
+}
+
 let timeout
 
 const handleMouseMove = event => {
@@ -132,6 +138,7 @@ function checkExistingButtons (keyCodes) {
 
 export default {
   bind,
+  unbind,
   createButton,
   getKey,
   getAxis,

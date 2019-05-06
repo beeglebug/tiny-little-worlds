@@ -1,15 +1,17 @@
-import React, { createRef } from 'react'
-import styles from './Preview.css'
+import React, { useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { mapSelector } from './state/selectors'
 import { initGame } from '../engine/initGame'
+import styles from './Preview.css'
 
 export default function Preview () {
-  const canvasRef = createRef()
 
+  const canvasRef = useRef(null)
+  const [ running, setRunning ] = useState(false)
   const map = useSelector(mapSelector)
 
   function handlePlay () {
+    setRunning(true)
     initGame(canvasRef.current, map)
   }
 
@@ -22,9 +24,11 @@ export default function Preview () {
         width={320}
         height={180}
       />
-      <div className={styles.overlay}>
-        <button onClick={handlePlay}>play</button>
-      </div>
+      {!running && (
+        <div className={styles.overlay}>
+          <button onClick={handlePlay}>play</button>
+        </div>
+      )}
     </div>
   )
 }

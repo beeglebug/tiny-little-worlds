@@ -1,4 +1,4 @@
-import React, { createRef, useEffect, useState } from 'react'
+import React, { useRef, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styles from './MapEditor.css'
 import useCanvasWithMouse from './hooks/useCanvasWithMouse'
@@ -8,14 +8,13 @@ import { setMapTileAction } from './state/actions'
 import { TOOLS } from './consts'
 
 export default function MapEditor ({ tileset, backgroundColor = '#7a7a7a', gridColor = '#959595' }) {
-  const canvasRef = createRef()
 
+  const canvasRef = useRef(null)
   const dispatch = useDispatch()
   const selectedTile = useSelector(selectedTileSelector)
   const map = useSelector(mapSelector)
   const selectedTool = useSelector(selectedToolSelector)
   const [ currentTileIndex, setCurrentTileIndex ] = useState(null)
-
   const [ctx, mousePosition, mouseDown] = useCanvasWithMouse(canvasRef)
 
   useEffect(() => {

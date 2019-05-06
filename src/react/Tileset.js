@@ -1,4 +1,4 @@
-import React, { createRef, useEffect } from 'react'
+import React, { useRef, useEffect } from 'react'
 import styles from './Tileset.css'
 import useCanvasWithMouse from './hooks/useCanvasWithMouse'
 import { useDispatch, useSelector } from 'react-redux'
@@ -8,9 +8,9 @@ import { getPositionFromTileIndex, getTileIndexFromPosition } from './util/tiles
 import { TOOLS } from './consts'
 
 export default function Tileset ({ tileset }) {
-  const canvasRef = createRef()
-  const [ctx, mousePosition] = useCanvasWithMouse(canvasRef)
 
+  const canvasRef = useRef(null)
+  const [ctx, mousePosition] = useCanvasWithMouse(canvasRef)
   const dispatch = useDispatch()
   const selectedTile = useSelector(selectedTileSelector)
 
