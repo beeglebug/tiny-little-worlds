@@ -13,7 +13,7 @@ const [ store, persistor ] = createStore()
 
 export default function App () {
 
-  const imagePath = '/tileset.png'
+  const imagePath = './tileset.png'
   const image = new Image()
   image.src = imagePath
 
