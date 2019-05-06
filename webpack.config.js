@@ -1,6 +1,7 @@
 const path = require('path')
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const CopyPlugin = require('copy-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 
 const outputDirectory = path.resolve(__dirname, 'dist')
@@ -76,12 +77,15 @@ module.exports = {
     ]
   },
   plugins: [
-    // new CleanWebpackPlugin(['dist']),
+    new CleanWebpackPlugin(['dist']),
     new HtmlWebpackPlugin({
       title: 'Tiny First Person',
       meta: { viewport: 'width=device-width, initial-scale=1, shrink-to-fit=no' },
       filename: 'index.html',
     }),
+    new CopyPlugin([
+      { from: './src/assets/tileset.png', to: 'assets/tileset.png' },
+    ]),
     new webpack.HashedModuleIdsPlugin(),
   ],
   optimization: {

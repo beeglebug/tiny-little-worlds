@@ -44,36 +44,6 @@ exports.locals = {
 
 /***/ }),
 
-/***/ "0FMS":
-/*!***************************!*\
-  !*** ./src/react/App.css ***!
-  \***************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-
-var content = __webpack_require__(/*! !../../node_modules/css-loader??ref--9-1!./App.css */ "fexv");
-
-if(typeof content === 'string') content = [[module.i, content, '']];
-
-var transform;
-var insertInto;
-
-
-
-var options = {"hmr":true}
-
-options.transform = transform
-options.insertInto = undefined;
-
-var update = __webpack_require__(/*! ../../node_modules/style-loader/lib/addStyles.js */ "aET+")(content, options);
-
-if(content.locals) module.exports = content.locals;
-
-if(false) {}
-
-/***/ }),
-
 /***/ "1Tnp":
 /*!*****************************************************************!*\
   !*** ./node_modules/css-loader??ref--9-1!./src/react/Tools.css ***!
@@ -908,8 +878,8 @@ function useCanvasWithMouse(canvasRef) {
 
     function handleMouseMove(e) {
       var mousePosition = {
-        x: e.clientX - rect.x,
-        y: e.clientY - rect.y
+        x: e.pageX - rect.x,
+        y: e.pageY - rect.y
       };
       setMousePosition(mousePosition);
     }
@@ -1984,25 +1954,6 @@ var getCollisionFn = function getCollisionFn(target, obstacle) {
 
 /***/ }),
 
-/***/ "fexv":
-/*!***************************************************************!*\
-  !*** ./node_modules/css-loader??ref--9-1!./src/react/App.css ***!
-  \***************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader/lib/css-base.js */ "I1BE")(false);
-// imports
-
-
-// module
-exports.push([module.i, "", ""]);
-
-// exports
-
-
-/***/ }),
-
 /***/ "fwtq":
 /*!*****************************!*\
   !*** ./src/react/Tools.css ***!
@@ -2743,14 +2694,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "/MKj");
 /* harmony import */ var redux_persist_integration_react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! redux-persist/integration/react */ "KMx9");
-/* harmony import */ var _App_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./App.css */ "0FMS");
-/* harmony import */ var _App_css__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_App_css__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _MapEditor__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./MapEditor */ "RPia");
-/* harmony import */ var _Tileset__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Tileset */ "EXY2");
-/* harmony import */ var _state_store__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./state/store */ "IaF1");
-/* harmony import */ var _Tools__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Tools */ "GdsF");
-/* harmony import */ var _Preview__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Preview */ "T0Ow");
-/* harmony import */ var _Inspector__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Inspector */ "pnkl");
+/* harmony import */ var _MapEditor__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./MapEditor */ "RPia");
+/* harmony import */ var _Tileset__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Tileset */ "EXY2");
+/* harmony import */ var _state_store__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./state/store */ "IaF1");
+/* harmony import */ var _Tools__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Tools */ "GdsF");
+/* harmony import */ var _Preview__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Preview */ "T0Ow");
+/* harmony import */ var _Inspector__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Inspector */ "pnkl");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
@@ -2769,15 +2718,22 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
-
-var _createStore = Object(_state_store__WEBPACK_IMPORTED_MODULE_6__["default"])(),
+var _createStore = Object(_state_store__WEBPACK_IMPORTED_MODULE_5__["default"])(),
     _createStore2 = _slicedToArray(_createStore, 2),
     store = _createStore2[0],
     persistor = _createStore2[1];
 
 function App() {
-  var imagePath = './tileset.png';
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(true),
+      _useState2 = _slicedToArray(_useState, 2),
+      loading = _useState2[0],
+      setLoading = _useState2[1];
+
+  var imagePath = './assets/tileset.png';
   var image = new Image();
+  image.addEventListener('load', function () {
+    setLoading(false);
+  });
   image.src = imagePath;
   var tileset = {
     width: 48,
@@ -2786,20 +2742,18 @@ function App() {
     imagePath: imagePath,
     image: image
   };
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: _App_css__WEBPACK_IMPORTED_MODULE_3___default.a.container
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_redux__WEBPACK_IMPORTED_MODULE_1__["Provider"], {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_redux__WEBPACK_IMPORTED_MODULE_1__["Provider"], {
     store: store
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(redux_persist_integration_react__WEBPACK_IMPORTED_MODULE_2__["PersistGate"], {
     persistor: persistor
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_MapEditor__WEBPACK_IMPORTED_MODULE_4__["default"], {
+  }, loading && 'loading...', !loading && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_MapEditor__WEBPACK_IMPORTED_MODULE_3__["default"], {
     tileset: tileset
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Inspector__WEBPACK_IMPORTED_MODULE_9__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Tileset__WEBPACK_IMPORTED_MODULE_5__["default"], {
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Inspector__WEBPACK_IMPORTED_MODULE_8__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Tileset__WEBPACK_IMPORTED_MODULE_4__["default"], {
     tileset: tileset
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Tools__WEBPACK_IMPORTED_MODULE_7__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Preview__WEBPACK_IMPORTED_MODULE_8__["default"], null))));
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Tools__WEBPACK_IMPORTED_MODULE_6__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Preview__WEBPACK_IMPORTED_MODULE_7__["default"], null))));
 }
 
 /***/ })
 
 },[["tjUo","runtime","vendor"]]]);
-//# sourceMappingURL=main.e9338d4581aa25ebc2e7.js.map
+//# sourceMappingURL=main.b3212873ebfa93ea850f.js.map

@@ -1,7 +1,6 @@
-import React from 'react'
+import React, { Fragment, useState } from 'react'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
-import styles from './App.css'
 import MapEditor from './MapEditor'
 import Tileset from './Tileset'
 import createStore from './state/store'
@@ -13,8 +12,13 @@ const [ store, persistor ] = createStore()
 
 export default function App () {
 
-  const imagePath = './tileset.png'
+  const [ loading, setLoading ] = useState(true)
+
+  const imagePath = './assets/tileset.png'
   const image = new Image()
+  image.addEventListener('load', () => {
+    setLoading(false)
+  })
   image.src = imagePath
 
   const tileset = {
@@ -26,16 +30,19 @@ export default function App () {
   }
 
   return (
-    <div className={styles.container}>
-      <Provider store={store}>
-        <PersistGate persistor={persistor}>
-          <MapEditor tileset={tileset} />
-          <Inspector />
-          <Tileset tileset={tileset} />
-          <Tools />
-          <Preview />
-        </PersistGate>
-      </Provider>
-    </div>
+    <Provider store={store}>
+      <PersistGate persistor={persistor}>
+        {loading && 'loading...'}
+        {!loading && (
+          <Fragment>
+            <MapEditor tileset={tileset} />
+            <Inspector />
+            <Tileset tileset={tileset} />
+            <Tools />
+            <Preview />
+          </Fragment>
+        )}
+      </PersistGate>
+    </Provider>
   )
 }
