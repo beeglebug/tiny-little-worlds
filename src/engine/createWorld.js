@@ -16,9 +16,9 @@ export default function createWorld (map) {
       const dz = y * TILE_SIZE
       let mesh
       if (tile === 2) {
-        mesh = createWall()
+        mesh = wallMesh.clone()
       } else {
-        mesh = createFloor()
+        mesh = floorMesh.clone()
       }
       mesh.position.set(dx, 0, dz)
       world.add(mesh)
@@ -29,19 +29,12 @@ export default function createWorld (map) {
 }
 
 
+const wallMaterial = new MeshLambertMaterial({ color: new Color('#5f606e') })
+const wallGeometry = new BoxGeometry(TILE_SIZE, WALL_HEIGHT, TILE_SIZE)
+wallGeometry.translate(0, WALL_HEIGHT / 2, 0)
+const wallMesh = new Mesh(wallGeometry, wallMaterial)
 
 const floorMaterial = new MeshLambertMaterial({ color: new Color('#6a6e7c') })
-const wallMaterial = new MeshLambertMaterial({ color: new Color('#5f606e') })
-
-function createWall () {
-  const geometry = new BoxGeometry(TILE_SIZE, WALL_HEIGHT, TILE_SIZE)
-  const mesh = new Mesh(geometry, wallMaterial)
-  mesh.position.y = WALL_HEIGHT / 2
-  return mesh
-}
-
-function createFloor () {
-  const geometry = new PlaneGeometry(TILE_SIZE, TILE_SIZE)
-  geometry.rotateX(-Math.PI / 2)
-  return new Mesh(geometry, floorMaterial)
-}
+const floorGeometry = new PlaneGeometry(TILE_SIZE, TILE_SIZE)
+floorGeometry.rotateX(-Math.PI / 2)
+const floorMesh = new Mesh(floorGeometry, floorMaterial)

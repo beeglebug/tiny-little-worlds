@@ -5,6 +5,7 @@ import Input from './input/Input'
 import { HEIGHT, WIDTH } from './consts'
 import loop from './loop'
 import createWorld from './createWorld'
+import findPlayerPosition from './findPlayerPosition'
 
 export default class Game {
 
@@ -25,7 +26,9 @@ export default class Game {
 
     this.world = createWorld(map)
 
-    this.controller.position.set(0,0,0)
+    const [x, y, z] = findPlayerPosition(map)
+
+    this.controller.position.set(x, y, z)
     this.controller.resetRotation(Math.PI, 0)
     this.controller.handlePhysics() // force update the 2d collider
 
