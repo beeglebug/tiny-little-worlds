@@ -24,6 +24,8 @@ export default class Game {
   start (map) {
     Input.bind(this.canvas)
 
+    this.clear()
+
     this.world = createWorld(map)
 
     const [x, y, z] = findPlayerPosition(map)
@@ -40,11 +42,16 @@ export default class Game {
     this.cancelLoop = loop(this.tick)
   }
 
+  clear () {
+    if (!this.world) return
+    // loop backwards to a void mid loop splice reindexing
+    for (let i = this.world.children.length - 1; i >= 0; i--) {
+      this.world.remove(this.world.children[i])
+    }
+  }
+
   stop () {
     Input.unbind(this.canvas)
-    this.world.children.forEach(child => {
-      this.world.remove(child)
-    })
     this.canvas.blur()
     this.cancelLoop()
     this.onStop()

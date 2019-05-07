@@ -1,6 +1,5 @@
 import {
   BoxGeometry,
-  Color, GeometryUtils,
   Mesh,
   MeshBasicMaterial,
   NearestFilter,
@@ -75,6 +74,6 @@ const ceilingGeometry = new PlaneGeometry(TILE_SIZE, TILE_SIZE)
 ceilingGeometry.rotateX(Math.PI / 2)
 ceilingGeometry.translate(0, WALL_HEIGHT, 0)
 
-GeometryUtils.merge(floorGeometry, ceilingGeometry)
+floorGeometry.merge(ceilingGeometry)
 
 const floorMesh = new Mesh(floorGeometry, floorMaterial)
