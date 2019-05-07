@@ -7,6 +7,8 @@ import createStore from './state/store'
 import Tools from './Tools'
 import Preview from './Preview'
 import Inspector from './Inspector'
+import loadImage from './util/loadImage'
+import SaveLoad from './SaveLoad'
 
 const [ store, persistor ] = createStore()
 
@@ -14,19 +16,16 @@ export default function App () {
 
   const [ loading, setLoading ] = useState(true)
 
-  const imagePath = './assets/tileset.png'
-  const image = new Image()
-  image.addEventListener('load', () => {
-    setLoading(false)
-  })
-  image.src = imagePath
+  loadImage('./assets/tileset.png')
+    .then(image => {
+      tileset.image = image
+      setLoading(false)
+    })
 
   const tileset = {
     width: 48,
     height: 16,
     tileSize: 16,
-    imagePath,
-    image,
   }
 
   return (
@@ -40,6 +39,7 @@ export default function App () {
             <Tileset tileset={tileset} />
             <Tools />
             <Preview />
+            <SaveLoad />
           </Fragment>
         )}
       </PersistGate>

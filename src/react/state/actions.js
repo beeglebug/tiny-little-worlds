@@ -2,6 +2,7 @@ export const SELECT_TILE = 'SELECT_TILE'
 export const SELECT_TOOL = 'SELECT_TOOL'
 export const SET_MAP_TILE = 'SET_MAP_TILE'
 export const CLEAR_MAP = 'CLEAR_MAP'
+export const LOAD_MAP = 'LOAD_MAP'
 
 export const selectTileAction = (tile) => ({
   type: SELECT_TILE,
@@ -20,4 +21,9 @@ export const setMapTileAction = (x, y, tile) => ({
 
 export const clearMapAction = () => ({
   type: CLEAR_MAP,
+})
+
+export const loadMapAction = (map) => ({
+  type: LOAD_MAP,
+  payload: { map }
 })
