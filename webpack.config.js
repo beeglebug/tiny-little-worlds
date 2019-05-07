@@ -10,7 +10,9 @@ const nodeEnv = process.env.NODE_ENV
 
 module.exports = {
   mode: nodeEnv || 'development',
-  entry: path.resolve(__dirname, './src/index.js'),
+  entry: {
+    editor: path.resolve(__dirname, './src/index.js')
+  },
   output: {
     path: outputDirectory,
     filename: '[name].[contenthash].js',
@@ -90,22 +92,9 @@ module.exports = {
     ]),
     new webpack.HashedModuleIdsPlugin(),
   ],
-  optimization: {
-    runtimeChunk: 'single',
-    splitChunks: {
-      cacheGroups: {
-        vendor: {
-          test: /[\\/]node_modules[\\/]/,
-          name: 'vendor',
-          chunks: 'all',
-        },
-      },
-    },
-  },
   performance: { hints: false }, // we know its big, ok?
   devtool: 'cheap-module-source-map',
   devServer: {
     contentBase: outputDirectory,
   },
 }
-

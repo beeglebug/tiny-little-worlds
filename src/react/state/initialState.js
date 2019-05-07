@@ -1,4 +1,5 @@
 import { TOOLS } from '../consts'
+import arrayOf from '../util/arrayOf'
 
 export default {
   selectedTile: 1,
@@ -7,6 +8,6 @@ export default {
     width: 16,
     height: 16,
     tileSize: 16,
-    data: Array.from({ length: 16 * 16 }).map(() => 0),
+    data: arrayOf(16 * 16, 0),
   }
 }
