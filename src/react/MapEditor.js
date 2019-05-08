@@ -8,6 +8,8 @@ import { setMapTileAction } from './state/actions'
 import { TOOLS } from './consts'
 import Window from './Window'
 
+const SIZE = 16
+
 export default function MapEditor ({ tileset, backgroundColor = '#7a7a7a', gridColor = '#959595' }) {
 
   const canvasRef = useRef(null)
@@ -31,9 +33,8 @@ export default function MapEditor ({ tileset, backgroundColor = '#7a7a7a', gridC
   }
 
   function handleMouseMove () {
-    const size = map.tileSize
-    const x = Math.floor(mousePosition.x / size)
-    const y = Math.floor(mousePosition.y / size)
+    const x = Math.floor(mousePosition.x / SIZE)
+    const y = Math.floor(mousePosition.y / SIZE)
     const index = (y * map.width) + x
     if (mouseDown && currentTileIndex !== index) {
       paintCurrentMapTile()
@@ -48,24 +49,22 @@ export default function MapEditor ({ tileset, backgroundColor = '#7a7a7a', gridC
     } else if (selectedTool === TOOLS.ERASE) {
       tile = 0
     }
-    const size = map.tileSize
-    const x = Math.floor(mousePosition.x / size)
-    const y = Math.floor(mousePosition.y / size)
+    const x = Math.floor(mousePosition.x / SIZE)
+    const y = Math.floor(mousePosition.y / SIZE)
     dispatch(setMapTileAction(x, y, tile))
   }
 
   function draw () {
     if (!ctx) return
-    const size = map.tileSize
-    const width = map.width * size
-    const height = map.height * size
+    const width = map.width * SIZE
+    const height = map.height * SIZE
     ctx.fillStyle = backgroundColor
     ctx.fillRect(0, 0, width, height)
     drawTiles(ctx, map, tileset)
-    drawGrid(ctx, width, height, size, gridColor)
+    drawGrid(ctx, width, height, gridColor)
     if (mousePosition) {
-      const x = Math.floor(mousePosition.x / size) * size
-      const y = Math.floor(mousePosition.y / size) * size
+      const x = Math.floor(mousePosition.x / SIZE) * SIZE
+      const y = Math.floor(mousePosition.y / SIZE) * SIZE
       drawCursor(ctx, x, y, selectedTile, selectedTool, map, tileset)
     }
   }
@@ -84,17 +83,17 @@ export default function MapEditor ({ tileset, backgroundColor = '#7a7a7a', gridC
   )
 }
 
-function drawGrid (ctx, width, height, size, gridColor) {
+function drawGrid (ctx, width, height, gridColor) {
 
   ctx.translate(0.5, 0.5)
   ctx.strokeStyle = gridColor
 
-  for (let y = size; y < height; y += size) {
+  for (let y = SIZE; y < height; y += SIZE) {
     ctx.moveTo(0, y)
     ctx.lineTo(width, y)
   }
 
-  for (let x = size; x < width; x += size) {
+  for (let x = SIZE; x < width; x += SIZE) {
     ctx.moveTo(x, 0)
     ctx.lineTo(x, height)
   }
@@ -108,11 +107,11 @@ function drawCursor (ctx, dx, dy, selectedTile, selectedTool, map, tileset) {
   const [sx, sy] = getPositionFromTileIndex(selectedTile, tileset)
 
   if (selectedTool === TOOLS.PAINT) {
-    ctx.drawImage(tileset.image, sx, sy, map.tileSize, map.tileSize, dx, dy, tileset.tileSize, tileset.tileSize)
+    ctx.drawImage(tileset.image, sx, sy, SIZE, SIZE, dx, dy, tileset.tileSize, tileset.tileSize)
   }
 
   ctx.fillStyle = 'rgba(255, 255, 255, 0.3)'
-  ctx.fillRect(dx, dy, map.tileSize, map.tileSize)
+  ctx.fillRect(dx, dy, SIZE, SIZE)
 }
 
 function drawTiles (ctx, map, tileset) {
@@ -121,8 +120,8 @@ function drawTiles (ctx, map, tileset) {
       const ix = (y * map.width) + x
       const tile = map.data[ix]
       if (tile === 0) continue
-      const dx = x * map.tileSize
-      const dy = y * map.tileSize
+      const dx = x * SIZE
+      const dy = y * SIZE
       const [sx, sy] = getPositionFromTileIndex(tile, tileset)
       ctx.drawImage(
         tileset.image,
@@ -132,8 +131,8 @@ function drawTiles (ctx, map, tileset) {
         tileset.tileSize,
         dx,
         dy,
-        map.tileSize,
-        map.tileSize
+        SIZE,
+        SIZE
       )
     }
   }
