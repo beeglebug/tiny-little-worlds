@@ -1,10 +1,6 @@
 html, body {
     height: 100%;
     margin: 0;
-    font-size: 16pt;
-}
-
-@font-face {
-    font-family: m5x7;
-    src: url('./assets/fonts/m5x7.ttf');
+    font-family: sans-serif;
+    font-size: 12pt;
 }
