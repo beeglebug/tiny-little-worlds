@@ -54,7 +54,6 @@ export default function SaveLoad () {
 }
 
 function validateMap (map) {
-  console.log(map.width, map)
   if (!map.width) throw 'No width'
   if (!map.height) throw 'No height'
   if (map.data.length !== map.width * map.height) throw 'data does not match dimensions'
