@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux'
 import { CLEAR_MAP, LOAD_MAP, SELECT_TILE, SELECT_TOOL, SET_MAP_TILE } from './actions'
 import initialState from './initialState'
+import arrayOf from '../util/arrayOf'
 
 const selectedTile = (state = initialState.selectedTile, action) => {
   switch (action.type) {
@@ -19,7 +20,10 @@ const selectedTool = (state = initialState.selectedTool, action) => {
 const map = (state = initialState.map, action) => {
   switch (action.type) {
     case SET_MAP_TILE: return setMapTile(state, action.payload)
-    case CLEAR_MAP: return { ...initialState.map }
+    case CLEAR_MAP: return {
+      ...state,
+      data: arrayOf(state.width * state.height, 0)
+    }
     case LOAD_MAP: return action.payload.map
     default: return state
   }

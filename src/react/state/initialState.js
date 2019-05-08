@@ -7,7 +7,6 @@ export default {
   map: {
     width: 16,
     height: 16,
-    tileSize: 16,
     data: arrayOf(16 * 16, 0),
   }
 }

@@ -12,7 +12,6 @@ import { TILE_SIZE, WALL_HEIGHT } from './consts'
 import Rect from './physics/geometry/Rect'
 import Physics from './Physics'
 
-
 export default function createWorld (map) {
 
   const world = new Object3D()
