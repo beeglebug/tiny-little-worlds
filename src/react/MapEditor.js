@@ -10,7 +10,7 @@ import Window from './Window'
 
 const SIZE = 16
 
-export default function MapEditor ({ tileset, backgroundColor = '#7a7a7a', gridColor = '#959595' }) {
+export default function MapEditor ({ tileset, backgroundColor = '#7a7a7a', gridColor = '#454545' }) {
 
   const canvasRef = useRef(null)
   const dispatch = useDispatch()
@@ -19,10 +19,11 @@ export default function MapEditor ({ tileset, backgroundColor = '#7a7a7a', gridC
   const selectedTool = useSelector(selectedToolSelector)
   const [ currentTileIndex, setCurrentTileIndex ] = useState(null)
   const [ctx, mousePosition, mouseDown] = useCanvasWithMouse(canvasRef)
+  const [ grid, setGrid ] = useState(true)
 
   useEffect(() => {
     draw()
-  }, [ctx, map, mousePosition])
+  }, [ctx, map, mousePosition, grid])
 
   function handleMouseDown () {
     if (selectedTool === TOOLS.INSPECT) {
@@ -61,7 +62,9 @@ export default function MapEditor ({ tileset, backgroundColor = '#7a7a7a', gridC
     ctx.fillStyle = backgroundColor
     ctx.fillRect(0, 0, width, height)
     drawTiles(ctx, map, tileset)
-    drawGrid(ctx, width, height, gridColor)
+    if (grid) {
+      drawGrid(ctx, width, height, gridColor)
+    }
     if (mousePosition) {
       const x = Math.floor(mousePosition.x / SIZE) * SIZE
       const y = Math.floor(mousePosition.y / SIZE) * SIZE
@@ -79,6 +82,15 @@ export default function MapEditor ({ tileset, backgroundColor = '#7a7a7a', gridC
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
       />
+      <label htmlFor={'show-grid'}>
+        <input
+          id={'show-grid'}
+          type={'checkbox'}
+          checked={grid}
+          onChange={() => setGrid(!grid)}
+        />
+        show grid
+      </label>
     </Window>
   )
 }
