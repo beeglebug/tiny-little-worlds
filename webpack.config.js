@@ -83,7 +83,7 @@ module.exports = {
     new CleanWebpackPlugin(['dist']),
     new HtmlWebpackPlugin({
       title: 'Editor',
-      filename: 'editor.html',
+      filename: 'index.html',
       chunks: ['editor'],
     }),
     new HtmlWebpackPlugin({
