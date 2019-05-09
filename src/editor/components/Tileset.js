@@ -1,11 +1,11 @@
 import React, { useRef, useEffect } from 'react'
 import styles from './Tileset.css'
-import useCanvasWithMouse from './hooks/useCanvasWithMouse'
+import useCanvasWithMouse from '../hooks/useCanvasWithMouse'
 import { useDispatch, useSelector } from 'react-redux'
-import { selectTileAction, selectToolAction } from './state/actions'
-import { selectedTileSelector, selectedToolSelector } from './state/selectors'
-import { getPositionFromTileIndex, getTileIndexFromPosition } from './util/tileset'
-import { TOOLS } from './consts'
+import { selectTileAction, selectToolAction } from '../state/actions'
+import { selectedTileSelector, selectedToolSelector } from '../state/selectors'
+import { getPositionFromTileIndex, getTileIndexFromPosition } from '../util/tileset'
+import { TOOLS } from '../consts'
 import Window from './Window'
 
 export default function Tileset ({ tileset }) {

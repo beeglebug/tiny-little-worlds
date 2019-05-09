@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styles from './Tools.css'
-import { loadMapAction } from './state/actions'
-import { mapSelector } from './state/selectors'
+import { loadMapAction } from '../state/actions'
+import { mapSelector } from '../state/selectors'
 import Window from './Window'
 
 export default function SaveLoad () {

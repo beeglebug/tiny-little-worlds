@@ -11,7 +11,7 @@ const nodeEnv = process.env.NODE_ENV
 module.exports = {
   mode: nodeEnv || 'development',
   entry: {
-    editor: path.resolve(__dirname, './src/index.js'),
+    editor: path.resolve(__dirname, './src/editor/index.js'),
     game: path.resolve(__dirname, './src/engine/index.js')
   },
   output: {

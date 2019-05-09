@@ -1,9 +1,9 @@
 import React, { useRef, useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
-import { mapSelector } from './state/selectors'
-import Game from '../engine/Game'
-import styles from './Preview.css'
+import { mapSelector } from '../state/selectors'
+import Game from '../../engine/Game'
 import Window from './Window'
+import styles from './Preview.css'
 
 export default function Preview () {
 

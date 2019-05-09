@@ -2,9 +2,9 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import classnames from 'classnames'
 import styles from './Tools.css'
-import { TOOLS } from './consts'
-import { clearMapAction, selectToolAction } from './state/actions'
-import { selectedToolSelector } from './state/selectors'
+import { TOOLS } from '../consts'
+import { clearMapAction, selectToolAction } from '../state/actions'
+import { selectedToolSelector } from '../state/selectors'
 import Window from './Window'
 
 export default function Tools () {
