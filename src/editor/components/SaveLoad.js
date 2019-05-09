@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import styles from './Tools.css'
 import { loadMapAction } from '../state/actions'
 import { mapSelector } from '../state/selectors'
 import Window from './Window'
+import Button from './Button'
+import styles from './SaveLoad.css'
 
 export default function SaveLoad () {
 
@@ -32,23 +33,20 @@ export default function SaveLoad () {
   }
 
   return (
-    <Window title={'Save/Load'}>
-      <button
-        onClick={save}
-        className={styles.button}
-      >
-        save
-      </button>
-      <button
-        onClick={load}
-        className={styles.button}
-      >
-        load
-      </button>
+    <Window title={'save / load'}>
       <textarea
         onChange={handleChange}
+        className={styles.textarea}
         value={data}
       />
+      <div>
+        <Button onClick={save}>
+          save
+        </Button>
+        <Button onClick={load}>
+          load
+        </Button>
+      </div>
     </Window>
   )
 }

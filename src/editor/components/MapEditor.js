@@ -73,7 +73,7 @@ export default function MapEditor ({ tileset, backgroundColor = '#7a7a7a', gridC
   }
 
   return (
-    <Window title={'Editor'}>
+    <Window title={'edit level'}>
       <canvas
         ref={canvasRef}
         className={styles.canvas}

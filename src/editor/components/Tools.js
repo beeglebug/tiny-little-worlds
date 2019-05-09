@@ -1,11 +1,10 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import classnames from 'classnames'
-import styles from './Tools.css'
 import { TOOLS } from '../consts'
 import { clearMapAction, selectToolAction } from '../state/actions'
 import { selectedToolSelector } from '../state/selectors'
 import Window from './Window'
+import Button from './Button'
 
 export default function Tools () {
 
@@ -26,31 +25,22 @@ export default function Tools () {
   }
 
   return (
-    <Window title={'Tools'}>
-      <button
+    <Window title={'tools'}>
+      <Button
         onClick={() => selectTool(TOOLS.PAINT)}
-        className={classnames(styles.button, selectedTool === TOOLS.PAINT && styles.selected)}
+        selected={selectedTool === TOOLS.PAINT}
       >
         paint
-      </button>
-      <button
+      </Button>
+      <Button
         onClick={() => selectTool(TOOLS.ERASE)}
-        className={classnames(styles.button, selectedTool === TOOLS.ERASE && styles.selected)}
+        selected={selectedTool === TOOLS.ERASE}
       >
         erase
-      </button>
-      <button
-        onClick={clearMap}
-        className={styles.button}
-      >
+      </Button>
+      <Button onClick={clearMap}>
         clear
-      </button>
-      {/*<button*/}
-      {/*  onClick={() => selectTool(TOOLS.INSPECT)}*/}
-      {/*  className={classnames(styles.button, selectedTool === TOOLS.INSPECT && styles.selected)}*/}
-      {/*>*/}
-      {/*  inspect*/}
-      {/*</button>*/}
+      </Button>
     </Window>
   )
 }

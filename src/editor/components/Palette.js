@@ -1,14 +1,14 @@
 import React, { useRef, useEffect } from 'react'
-import styles from './Tileset.css'
-import useCanvasWithMouse from '../hooks/useCanvasWithMouse'
 import { useDispatch, useSelector } from 'react-redux'
+import useCanvasWithMouse from '../hooks/useCanvasWithMouse'
 import { selectTileAction, selectToolAction } from '../state/actions'
 import { selectedTileSelector, selectedToolSelector } from '../state/selectors'
 import { getPositionFromTileIndex, getTileIndexFromPosition } from '../util/tileset'
 import { TOOLS } from '../consts'
 import Window from './Window'
+import styles from './Palette.css'
 
-export default function Tileset ({ tileset }) {
+export default function Palette ({ tileset }) {
 
   const canvasRef = useRef(null)
   const [ctx, mousePosition] = useCanvasWithMouse(canvasRef)
@@ -48,7 +48,7 @@ export default function Tileset ({ tileset }) {
   }
 
   return (
-    <Window title={'tileset'}>
+    <Window title={'palette'}>
       <canvas
         ref={canvasRef}
         className={styles.canvas}

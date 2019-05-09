@@ -1,15 +1,15 @@
 .container {
-    background-color: #aaaaaa;
+    background-color: #f3f8ff;
     margin: 10px;
+    display: inline-block;
 }
 
 .header {
-    background-color: #888888;
-    color: #FFF;
-    text-transform: uppercase;
-    padding: 5px;
+    background-color: #deecff;
+    color: #69779b;
+    padding: 10px;
 }
 
 .body {
-    padding: 5px;
+    padding: 10px;
 }

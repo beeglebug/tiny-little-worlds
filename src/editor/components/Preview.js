@@ -4,6 +4,7 @@ import { mapSelector } from '../state/selectors'
 import Game from '../../engine/Game'
 import Window from './Window'
 import styles from './Preview.css'
+import Button from './Button'
 
 export default function Preview () {
 
@@ -19,14 +20,15 @@ export default function Preview () {
 
   function handlePlay () {
     setRunning(true)
-    game.start(map)
+    game.load(map)
+    game.start()
     game.onStop = () => {
       setRunning(false)
     }
   }
 
   return (
-    <Window title={'Preview'}>
+    <Window title={'preview'}>
       <canvas
         ref={canvasRef}
         tabIndex={1}
@@ -34,7 +36,7 @@ export default function Preview () {
         width={320}
         height={180}
       />
-      <button onClick={handlePlay}>{running ? 'pause' : 'play'}</button>
+      <Button onClick={handlePlay}>{running ? 'pause' : 'play'}</Button>
     </Window>
   )
 }

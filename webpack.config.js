@@ -81,7 +81,7 @@ module.exports = (env, argv) => {
     plugins: [
       new CleanWebpackPlugin(['dist']),
       new HtmlWebpackPlugin({
-        title: 'Editor',
+        title: 'Tiny Little World - Editor',
         filename: 'index.html',
         chunks: ['editor'],
       }),

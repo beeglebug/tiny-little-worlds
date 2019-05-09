@@ -1,14 +1,14 @@
-import React, { Fragment, useState } from 'react'
+import React, { useState } from 'react'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
-import MapEditor from './MapEditor'
-import Tileset from './Tileset'
 import createStore from '../state/store'
+import loadImage from '../util/loadImage'
+import MapEditor from './MapEditor'
+import Palette from './Palette'
 import Tools from './Tools'
 import Preview from './Preview'
-import Inspector from './Inspector'
-import loadImage from '../util/loadImage'
 import SaveLoad from './SaveLoad'
+import styles from './App.css'
 
 const [ store, persistor ] = createStore()
 
@@ -33,14 +33,13 @@ export default function App () {
       <PersistGate persistor={persistor}>
         {loading && 'loading...'}
         {!loading && (
-          <Fragment>
+          <div className={styles.container}>
             <MapEditor tileset={tileset} />
-            {/*<Inspector />*/}
-            <Tileset tileset={tileset} />
+            <Palette tileset={tileset} />
             <Tools />
             <Preview />
             <SaveLoad />
-          </Fragment>
+          </div>
         )}
       </PersistGate>
     </Provider>

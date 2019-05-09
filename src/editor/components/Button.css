@@ -1,0 +1,11 @@
+.button {
+    -webkit-appearance: none;
+    border-radius: 0;
+    padding: 5px;
+    background-color: #deecff;
+}
+
+.selected {
+    background-color: #69779b;
+    color: #deecff;
+}
