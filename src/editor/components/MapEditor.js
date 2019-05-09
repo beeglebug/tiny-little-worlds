@@ -1,16 +1,16 @@
 import React, { useRef, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import styles from './MapEditor.css'
 import useCanvasWithMouse from '../hooks/useCanvasWithMouse'
 import { mapSelector, selectedTileSelector, selectedToolSelector } from '../state/selectors'
 import { getPositionFromTileIndex } from '../util/tileset'
 import { setMapTileAction } from '../state/actions'
 import { TOOLS } from '../consts'
 import Window from './Window'
+import styles from './MapEditor.css'
 
 const SIZE = 16
 
-export default function MapEditor ({ tileset, backgroundColor = '#7a7a7a', gridColor = '#454545' }) {
+export default function MapEditor ({ tileset, backgroundColor = '#deecff', gridColor = '#ffffff' }) {
 
   const canvasRef = useRef(null)
   const dispatch = useDispatch()
