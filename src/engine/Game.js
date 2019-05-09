@@ -21,9 +21,7 @@ export default class Game {
     this.setupPointerLock(canvas)
   }
 
-  start (map) {
-    Input.bind(this.canvas)
-
+  load (map) {
     this.clear()
 
     this.world = createWorld(map)
@@ -35,6 +33,10 @@ export default class Game {
     this.controller.handlePhysics() // force update the 2d collider
 
     this.scene.add(this.world)
+  }
+
+  start () {
+    Input.bind(this.canvas)
 
     this.canvas.focus()
     this.canvas.requestPointerLock()
@@ -77,8 +79,8 @@ export default class Game {
       }
     }
 
-    const handlePointerLockError = () => {
-      return console.warn('Pointer Lock Error')
+    const handlePointerLockError = (error) => {
+      return console.warn('Pointer Lock Error', error)
     }
 
     document.addEventListener('pointerlockchange', handlePointerLockChange)

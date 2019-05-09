@@ -11,7 +11,8 @@ const nodeEnv = process.env.NODE_ENV
 module.exports = {
   mode: nodeEnv || 'development',
   entry: {
-    editor: path.resolve(__dirname, './src/index.js')
+    editor: path.resolve(__dirname, './src/index.js'),
+    game: path.resolve(__dirname, './src/engine/index.js')
   },
   output: {
     path: outputDirectory,
@@ -81,9 +82,15 @@ module.exports = {
   plugins: [
     new CleanWebpackPlugin(['dist']),
     new HtmlWebpackPlugin({
-      title: 'Tiny First Person',
-      meta: { viewport: 'width=device-width, initial-scale=1, shrink-to-fit=no' },
-      filename: 'index.html',
+      title: 'Editor',
+      filename: 'editor.html',
+      chunks: ['editor'],
+    }),
+    new HtmlWebpackPlugin({
+      title: 'Game',
+      template: './src/assets/html/game.html',
+      filename: 'game.html',
+      chunks: ['game'],
     }),
     new CopyPlugin([
       { from: './src/assets/tileset.png', to: 'assets/tileset.png' },
