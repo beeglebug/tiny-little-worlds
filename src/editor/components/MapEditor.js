@@ -77,8 +77,8 @@ export default function MapEditor ({ tileset, backgroundColor = '#7a7a7a', gridC
       <canvas
         ref={canvasRef}
         className={styles.canvas}
-        width={map.width * map.tileSize}
-        height={map.height * map.tileSize}
+        width={map.width * SIZE}
+        height={map.height * SIZE}
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
       />
