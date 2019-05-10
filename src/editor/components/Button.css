@@ -1,9 +1,11 @@
 .button {
     -webkit-appearance: none;
-    border-radius: 0;
     padding: 5px;
     background-color: #deecff;
     margin-right: 5px;
+    font-size: 10pt;
+    color: #69779b;
+    border: 1px solid #b7cce2;
 }
 
 .selected {
