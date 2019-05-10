@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { Provider } from 'react-redux'
-import { PersistGate } from 'redux-persist/integration/react'
 import createStore from '../state/store'
 import loadImage from '../util/loadImage'
 import MapEditor from './MapEditor'
@@ -10,7 +9,7 @@ import Preview from './Preview'
 import SaveLoad from './SaveLoad'
 import styles from './App.css'
 
-const [ store, persistor ] = createStore()
+const store = createStore()
 
 export default function App () {
 
@@ -30,18 +29,16 @@ export default function App () {
 
   return (
     <Provider store={store}>
-      <PersistGate persistor={persistor}>
-        {loading && 'loading...'}
-        {!loading && (
-          <div className={styles.container}>
-            <MapEditor tileset={tileset} />
-            <Palette tileset={tileset} />
-            <Tools />
-            <Preview />
-            <SaveLoad />
-          </div>
-        )}
-      </PersistGate>
+      {loading && 'loading...'}
+      {!loading && (
+        <div className={styles.container}>
+          <MapEditor tileset={tileset} />
+          <Palette tileset={tileset} />
+          <Tools />
+          <Preview />
+          <SaveLoad />
+        </div>
+      )}
     </Provider>
   )
 }

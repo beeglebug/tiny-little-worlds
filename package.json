@@ -51,7 +51,6 @@
     "lodash": "^4.17.11",
     "mersenne-twister": "^1.1.0",
     "react-redux": "^7.1.0-alpha.4",
-    "redux": "^4.0.1",
-    "redux-persist": "^5.10.0"
+    "redux": "^4.0.1"
   }
 }

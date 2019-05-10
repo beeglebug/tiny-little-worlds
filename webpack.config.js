@@ -11,7 +11,6 @@ module.exports = (env, argv) => {
   return {
     entry: {
       editor: path.resolve(__dirname, './src/editor/index.js'),
-      game: path.resolve(__dirname, './src/engine/index.js'),
     },
     output: {
       path: outputDirectory,
@@ -85,12 +84,6 @@ module.exports = (env, argv) => {
         filename: 'index.html',
         chunks: ['editor'],
       }),
-      new HtmlWebpackPlugin({
-        title: 'Game',
-        template: './src/assets/html/game.html',
-        filename: 'game.html',
-        chunks: ['game'],
-      }),
       new CopyPlugin([
         { from: './src/assets/tileset.png', to: 'assets/tileset.png' },
         { from: './src/assets/wall.png', to: 'assets/wall.png' },
@@ -102,5 +95,10 @@ module.exports = (env, argv) => {
       contentBase: outputDirectory,
     },
     performance: { hints: false }, // we know its big, ok?
+    optimization: {
+      splitChunks: {
+        chunks: 'all',
+      },
+    },
   }
 }
