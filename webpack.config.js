@@ -81,7 +81,6 @@ module.exports = (env, argv) => {
       new CleanWebpackPlugin(['dist']),
       new HtmlWebpackPlugin({
         template: 'src/assets/index.html',
-        chunks: ['editor'],
       }),
       new CopyPlugin([
         { from: './src/assets/tileset.png', to: 'assets/tileset.png' },
