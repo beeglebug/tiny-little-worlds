@@ -80,8 +80,7 @@ module.exports = (env, argv) => {
     plugins: [
       new CleanWebpackPlugin(['dist']),
       new HtmlWebpackPlugin({
-        title: 'Tiny Little World - Editor',
-        filename: 'index.html',
+        template: 'src/assets/index.html',
         chunks: ['editor'],
       }),
       new CopyPlugin([
