@@ -6,7 +6,7 @@ export default function Panel ({ title, children }) {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        {title}
+        <h2>{title}</h2>
       </div>
       <div className={styles.body}>
         <Suspense fallback={<Loader />}>

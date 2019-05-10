@@ -6,8 +6,9 @@ import { HEIGHT, WIDTH } from './consts'
 import loop from './loop'
 import createWorld from './createWorld'
 import findPlayerPosition from './findPlayerPosition'
+import loadAssets from './loadAssets'
 
-export default class Game {
+export default class Engine {
 
   constructor (canvas) {
 
@@ -21,18 +22,22 @@ export default class Game {
     this.setupPointerLock(canvas)
   }
 
-  load (map) {
+  load (game) {
+
     this.clear()
 
-    this.world = createWorld(map)
+    return loadAssets(game)
+      .then((assets) => {
+        this.world = createWorld(game, assets)
 
-    const [x, y, z] = findPlayerPosition(map)
+        const [x, y, z] = findPlayerPosition(game)
 
-    this.controller.position.set(x, y, z)
-    this.controller.resetRotation(Math.PI, 0)
-    this.controller.handlePhysics() // force update the 2d collider
+        this.controller.position.set(x, y, z)
+        this.controller.resetRotation(Math.PI, 0)
+        this.controller.handlePhysics() // force update the 2d collider
 
-    this.scene.add(this.world)
+        this.scene.add(this.world)
+      })
   }
 
   start () {

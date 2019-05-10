@@ -1,0 +1,12 @@
+.name {
+    margin-bottom: 10px;
+}
+
+.swatch {
+    margin: 0 2px 0 0;
+    border: 1px solid #ffffff;
+}
+
+.selected {
+    border: 1px solid #69779b;
+}

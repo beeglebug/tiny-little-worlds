@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux'
-import { CLEAR_MAP, LOAD_MAP, SELECT_TILE, SELECT_TOOL, SET_MAP_TILE } from './actions'
+import { CLEAR_MAP, LOAD_MAP, SELECT_TILE, SELECT_TOOL, SET_GAME, SET_MAP_TILE } from './actions'
 import initialState from './initialState'
 import arrayOf from '../util/arrayOf'
 
@@ -39,8 +39,16 @@ function setMapTile (map, { x, y, tile }) {
   }
 }
 
+function game (state = null, action) {
+  switch (action.type) {
+    case SET_GAME: return action.payload.game
+    default: return state
+  }
+}
+
 export default combineReducers({
+  game,
   selectedTile,
   selectedTool,
-  map
+  map,
 })

@@ -3,6 +3,7 @@ export const SELECT_TOOL = 'SELECT_TOOL'
 export const SET_MAP_TILE = 'SET_MAP_TILE'
 export const CLEAR_MAP = 'CLEAR_MAP'
 export const LOAD_MAP = 'LOAD_MAP'
+export const SET_GAME = 'SET_GAME'
 
 export const selectTileAction = (tile) => ({
   type: SELECT_TILE,
@@ -26,4 +27,12 @@ export const clearMapAction = () => ({
 export const loadMapAction = (map) => ({
   type: LOAD_MAP,
   payload: { map }
+})
+
+/**
+ * Dump an entire game into state
+ */
+export const setGameAction = game => ({
+  type: SET_GAME,
+  payload: { game },
 })
