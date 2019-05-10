@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { TOOLS } from '../consts'
 import { clearMapAction, selectToolAction } from '../state/actions'
 import { selectedToolSelector } from '../state/selectors'
-import Window from './Window'
+import Panel from './Panel'
 import Button from './Button'
 
 export default function Tools () {
@@ -25,7 +25,7 @@ export default function Tools () {
   }
 
   return (
-    <Window title={'tools'}>
+    <Panel title={'tools'}>
       <Button
         onClick={() => selectTool(TOOLS.PAINT)}
         selected={selectedTool === TOOLS.PAINT}
@@ -41,6 +41,6 @@ export default function Tools () {
       <Button onClick={clearMap}>
         clear
       </Button>
-    </Window>
+    </Panel>
   )
 }

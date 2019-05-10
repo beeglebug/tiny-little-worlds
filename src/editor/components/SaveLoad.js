@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { loadMapAction } from '../state/actions'
 import { mapSelector } from '../state/selectors'
-import Window from './Window'
+import Panel from './Panel'
 import Button from './Button'
 import styles from './SaveLoad.css'
 
@@ -33,7 +33,7 @@ export default function SaveLoad () {
   }
 
   return (
-    <Window title={'save / load'}>
+    <Panel title={'save / load'}>
       <textarea
         onChange={handleChange}
         className={styles.textarea}
@@ -47,7 +47,7 @@ export default function SaveLoad () {
           load
         </Button>
       </div>
-    </Window>
+    </Panel>
   )
 }
 

@@ -5,9 +5,9 @@ import loadImage from '../util/loadImage'
 import MapEditor from './MapEditor'
 import Palette from './Palette'
 import Tools from './Tools'
-import Preview from './Preview'
 import SaveLoad from './SaveLoad'
 import styles from './App.css'
+import PreviewPanel from './PreviewPanel'
 
 const store = createStore()
 
@@ -35,7 +35,7 @@ export default function App () {
           <MapEditor tileset={tileset} />
           <Palette tileset={tileset} />
           <Tools />
-          <Preview />
+          <PreviewPanel />
           <SaveLoad />
         </div>
       )}

@@ -1,8 +1,7 @@
-import React, { useRef, useState, useEffect } from 'react'
+import React, { useRef, useState, useEffect, Fragment } from 'react'
 import { useSelector } from 'react-redux'
 import { mapSelector } from '../state/selectors'
 import Game from '../../engine/Game'
-import Window from './Window'
 import styles from './Preview.css'
 import Button from './Button'
 
@@ -28,7 +27,7 @@ export default function Preview () {
   }
 
   return (
-    <Window title={'preview'}>
+    <Fragment>
       <canvas
         ref={canvasRef}
         tabIndex={1}
@@ -37,6 +36,6 @@ export default function Preview () {
         height={180}
       />
       <Button onClick={handlePlay}>{running ? 'pause' : 'play'}</Button>
-    </Window>
+    </Fragment>
   )
 }

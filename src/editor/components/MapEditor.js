@@ -5,7 +5,7 @@ import { mapSelector, selectedTileSelector, selectedToolSelector } from '../stat
 import { getPositionFromTileIndex } from '../util/tileset'
 import { setMapTileAction } from '../state/actions'
 import { TOOLS } from '../consts'
-import Window from './Window'
+import Panel from './Panel'
 import styles from './MapEditor.css'
 
 const SIZE = 16
@@ -73,7 +73,7 @@ export default function MapEditor ({ tileset, backgroundColor = '#deecff', gridC
   }
 
   return (
-    <Window title={'edit level'}>
+    <Panel title={'edit level'}>
       <canvas
         ref={canvasRef}
         className={styles.canvas}
@@ -91,7 +91,7 @@ export default function MapEditor ({ tileset, backgroundColor = '#deecff', gridC
         />
         show grid
       </label>
-    </Window>
+    </Panel>
   )
 }
 

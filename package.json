@@ -41,6 +41,7 @@
     "webpack-dev-server": "^3.1.10"
   },
   "dependencies": {
+    "@babel/plugin-syntax-dynamic-import": "^7.2.0",
     "classnames": "^2.2.6",
     "copy-webpack-plugin": "^5.0.3",
     "delaunator": "^3.0.2",

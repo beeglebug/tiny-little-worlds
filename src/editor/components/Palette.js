@@ -5,7 +5,7 @@ import { selectTileAction, selectToolAction } from '../state/actions'
 import { selectedTileSelector, selectedToolSelector } from '../state/selectors'
 import { getPositionFromTileIndex, getTileIndexFromPosition } from '../util/tileset'
 import { TOOLS } from '../consts'
-import Window from './Window'
+import Panel from './Panel'
 import styles from './Palette.css'
 
 export default function Palette ({ tileset }) {
@@ -48,7 +48,7 @@ export default function Palette ({ tileset }) {
   }
 
   return (
-    <Window title={'palette'}>
+    <Panel title={'palette'}>
       <canvas
         ref={canvasRef}
         className={styles.canvas}
@@ -56,6 +56,6 @@ export default function Palette ({ tileset }) {
         height={tileset.height}
         onClick={handleClick}
       />
-    </Window>
+    </Panel>
   )
 }
