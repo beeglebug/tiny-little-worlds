@@ -3,10 +3,10 @@ import Panel from './Panel'
 
 const MapEditor = lazy(() => import('./MapEditor'))
 
-export default function MapEditorPanel () {
+export default function MapEditorPanel ({ tileset }) {
   return (
     <Panel title={'edit level'}>
-      <MapEditor />
+      <MapEditor tileset={tileset} />
     </Panel>
   )
 }

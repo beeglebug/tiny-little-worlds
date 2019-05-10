@@ -3,21 +3,19 @@ import { useState, useEffect } from 'react'
 export default function useCanvasWithMouse (canvasRef) {
 
   const [ ctx, setCtx ] = useState(null)
-  const [ rect, setRect ] = useState(null)
-  const [ mousePosition, setMousePosition ] = useState(null)
+  const [ mousePosition, setMousePosition ] = useState({ x: 0, y: 0 })
   const [ mouseDown, setMouseDown ] = useState(false)
 
   useEffect(() => {
     const canvas = canvasRef.current
     const ctx = canvas.getContext('2d')
     setCtx(ctx)
-    setRect(canvas.getBoundingClientRect())
   }, [canvasRef.current])
 
   useEffect(() => {
     const canvas = canvasRef.current
-
     function handleMouseMove (e) {
+      const rect = canvas.getBoundingClientRect()
       const mousePosition = {
         x: e.pageX - rect.x,
         y: e.pageY - rect.y,
@@ -49,7 +47,7 @@ export default function useCanvasWithMouse (canvasRef) {
       canvas.removeEventListener('mousedown', handleMouseDown)
       canvas.removeEventListener('mouseup', handleMouseUp)
     }
-  }, [canvasRef.current, rect])
+  }, [canvasRef.current])
 
   return [ctx, mousePosition, mouseDown]
 }
