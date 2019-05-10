@@ -83,9 +83,7 @@ module.exports = (env, argv) => {
         template: 'src/assets/index.html',
       }),
       new CopyPlugin([
-        { from: './src/assets/tileset.png', to: 'assets/tileset.png' },
-        { from: './src/assets/wall.png', to: 'assets/wall.png' },
-        { from: './src/assets/floor.png', to: 'assets/floor.png' },
+        { from: './src/assets', to: 'assets' },
       ]),
     ],
     devtool: DEV ? 'cheap-module-eval-source-map' : 'none',
