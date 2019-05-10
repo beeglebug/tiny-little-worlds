@@ -2,12 +2,12 @@ import React, { useState } from 'react'
 import { Provider } from 'react-redux'
 import createStore from '../state/store'
 import loadImage from '../util/loadImage'
-import MapEditor from './MapEditor'
 import Palette from './Palette'
 import Tools from './Tools'
 import SaveLoad from './SaveLoad'
 import styles from './App.css'
 import PreviewPanel from './PreviewPanel'
+import MapEditorPanel from './MapEditorPanel'
 
 const store = createStore()
 
@@ -32,7 +32,7 @@ export default function App () {
       {loading && 'loading...'}
       {!loading && (
         <div className={styles.container}>
-          <MapEditor tileset={tileset} />
+          <MapEditorPanel tileset={tileset} />
           <Palette tileset={tileset} />
           <Tools />
           <PreviewPanel />

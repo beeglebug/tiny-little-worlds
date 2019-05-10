@@ -1,11 +1,10 @@
-import React, { useRef, useEffect, useState } from 'react'
+import React, { useRef, useEffect, useState, Fragment } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import useCanvasWithMouse from '../hooks/useCanvasWithMouse'
 import { mapSelector, selectedTileSelector, selectedToolSelector } from '../state/selectors'
 import { getPositionFromTileIndex } from '../util/tileset'
 import { setMapTileAction } from '../state/actions'
 import { TOOLS } from '../consts'
-import Panel from './Panel'
 import styles from './MapEditor.css'
 
 const SIZE = 16
@@ -73,7 +72,7 @@ export default function MapEditor ({ tileset, backgroundColor = '#deecff', gridC
   }
 
   return (
-    <Panel title={'edit level'}>
+    <Fragment>
       <canvas
         ref={canvasRef}
         className={styles.canvas}
@@ -91,7 +90,7 @@ export default function MapEditor ({ tileset, backgroundColor = '#deecff', gridC
         />
         show grid
       </label>
-    </Panel>
+    </Fragment>
   )
 }
 
