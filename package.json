@@ -4,8 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "build": "webpack --mode=development",
-    "deploy": "webpack --mode=production",
+    "build": "webpack --mode=production",
     "lint": "eslint src",
     "start": "webpack-dev-server",
     "test": "jest"
