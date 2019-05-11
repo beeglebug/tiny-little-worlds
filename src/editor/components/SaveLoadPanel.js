@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { setGameAction } from '../state/actions'
 import { gameSelector } from '../state/selectors'
-import PanelPanel from './Panel'
+import Panel from './Panel'
 import Button from './Button'
 import styles from './SaveLoadPanel.css'
 
@@ -35,7 +35,7 @@ export default function SaveLoadPanel () {
   }
 
   return (
-    <PanelPanel title={'save / load'}>
+    <Panel title={'save / load'}>
       <textarea
         ref={textAreaRef}
         onChange={handleChange}
@@ -50,6 +50,6 @@ export default function SaveLoadPanel () {
           load
         </Button>
       </div>
-    </PanelPanel>
+    </Panel>
   )
 }

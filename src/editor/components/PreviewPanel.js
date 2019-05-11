@@ -1,12 +1,12 @@
 import React, { lazy } from 'react'
-import PanelPanel from './Panel'
+import Panel from './Panel'
 
 const Preview = lazy(() => import('./Preview'))
 
 export default function PreviewPanel () {
   return (
-    <PanelPanel title={'preview'}>
+    <Panel title={'preview'}>
       <Preview />
-    </PanelPanel>
+    </Panel>
   )
 }
