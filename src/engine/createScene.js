@@ -3,7 +3,7 @@ import { AmbientLight, Color, Fog, Scene } from 'three'
 export default function createScene () {
 
   const scene = new Scene()
-  scene.background = new Color('#000000')
+  scene.background = new Color('#2D3747')
   scene.fog = new Fog(scene.background, 0, 80)
 
   const light = new AmbientLight(new Color('#ffffff'))

@@ -28,7 +28,7 @@
       ],
       "entities": [
         {
-          "type": "PLAYER",
+          "id": "PLAYER",
           "x": 8,
           "y": 6
         }
@@ -57,7 +57,7 @@
       ],
       "entities": [
         {
-          "type": "PLAYER",
+          "id": "PLAYER",
           "name": "Player",
           "sprite": "player.png",
           "texture": "player.png"

@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react'
+import React, { useRef, useState, useLayoutEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { gameSelector } from '../state/selectors'
 import Engine from '../../engine/Engine'
@@ -12,10 +12,12 @@ export default function Preview () {
   const [ engine, setEngine ] = useState(null)
   const game = useSelector(gameSelector)
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const engine = new Engine(canvasRef.current)
+    engine.load(game)
+    engine.render()
     setEngine(engine)
-  }, [canvasRef])
+  }, [game])
 
   function handlePlay () {
     setRunning(true)

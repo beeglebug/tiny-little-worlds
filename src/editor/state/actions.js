@@ -1,9 +1,15 @@
+export const SELECT_ENTITY = 'SELECT_ENTITY'
 export const SELECT_TILE = 'SELECT_TILE'
 export const SELECT_TOOL = 'SELECT_TOOL'
 export const SET_MAP_TILE = 'SET_MAP_TILE'
 export const CLEAR_MAP = 'CLEAR_MAP'
 export const SET_GAME = 'SET_GAME'
 export const SET_SHOW_GRID = 'SET_SHOW_GRID'
+
+export const selectEntityAction = (entityType) => ({
+  type: SELECT_ENTITY,
+  payload: entityType,
+})
 
 export const selectTileAction = (tile) => ({
   type: SELECT_TILE,

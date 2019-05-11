@@ -1,9 +1,19 @@
 import { SIZE, TOOLS } from '../consts'
 
-export default function drawCursor (ctx, dx, dy, selectedTile, selectedTool, assets) {
+export default function drawCursor (ctx, dx, dy, selectedEntity, selectedTile, selectedTool, assets) {
 
   if (selectedTool === TOOLS.PAINT) {
-    const image = assets[selectedTile]
+
+    let image
+
+    if (selectedTile) {
+      image = assets[selectedTile]
+    } else if (selectedEntity) {
+      image = assets[selectedEntity]
+    }
+
+    if (!image) return
+
     ctx.drawImage(
       image,
       dx,

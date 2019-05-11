@@ -41,6 +41,7 @@ export default class Editor {
   }
 
   setState (state) {
+    this.selectedEntity = state.selectedEntity
     this.selectedTool = state.selectedTool
     this.selectedTile = state.selectedTile
     this.game = state.game
@@ -129,8 +130,12 @@ export default class Editor {
   }
 
   loadAssets () {
-    const { tiles } = this.palette
-    return loadAllAssets(`/assets/games/${this.game.id}/assets`, tiles)
+    const { tiles, entities } = this.palette
+
+    const basePath = `/assets/games/${this.game.id}/assets`
+    const toLoad = [...tiles, ...entities]
+
+    return loadAllAssets(basePath, toLoad)
       .then(assets => {
         this.assets = assets
       })
@@ -156,7 +161,7 @@ export default class Editor {
     const x = Math.floor(this.mousePosition.x / SIZE) * SIZE
     const y = Math.floor(this.mousePosition.y / SIZE) * SIZE
 
-    drawCursor(this.ctx, x, y, this.selectedTile, this.selectedTool, this.assets)
+    drawCursor(this.ctx, x, y, this.selectedEntity, this.selectedTile, this.selectedTool, this.assets)
   }
 }
 

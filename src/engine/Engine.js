@@ -68,9 +68,13 @@ export default class Engine {
 
     this.controller.update(deltaTime)
 
-    this.renderer.render(this.scene, this.camera)
+    this.render()
 
     Input.clear()
+  }
+
+  render () {
+    this.renderer.render(this.scene, this.camera)
   }
 
   setupPointerLock (domElement) {
