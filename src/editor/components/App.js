@@ -26,7 +26,7 @@ function App () {
   return (
     <div className={styles.container}>
       <PseudoSuspense loading={loading}>
-        {/*<MapEditorPanel />*/}
+        <MapEditorPanel />
         <PalettePanel />
         <Tools />
         <PreviewPanel />

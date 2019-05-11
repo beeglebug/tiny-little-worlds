@@ -1,28 +1,66 @@
 import React, { useRef, useEffect, useState, Fragment } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import useCanvasWithMouse from '../hooks/useCanvasWithMouse'
-import { mapSelector, selectedTileSelector, selectedToolSelector } from '../state/selectors'
-import { getPositionFromTileIndex } from '../util/tileset'
+import { gameSelector, selectedTileSelector, selectedToolSelector } from '../state/selectors'
 import { setMapTileAction } from '../state/actions'
-import { TOOLS } from '../consts'
+import { SIZE, TOOLS } from '../consts'
 import styles from './MapEditor.css'
+import drawGrid from '../canvas/drawGrid'
+import drawCursor from '../canvas/drawCursor'
+import drawTiles from '../canvas/drawTiles'
+import loadImage from '../util/loadImage'
 
-const SIZE = 16
-
-export default function MapEditor ({ tileset, backgroundColor = '#deecff', gridColor = '#ffffff' }) {
+export default function MapEditor ({ backgroundColor = '#deecff', gridColor = '#ffffff' }) {
 
   const canvasRef = useRef(null)
   const dispatch = useDispatch()
   const selectedTile = useSelector(selectedTileSelector)
-  const map = useSelector(mapSelector)
+  const game = useSelector(gameSelector)
   const selectedTool = useSelector(selectedToolSelector)
   const [ currentTileIndex, setCurrentTileIndex ] = useState(null)
   const [ctx, mousePosition, mouseDown] = useCanvasWithMouse(canvasRef)
-  const [ grid, setGrid ] = useState(true)
+  const [ showGrid, setShowGrid ] = useState(true)
+  const [ assets, setAssets ] = useState(null)
+
+  const map = game.levels[0]
+  const palette = game.palettes[0]
 
   useEffect(() => {
-    draw()
-  }, [ctx, map, mousePosition, grid])
+    const { tiles } = palette
+    Promise
+      .all(tiles.map(tile => loadImage(`/assets/games/${game.id}/assets/${tile.sprite}`)))
+      .then(loaded => {
+        const assets = tiles.reduce((byId, tile, ix) => {
+          byId[tile.id] = loaded[ix]
+          return byId
+        }, {})
+        setAssets(assets)
+      })
+  }, [game.id, palette])
+
+  useEffect(() => {
+
+    if (!ctx) return
+    if (!assets) return
+
+    const width = map.width * SIZE
+    const height = map.height * SIZE
+    ctx.fillStyle = backgroundColor
+    ctx.fillRect(0, 0, width, height)
+
+    drawTiles(ctx, map, assets)
+
+    if (showGrid) {
+      drawGrid(ctx, width, height, gridColor)
+    }
+
+    if (mousePosition) {
+      const x = Math.floor(mousePosition.x / SIZE) * SIZE
+      const y = Math.floor(mousePosition.y / SIZE) * SIZE
+      // drawCursor(ctx, x, y, selectedTile, selectedTool, map, tileset)
+    }
+
+  }, [ctx, assets, map, palette, mousePosition, showGrid, gridColor])
 
   function handleMouseDown () {
     if (selectedTool === TOOLS.INSPECT) {
@@ -54,23 +92,6 @@ export default function MapEditor ({ tileset, backgroundColor = '#deecff', gridC
     dispatch(setMapTileAction(x, y, tile))
   }
 
-  function draw () {
-    if (!ctx) return
-    const width = map.width * SIZE
-    const height = map.height * SIZE
-    ctx.fillStyle = backgroundColor
-    ctx.fillRect(0, 0, width, height)
-    drawTiles(ctx, map, tileset)
-    if (grid) {
-      drawGrid(ctx, width, height, gridColor)
-    }
-    if (mousePosition) {
-      const x = Math.floor(mousePosition.x / SIZE) * SIZE
-      const y = Math.floor(mousePosition.y / SIZE) * SIZE
-      drawCursor(ctx, x, y, selectedTile, selectedTool, map, tileset)
-    }
-  }
-
   return (
     <Fragment>
       <canvas
@@ -81,70 +102,18 @@ export default function MapEditor ({ tileset, backgroundColor = '#deecff', gridC
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
       />
-      <label htmlFor={'show-grid'}>
+      <label
+        htmlFor={'show-grid'}
+        className={styles.checkbox}
+      >
         <input
           id={'show-grid'}
           type={'checkbox'}
-          checked={grid}
-          onChange={() => setGrid(!grid)}
+          checked={showGrid}
+          onChange={() => setShowGrid(!showGrid)}
         />
         show grid
       </label>
     </Fragment>
   )
-}
-
-function drawGrid (ctx, width, height, gridColor) {
-
-  ctx.translate(0.5, 0.5)
-  ctx.strokeStyle = gridColor
-
-  for (let y = SIZE; y < height; y += SIZE) {
-    ctx.moveTo(0, y)
-    ctx.lineTo(width, y)
-  }
-
-  for (let x = SIZE; x < width; x += SIZE) {
-    ctx.moveTo(x, 0)
-    ctx.lineTo(x, height)
-  }
-
-  ctx.stroke()
-  ctx.translate(-0.5, -0.5)
-}
-
-function drawCursor (ctx, dx, dy, selectedTile, selectedTool, map, tileset) {
-
-  const [sx, sy] = getPositionFromTileIndex(selectedTile, tileset)
-
-  if (selectedTool === TOOLS.PAINT) {
-    ctx.drawImage(tileset.image, sx, sy, SIZE, SIZE, dx, dy, tileset.tileSize, tileset.tileSize)
-  }
-
-  ctx.fillStyle = 'rgba(255, 255, 255, 0.3)'
-  ctx.fillRect(dx, dy, SIZE, SIZE)
-}
-
-function drawTiles (ctx, map, tileset) {
-  for (let y = 0; y < map.height; y++) {
-    for (let x = 0; x < map.width; x++) {
-      const ix = (y * map.width) + x
-      const tile = map.data[ix]
-      if (tile === 0) continue
-      const dx = x * SIZE
-      const dy = y * SIZE
-      const [sx, sy] = getPositionFromTileIndex(tile, tileset)
-      ctx.drawImage(
-        tileset.image,
-        sx,
-        sy,
-        tileset.tileSize,
-        tileset.tileSize,
-        dx,
-        dy,
-        SIZE,
-        SIZE
-      )
-    }
-  }
 }
