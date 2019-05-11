@@ -1,9 +1,9 @@
-import React, { useRef, useState, useEffect, Fragment } from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { gameSelector } from '../state/selectors'
 import Engine from '../../engine/Engine'
-import styles from './Preview.css'
 import Button from './Button'
+import styles from './Preview.css'
 
 export default function Preview () {
 
@@ -15,7 +15,7 @@ export default function Preview () {
   useEffect(() => {
     const engine = new Engine(canvasRef.current)
     setEngine(engine)
-  }, [])
+  }, [canvasRef])
 
   function handlePlay () {
     setRunning(true)
@@ -27,7 +27,7 @@ export default function Preview () {
   }
 
   return (
-    <Fragment>
+    <div className={styles.container}>
       <canvas
         ref={canvasRef}
         tabIndex={1}
@@ -35,7 +35,11 @@ export default function Preview () {
         width={320}
         height={180}
       />
-      <Button onClick={handlePlay}>{running ? 'pause' : 'play'}</Button>
-    </Fragment>
+      {!running && (
+        <div className={styles.overlay}>
+          <Button onClick={handlePlay}>{'play'}</Button>
+        </div>
+      )}
+    </div>
   )
 }
