@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { setGameAction } from '../state/actions'
 import { gameSelector } from '../state/selectors'
@@ -11,9 +11,12 @@ export default function SaveLoadPanel () {
   const [ data, setData ] = useState('')
   const dispatch = useDispatch()
   const game = useSelector(gameSelector)
+  const textAreaRef = useRef()
 
   const save = () => {
     setData(JSON.stringify(game))
+    // TODO better way of doing this?
+    setTimeout(() => textAreaRef.current.select(), 10)
   }
 
   const load = () => {
@@ -21,7 +24,6 @@ export default function SaveLoadPanel () {
       const game = JSON.parse(data)
       // TODO validate?
       dispatch(setGameAction(game))
-      setData('')
     } catch (error) {
       alert(`Error parsing map: ${error}`)
     }
@@ -35,6 +37,7 @@ export default function SaveLoadPanel () {
   return (
     <PanelPanel title={'save / load'}>
       <textarea
+        ref={textAreaRef}
         onChange={handleChange}
         className={styles.textarea}
         value={data}
