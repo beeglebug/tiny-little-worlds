@@ -1,4 +1,4 @@
-import { CLEAR_MAP, SET_GAME, SET_MAP_TILE, SET_MAP_ENTITY } from '../actions'
+import { CLEAR_MAP, SET_GAME, SET_MAP_TILE, SET_MAP_ENTITY, CLEAR_MAP_TILE, CLEAR_MAP_ENTITY } from '../actions'
 import arrayOf from '../../util/arrayOf'
 
 function setMapTile (game, action) {
@@ -46,6 +46,27 @@ function setMapEntity (game, action) {
   }
 }
 
+function clearMapEntity (game, action) {
+
+  const { x, y, levelId } = action.payload
+
+  const levelIndex = game.levels.findIndex(level => level.id === levelId)
+  const level = game.levels[levelIndex]
+
+  const entities = level.entities.filter(entity => !(entity.x === x && entity.y === y))
+
+  const levels = [...game.levels]
+  levels[levelIndex] = {
+    ...level,
+    entities,
+  }
+
+  return {
+    ...game,
+    levels,
+  }
+}
+
 function clearMap (game, action) {
 
   const levelId = action.payload
@@ -71,6 +92,7 @@ export default function game (state = null, action) {
     case SET_GAME: return action.payload
     case SET_MAP_TILE: return setMapTile(state, action)
     case SET_MAP_ENTITY: return setMapEntity(state, action)
+    case CLEAR_MAP_ENTITY: return clearMapEntity(state, action)
     case CLEAR_MAP: return clearMap(state, action)
     default: return state
   }

@@ -1,5 +1,5 @@
 import { SIZE, TOOLS } from '../consts'
-import { setMapEntityAction, setMapTileAction } from '../state/actions'
+import { clearMapEntityAction, clearMapTileAction, setMapEntityAction, setMapTileAction } from '../state/actions'
 import drawTiles from './drawTiles'
 import drawGrid from './drawGrid'
 import drawCursor from './drawCursor'
@@ -102,28 +102,25 @@ export default class Editor {
     const x = Math.floor(this.mousePosition.x / SIZE)
     const y = Math.floor(this.mousePosition.y / SIZE)
 
-    // handle tiles
-    if (this.selectedTile !== null) {
-      const id = this.getSelectedTileId()
-      this.store.dispatch(setMapTileAction(x, y, id))
+    if (this.selectedTool === TOOLS.PAINT) {
+
+      // handle tiles
+      if (this.selectedTile !== null) {
+        this.store.dispatch(setMapTileAction(x, y, this.selectedTile))
+      }
+
+      // handle entities
+      if (this.selectedEntity !== null) {
+        // TODO handle unique entities
+        this.store.dispatch(setMapEntityAction(x, y, this.selectedEntity))
+      }
     }
 
-    // handle entities
-    if (this.selectedEntity !== null) {
-      const id = this.getSelectedEntityId()
-      // TODO handle unique entities
-      this.store.dispatch(setMapEntityAction(x, y, id))
+    if (this.selectedTool === TOOLS.ERASE) {
+      // TODO decide how to handle erase with entity and tile?
+      this.store.dispatch(setMapTileAction(x, y, 0))
+      this.store.dispatch(clearMapEntityAction(x, y))
     }
-  }
-
-  getSelectedTileId () {
-    if (this.selectedTool === TOOLS.PAINT) return this.selectedTile
-    if (this.selectedTool === TOOLS.ERASE) return 0
-  }
-
-  getSelectedEntityId () {
-    if (this.selectedTool === TOOLS.PAINT) return this.selectedEntity
-    if (this.selectedTool === TOOLS.ERASE) return 0
   }
 
   bindListeners () {
