@@ -4,6 +4,7 @@ import { setMapTileAction } from '../state/actions'
 import drawTiles from './drawTiles'
 import drawGrid from './drawGrid'
 import drawCursor from './drawCursor'
+import drawEntities from './drawEntities'
 
 export default class Editor {
 
@@ -153,6 +154,7 @@ export default class Editor {
     this.ctx.fillRect(0, 0, width, height)
 
     drawTiles(this.ctx, this.map, this.assets)
+    drawEntities(this.ctx, this.map, this.assets)
 
     if (this.showGrid) {
       drawGrid(this.ctx, width, height, '#ffffff')

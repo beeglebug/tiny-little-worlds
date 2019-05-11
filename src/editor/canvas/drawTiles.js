@@ -16,6 +16,8 @@ export default function drawTiles (ctx, map, assets) {
 
       const image = assets[tileId]
 
+      if (!image) return
+
       ctx.drawImage(
         image,
         dx,
