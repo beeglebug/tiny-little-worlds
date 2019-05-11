@@ -3,3 +3,7 @@
     border: 1px solid #b7cce2;
     margin-bottom: 10px;
 }
+
+.checkbox input {
+    margin: 0 5px 0 0;
+}

@@ -1,6 +1,7 @@
 .button {
     -webkit-appearance: none;
-    padding: 5px;
+    height: 32px;
+    padding: 0 10px;
     background-color: #deecff;
     margin-right: 5px;
     font-size: 10pt;

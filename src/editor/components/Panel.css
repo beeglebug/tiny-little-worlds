@@ -7,9 +7,12 @@
 
 .header {
     background-color: #deecff;
-    padding: 10px;
     color: #69779b;
     border-bottom: 1px solid #b7cce2;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
 }
 
 .body {
