@@ -1,12 +1,16 @@
-import { getPositionFromTileIndex } from '../util/tileset'
 import { SIZE, TOOLS } from '../consts'
 
-export default function drawCursor (ctx, dx, dy, selectedTile, selectedTool, map, tileset) {
-
-  const [sx, sy] = getPositionFromTileIndex(selectedTile, tileset)
+export default function drawCursor (ctx, dx, dy, selectedTile, selectedTool, assets) {
 
   if (selectedTool === TOOLS.PAINT) {
-    ctx.drawImage(tileset.image, sx, sy, SIZE, SIZE, dx, dy, tileset.tileSize, tileset.tileSize)
+    const image = assets[selectedTile]
+    ctx.drawImage(
+      image,
+      dx,
+      dy,
+      SIZE,
+      SIZE
+    )
   }
 
   ctx.fillStyle = 'rgba(255, 255, 255, 0.3)'

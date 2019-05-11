@@ -2,37 +2,35 @@ export const SELECT_TILE = 'SELECT_TILE'
 export const SELECT_TOOL = 'SELECT_TOOL'
 export const SET_MAP_TILE = 'SET_MAP_TILE'
 export const CLEAR_MAP = 'CLEAR_MAP'
-export const LOAD_MAP = 'LOAD_MAP'
 export const SET_GAME = 'SET_GAME'
+export const SET_SHOW_GRID = 'SET_SHOW_GRID'
 
 export const selectTileAction = (tile) => ({
   type: SELECT_TILE,
-  payload: { tile }
+  payload: tile,
 })
 
 export const selectToolAction = (tool) => ({
   type: SELECT_TOOL,
-  payload: { tool }
+  payload: tool,
 })
 
-export const setMapTileAction = (x, y, tile) => ({
+export const setMapTileAction = (x, y, tileId) => ({
   type: SET_MAP_TILE,
-  payload: { x, y, tile }
+  payload: { x, y, tileId },
 })
 
-export const clearMapAction = () => ({
+export const clearMapAction = (levelIx = 0) => ({
   type: CLEAR_MAP,
+  payload: levelIx,
 })
 
-export const loadMapAction = (map) => ({
-  type: LOAD_MAP,
-  payload: { map }
-})
-
-/**
- * Dump an entire game into state
- */
 export const setGameAction = game => ({
   type: SET_GAME,
-  payload: { game },
+  payload: game,
+})
+
+export const setShowGridAction = showGrid => ({
+  type: SET_SHOW_GRID,
+  payload: showGrid,
 })

@@ -14,8 +14,10 @@ export default function drawTiles (ctx, map, assets) {
       const dx = x * SIZE
       const dy = y * SIZE
 
+      const image = assets[tileId]
+
       ctx.drawImage(
-        assets[tileId],
+        image,
         dx,
         dy,
         SIZE,
