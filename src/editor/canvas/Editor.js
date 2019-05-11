@@ -23,7 +23,7 @@ export default class Editor {
 
     this.loadAssets().then(() => this.render())
 
-    this.mousePosition = { x: 0, y: 0 }
+    this.mousePosition = { x: -99, y: -99 }
     this.mouseDown = false
     this.mouseOver = false
 

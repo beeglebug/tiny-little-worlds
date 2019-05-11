@@ -15,14 +15,14 @@ export const selectToolAction = (tool) => ({
   payload: tool,
 })
 
-export const setMapTileAction = (x, y, tileId) => ({
+export const setMapTileAction = (x, y, tileId, levelId = 1) => ({
   type: SET_MAP_TILE,
-  payload: { x, y, tileId },
+  payload: { x, y, tileId, levelId },
 })
 
-export const clearMapAction = (levelIx = 0) => ({
+export const clearMapAction = (levelId = 1) => ({
   type: CLEAR_MAP,
-  payload: levelIx,
+  payload: levelId,
 })
 
 export const setGameAction = game => ({

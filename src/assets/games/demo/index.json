@@ -3,9 +3,9 @@
   "name": "Demo Game",
   "levels": [
     {
-      "id": "level-1",
+      "id": 1,
       "name": "Level 1",
-      "palette": "demo-palette",
+      "palette": 1,
       "width": 16,
       "height": 16,
       "data": [
@@ -37,7 +37,7 @@
   ],
   "palettes": [
     {
-      "id": "demo-palette",
+      "id": 1,
       "name": "Demo Palette",
       "tiles": [
         {
