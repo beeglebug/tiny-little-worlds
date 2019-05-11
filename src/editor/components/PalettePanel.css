@@ -3,8 +3,11 @@
 }
 
 .swatch {
-    margin: 0 2px 0 0;
-    border: 1px solid #ffffff;
+    width: 32px;
+    height: 32px;
+    margin: 0 5px 0 0;
+    border: 1px solid #b7cce2;
+    image-rendering: pixelated;
 }
 
 .selected {

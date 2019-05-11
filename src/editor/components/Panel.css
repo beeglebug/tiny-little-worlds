@@ -2,12 +2,14 @@
     background-color: #f3f8ff;
     margin: 10px;
     display: inline-block;
+    box-shadow: 5px 5px 0 rgba(0,0,0,0.1);
 }
 
 .header {
     background-color: #deecff;
     padding: 10px;
     color: #69779b;
+    border-bottom: 1px solid #b7cce2;
 }
 
 .body {
