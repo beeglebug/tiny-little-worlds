@@ -1,6 +1,5 @@
-import React, { Suspense } from 'react'
+import React from 'react'
 import styles from './Panel.css'
-import Loader from './Loader'
 
 export default function Panel ({ title, children }) {
   return (
@@ -9,9 +8,7 @@ export default function Panel ({ title, children }) {
         <h2>{title}</h2>
       </div>
       <div className={styles.body}>
-        <Suspense fallback={<Loader />}>
-          {children}
-        </Suspense>
+        {children}
       </div>
     </div>
   )

@@ -1,0 +1,9 @@
+.loading {
+  width: 320px;
+  height: 180px;
+  border: 1px solid rgb(183, 204, 226);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #D9DADD;
+}

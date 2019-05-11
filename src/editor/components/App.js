@@ -8,7 +8,7 @@ import SaveLoadPanel from './SaveLoadPanel'
 import styles from './App.css'
 import PreviewPanel from './PreviewPanel'
 import MapEditorPanel from './MapEditorPanel'
-import Loader from './Loader'
+import LoadingIndicator from './LoadingIndicator'
 
 const store = createStore()
 
@@ -37,7 +37,7 @@ function App () {
 }
 
 function PseudoSuspense ({ loading, children }) {
-  if (loading) return <Loader />
+  if (loading) return <LoadingIndicator />
   return children
 }
 
