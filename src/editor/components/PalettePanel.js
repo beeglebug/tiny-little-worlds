@@ -1,16 +1,14 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import classnames from 'classnames'
-import { selectEntityAction, selectTileAction, selectToolAction } from '../state/actions'
-import { gameSelector, selectedEntitySelector, selectedTileSelector, selectedToolSelector } from '../state/selectors'
+import { selectEntityAction, selectTileAction } from '../state/actions'
+import { gameSelector, selectedEntitySelector, selectedTileSelector } from '../state/selectors'
 import useReduxState from '../hooks/useReduxState'
-import { TOOLS } from '../consts'
 import Panel from './Panel'
 import styles from './PalettePanel.css'
 
 export default function PalettePanel () {
 
-  const [ , setSelectedTool ] = useReduxState(selectedToolSelector, selectToolAction)
   const [ selectedTile, setSelectedTile ] = useReduxState(selectedTileSelector, selectTileAction)
   const [ selectedEntity, setSelectedEntity ] = useReduxState(selectedEntitySelector, selectEntityAction)
   const game = useSelector(gameSelector)
@@ -19,13 +17,10 @@ export default function PalettePanel () {
 
   function handleClickTile (tileId) {
     setSelectedTile(tileId)
-    setSelectedTool(TOOLS.PAINT)
   }
 
   function handleClickEntity (id) {
-    setSelectedTile(null)
     setSelectedEntity(id)
-    setSelectedTool(TOOLS.PAINT)
   }
 
   // TODO per level palette

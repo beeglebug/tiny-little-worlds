@@ -1,10 +1,10 @@
 import { SIZE, TOOLS } from '../consts'
-import loadImage from '../util/loadImage'
-import { setMapTileAction } from '../state/actions'
+import { setMapEntityAction, setMapTileAction } from '../state/actions'
 import drawTiles from './drawTiles'
 import drawGrid from './drawGrid'
 import drawCursor from './drawCursor'
 import drawEntities from './drawEntities'
+import loadAssets from './loadAssets'
 
 export default class Editor {
 
@@ -69,7 +69,7 @@ export default class Editor {
 
     const index = (y * this.map.width) + x
     if (this.mouseDown && this.currentTileIndex !== index) {
-      this.paintCurrentMapTile()
+      this.paintCurrent()
     }
     this.currentTileIndex = index
 
@@ -90,28 +90,40 @@ export default class Editor {
 
   handleMouseDown = () => {
     this.mouseDown = true
-    if (this.selectedTool === TOOLS.INSPECT) {
-      console.log('inspecting')
-    } else {
-      this.paintCurrentMapTile()
-    }
+    this.paintCurrent()
   }
 
   handleMouseUp = () => {
     this.mouseDown = false
   }
 
-  paintCurrentMapTile () {
-    let tile
-    if (this.selectedTool === TOOLS.PAINT) {
-      tile = this.selectedTile
-    } else if (this.selectedTool === TOOLS.ERASE) {
-      tile = 0
-    }
+  paintCurrent () {
+
     const x = Math.floor(this.mousePosition.x / SIZE)
     const y = Math.floor(this.mousePosition.y / SIZE)
 
-    this.store.dispatch(setMapTileAction(x, y, tile))
+    // handle tiles
+    if (this.selectedTile !== null) {
+      const id = this.getSelectedTileId()
+      this.store.dispatch(setMapTileAction(x, y, id))
+    }
+
+    // handle entities
+    if (this.selectedEntity !== null) {
+      const id = this.getSelectedEntityId()
+      // TODO handle unique entities
+      this.store.dispatch(setMapEntityAction(x, y, id))
+    }
+  }
+
+  getSelectedTileId () {
+    if (this.selectedTool === TOOLS.PAINT) return this.selectedTile
+    if (this.selectedTool === TOOLS.ERASE) return 0
+  }
+
+  getSelectedEntityId () {
+    if (this.selectedTool === TOOLS.PAINT) return this.selectedEntity
+    if (this.selectedTool === TOOLS.ERASE) return 0
   }
 
   bindListeners () {
@@ -136,7 +148,7 @@ export default class Editor {
     const basePath = `/assets/games/${this.game.id}/assets`
     const toLoad = [...tiles, ...entities]
 
-    return loadAllAssets(basePath, toLoad)
+    return loadAssets(basePath, toLoad)
       .then(assets => {
         this.assets = assets
       })
@@ -165,13 +177,4 @@ export default class Editor {
 
     drawCursor(this.ctx, x, y, this.selectedEntity, this.selectedTile, this.selectedTool, this.assets)
   }
-}
-
-function loadAllAssets (basePath, tiles) {
-  const loaders = tiles.map(tile => loadImage(`${basePath}/${tile.sprite}`))
-  return Promise.all(loaders)
-    .then(loaded => tiles.reduce((byId, tile, ix) => {
-      byId[tile.id] = loaded[ix]
-      return byId
-    }, {}))
 }

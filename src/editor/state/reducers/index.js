@@ -4,18 +4,35 @@ import { SELECT_ENTITY, SELECT_TILE, SELECT_TOOL, SET_SHOW_GRID } from '../actio
 import game from './game'
 
 const selectedEntity = (state = null, action) => {
-  if (action.type === SELECT_ENTITY) return action.payload
-  return state
+  switch (action.type) {
+    case SELECT_ENTITY: return action.payload
+    case SELECT_TILE: return null
+    case SELECT_TOOL: return maybeClear(state, action)
+    default: return state
+  }
 }
 
 const selectedTile = (state = 1, action) => {
-  if (action.type === SELECT_TILE) return action.payload
+  switch (action.type) {
+    case SELECT_TILE: return action.payload
+    case SELECT_ENTITY: return null
+    case SELECT_TOOL: return maybeClear(state, action)
+    default: return state
+  }
+}
+
+function maybeClear (state, action) {
+  if (action.payload === TOOLS.ERASE) return null
   return state
 }
 
 const selectedTool = (state = TOOLS.PAINT, action) => {
-  if (action.type === SELECT_TOOL) return action.payload
-  return state
+  switch (action.type) {
+    case SELECT_TOOL: return action.payload
+    case SELECT_TILE:
+    case SELECT_ENTITY: return TOOLS.PAINT
+    default: return state
+  }
 }
 
 function showGrid (state = true, action) {
