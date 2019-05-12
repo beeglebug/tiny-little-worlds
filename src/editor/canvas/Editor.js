@@ -106,25 +106,41 @@ export default class Editor {
 
       // handle tiles
       if (this.selectedTile !== null) {
+
+        if (this.isEntityAt(x, y)) {
+          this.store.dispatch(clearMapEntityAction(x, y))
+        }
+
         this.store.dispatch(setMapTileAction(x, y, this.selectedTile))
       }
 
       // handle entities
       if (this.selectedEntity !== null) {
+        // TODO current palette
         const palette = this.game.palettes[0]
         const entity = palette.entities.find(entity => entity.id === this.selectedEntity)
         if (entity.unique) {
           this.store.dispatch(clearMapEntitiesAction(this.selectedEntity))
         }
         this.store.dispatch(setMapEntityAction(x, y, this.selectedEntity))
+        // also set the square under the entity to "base floor" for safety
+        this.store.dispatch(setMapTileAction(x, y, 1))
       }
     }
 
     if (this.selectedTool === TOOLS.ERASE) {
-      // TODO decide how to handle erase with entity and tile?
-      this.store.dispatch(setMapTileAction(x, y, 0))
-      this.store.dispatch(clearMapEntityAction(x, y))
+      if (this.isEntityAt(x, y)) {
+        this.store.dispatch(clearMapEntityAction(x, y))
+      } else {
+        this.store.dispatch(setMapTileAction(x, y, 0))
+      }
     }
+  }
+
+  isEntityAt (x, y) {
+    // TODO current level
+    const map = this.game.levels[0]
+    return map.entities.some(entity => (entity.x === x && entity.y === y))
   }
 
   bindListeners () {

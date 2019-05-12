@@ -24,12 +24,11 @@ export default function PalettePanel () {
   }
 
   // TODO per level palette
-  const { name, tiles, entities } = game.palettes[0]
+  const { tiles, entities } = game.palettes[0]
 
   return (
     <Panel title={'palette'}>
-      <h3 className={styles.name}>{name}</h3>
-      <div>
+      <div className={styles.row}>
         {tiles.map(({ id, name, sprite }) => {
           const src = `/assets/games/${game.id}/assets/${sprite}`
           return (
@@ -43,7 +42,7 @@ export default function PalettePanel () {
           )
         })}
       </div>
-      <div>
+      <div className={styles.row}>
         {entities.map(({ id, name, sprite }) => {
           const src = `/assets/games/${game.id}/assets/${sprite}`
           return (

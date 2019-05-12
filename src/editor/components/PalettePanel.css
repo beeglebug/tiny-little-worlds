@@ -5,11 +5,24 @@
 .swatch {
     width: 32px;
     height: 32px;
-    margin: 0 5px 0 0;
+    margin: 0 10px 10px 0;
     border: 1px solid #b7cce2;
     image-rendering: pixelated;
+    display: block;
+}
+
+.swatch:last-child {
+    margin-right: 0;
 }
 
 .selected {
     border: 1px solid #69779b;
+}
+
+.row {
+    display: flex;
+}
+
+.row:last-child .swatch {
+    margin-bottom: 0;
 }
