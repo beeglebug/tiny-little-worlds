@@ -36,6 +36,11 @@
           "id": "DOOR",
           "x": 8,
           "y": 9
+        },
+        {
+          "id": "KEY",
+          "x": 8,
+          "y": 7
         }
       ]
     }
@@ -74,6 +79,12 @@
           "sprite": "door.png",
           "texture": "door.png",
           "mesh": "door.obj"
+        },
+        {
+          "id": "KEY",
+          "name": "Key",
+          "sprite": "key.png",
+          "texture": "key.png"
         }
       ]
     }

@@ -6,9 +6,10 @@
     width: 32px;
     height: 32px;
     margin: 0 10px 10px 0;
-    border: 1px solid #b7cce2;
+    border: 2px solid #ffffff;
     image-rendering: pixelated;
     display: block;
+    background-color: #2d3747;
 }
 
 .swatch:last-child {
@@ -16,7 +17,7 @@
 }
 
 .selected {
-    border: 1px solid #69779b;
+    border: 2px solid #ecab08;
 }
 
 .row {
