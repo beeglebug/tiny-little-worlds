@@ -3,11 +3,10 @@ import {
   SET_GAME,
   SET_MAP_TILE,
   SET_MAP_ENTITY,
-  CLEAR_MAP_TILE,
   CLEAR_MAP_ENTITY,
-  CLEAR_MAP_ENTITIES
-} from '../actions'
-import arrayOf from '../../util/arrayOf'
+  CLEAR_MAP_ENTITIES,
+} from '../../actions'
+import arrayOf from '../../../util/arrayOf'
 import clearMapEntities from './clearMapEntities'
 
 function setMapTile (game, action) {

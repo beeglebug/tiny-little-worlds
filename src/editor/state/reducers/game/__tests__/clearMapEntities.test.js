@@ -35,7 +35,7 @@ describe('clearMapEntities', () => {
     const action = clearMapEntitiesAction(12)
     const output = clearMapEntities(state, action)
 
-    expect(output).toBe(expected)
+    expect(output).toEqual(expected)
   })
 
 })
