@@ -58,6 +58,7 @@
       "entities": [
         {
           "id": "PLAYER",
+          "unique": true,
           "name": "Player",
           "sprite": "player.png",
           "texture": "player.png"

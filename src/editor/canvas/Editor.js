@@ -1,5 +1,5 @@
 import { SIZE, TOOLS } from '../consts'
-import { clearMapEntityAction, setMapEntityAction, setMapTileAction } from '../state/actions'
+import { clearMapEntitiesAction, clearMapEntityAction, setMapEntityAction, setMapTileAction } from '../state/actions'
 import drawTiles from './drawTiles'
 import drawGrid from './drawGrid'
 import drawCursor from './drawCursor'
@@ -111,7 +111,11 @@ export default class Editor {
 
       // handle entities
       if (this.selectedEntity !== null) {
-
+        const palette = this.game.palettes[0]
+        const entity = palette.entities.find(entity => entity.id === this.selectedEntity)
+        if (entity.unique) {
+          this.store.dispatch(clearMapEntitiesAction(this.selectedEntity))
+        }
         this.store.dispatch(setMapEntityAction(x, y, this.selectedEntity))
       }
     }
