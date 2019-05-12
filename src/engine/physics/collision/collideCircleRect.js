@@ -1,7 +1,7 @@
 import Vector2 from '../geometry/Vector2'
 import nearestPointRect from '../closestPointRect'
-import collidePointCircle from './collidePointCircle'
 import distanceBetween from '../distanceBetween'
+import collidePointCircle from './collidePointCircle'
 
 const _near = new Vector2()
 

@@ -1,5 +1,5 @@
-import KeyCode, { getKeyForCode } from './KeyCode'
 import Vector2 from '../physics/geometry/Vector2'
+import KeyCode from './KeyCode'
 
 const buttons = {}
 const downKeys = {}
@@ -124,18 +124,6 @@ const getButtonUp = name => {
 
 const isButton = (keyCode, name) => buttons[name] && buttons[name].includes(keyCode)
 
-function checkExistingButtons (keyCodes) {
-  const btns = Object.entries(buttons)
-  keyCodes.forEach(code => {
-    btns.forEach(([name, codes]) => {
-      if (codes.includes(code)) {
-        const codeName = getKeyForCode(code)
-        console.warn(`WARNING: Key '${codeName}' already assigned to button '${name}'`)
-      }
-    })
-  })
-}
-
 export default {
   bind,
   unbind,
@@ -150,5 +138,5 @@ export default {
   mousePosition,
   MouseX,
   MouseY,
-  clear
+  clear,
 }

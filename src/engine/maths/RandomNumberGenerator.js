@@ -2,7 +2,7 @@ import MersenneTwister from 'mersenne-twister'
 
 export default class RandomNumberGenerator {
 
-  constructor (seed = +new Date) {
+  constructor (seed = Date.now()) {
     this.generator = new MersenneTwister(seed)
   }
 

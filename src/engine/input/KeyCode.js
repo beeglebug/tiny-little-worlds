@@ -90,7 +90,7 @@ const keyCodes = {
   Comma: 188,
   Minus: 189,
   Period: 190,
-  Tilde: 223
+  Tilde: 223,
 }
 
 export default keyCodes
