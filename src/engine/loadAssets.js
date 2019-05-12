@@ -2,33 +2,49 @@ import { BoxGeometry, Mesh, MeshBasicMaterial, NearestFilter, PlaneGeometry, Tex
 import { TILE_SIZE, WALL_HEIGHT } from './consts'
 
 export default function loadAssets (game) {
+
   // TODO multiple palettes
-  const { tiles } = game.palettes[0]
-  const loader = new TextureLoader()
-  return Promise
-    .all(tiles.map(tile => {
-      const path = `/assets/games/${game.id}/assets/${tile.texture}`
-      const texture = loader.load(path)
-      texture.magFilter = NearestFilter
-      texture.minFilter = NearestFilter
-      return { ...tile, texture }
-    }))
-    .then(tiles => {
-      return tiles.map(tile => {
-        const geometry = GEOMETRY[tile.mesh]
-        const material = new MeshBasicMaterial({ map: tile.texture })
-        tile.mesh = new Mesh(geometry, material)
-        return tile
-      }).reduce((tiles, tile) => {
-        tiles[tile.id] = tile
-        return tiles
-      }, {})
-    })
+  const { tiles, entities } = game.palettes[0]
+  const textureLoader = new TextureLoader()
+  const meshLoader = {}
+
+  const textures = [...tiles, ...entities]
+    .filter(item => item.texture)
+    .reduce((textures, item) => {
+      textures[item.texture] = loadTexture(textureLoader, `/assets/games/${game.id}/assets/${item.texture}`)
+      return textures
+    }, {})
+
+  const meshes = [...tiles, ...entities]
+    .filter(item => (item.mesh && item.texture))
+    .reduce((meshes, item) => {
+      meshes[item.mesh] = loadMesh(meshLoader, item.mesh, textures[item.texture])
+      return meshes
+    }, {})
+
+  return { textures, meshes }
 }
 
-// TODO load geometry from blender file
+function loadTexture (loader, path) {
+  const texture = loader.load(path)
+  texture.magFilter = NearestFilter
+  texture.minFilter = NearestFilter
+  return texture
+}
+
+// TODO load geometry from files
+function loadMesh (loader, path, map) {
+  const geometry = TEMP_GEOMETRY[path]
+  const material = new MeshBasicMaterial({ map })
+  return new Mesh(geometry, material)
+}
+
 const wallGeometry = new BoxGeometry(TILE_SIZE, WALL_HEIGHT, TILE_SIZE)
 wallGeometry.translate(0, WALL_HEIGHT / 2, 0)
+
+// aligned for 2d horizontal
+const doorGeometry = new BoxGeometry(TILE_SIZE, WALL_HEIGHT, TILE_SIZE / 2)
+doorGeometry.translate(0, WALL_HEIGHT / 2, 0)
 
 const floorGeometry = new PlaneGeometry(TILE_SIZE, TILE_SIZE)
 floorGeometry.rotateX(-Math.PI / 2)
@@ -39,7 +55,8 @@ ceilingGeometry.translate(0, WALL_HEIGHT, 0)
 
 floorGeometry.merge(ceilingGeometry)
 
-const GEOMETRY = {
-  WALL: wallGeometry,
-  FLOOR: floorGeometry,
+const TEMP_GEOMETRY = {
+  'wall.obj': wallGeometry,
+  'floor.obj': floorGeometry,
+  'door.obj': doorGeometry,
 }

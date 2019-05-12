@@ -2,7 +2,7 @@ import { PerspectiveCamera, WebGLRenderer } from 'three'
 import createScene from './createScene'
 import CharacterController from './CharacterController'
 import Input from './input/Input'
-import { HEIGHT, TILE_SIZE, WIDTH } from './consts'
+import { HEIGHT, WIDTH } from './consts'
 import loop from './loop'
 import createWorld from './createWorld'
 import loadAssets from './loadAssets'
@@ -25,25 +25,13 @@ export default class Engine {
 
     this.clear()
 
-    return loadAssets(game)
-      .then((assets) => {
-        this.world = createWorld(game, assets)
-        this.scene.add(this.world)
+    const assets = loadAssets(game)
 
-        const map = game.levels[0]
-        const player = map.entities.find(entity => entity.id === 'PLAYER')
+    this.world = createWorld(game, assets, this.controller)
+    this.scene.add(this.world)
 
-        if (player) {
-          this.controller.position.set(
-            player.x * TILE_SIZE,
-            0,
-            player.y * TILE_SIZE
-          )
-
-          this.controller.resetRotation(Math.PI, 0)
-          this.controller.handlePhysics() // force update the 2d collider
-        }
-      })
+    this.controller.resetRotation(Math.PI, 0)
+    this.controller.handlePhysics() // force update the 2d collider
   }
 
   start () {
