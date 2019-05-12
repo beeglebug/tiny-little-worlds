@@ -1,5 +1,5 @@
 import { SIZE, TOOLS } from '../consts'
-import { clearMapEntityAction, clearMapTileAction, setMapEntityAction, setMapTileAction } from '../state/actions'
+import { clearMapEntityAction, setMapEntityAction, setMapTileAction } from '../state/actions'
 import drawTiles from './drawTiles'
 import drawGrid from './drawGrid'
 import drawCursor from './drawCursor'
@@ -111,7 +111,7 @@ export default class Editor {
 
       // handle entities
       if (this.selectedEntity !== null) {
-        // TODO handle unique entities
+
         this.store.dispatch(setMapEntityAction(x, y, this.selectedEntity))
       }
     }

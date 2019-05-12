@@ -26,6 +26,7 @@ export default function loadAssets (game) {
     })
 }
 
+// TODO load geometry from blender file
 const wallGeometry = new BoxGeometry(TILE_SIZE, WALL_HEIGHT, TILE_SIZE)
 wallGeometry.translate(0, WALL_HEIGHT / 2, 0)
 
