@@ -9,6 +9,7 @@ import styles from './App.css'
 import PreviewPanel from './PreviewPanel'
 import MapEditorPanel from './MapEditorPanel'
 import LoadingIndicator from './LoadingIndicator'
+import Header from './Header'
 
 const store = createStore()
 
@@ -25,13 +26,16 @@ function App () {
 
   return (
     <div className={styles.container}>
-      <PseudoSuspense loading={loading}>
-        <MapEditorPanel />
-        <PalettePanel />
-        <Tools />
-        <PreviewPanel />
-        <SaveLoadPanel />
-      </PseudoSuspense>
+      <Header />
+      <div className={styles.body}>
+        <PseudoSuspense loading={loading}>
+          <MapEditorPanel />
+          <PalettePanel />
+          <Tools />
+          <PreviewPanel />
+          <SaveLoadPanel />
+        </PseudoSuspense>
+      </div>
     </div>
   )
 }
