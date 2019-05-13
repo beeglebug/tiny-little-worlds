@@ -8,21 +8,33 @@ export default function loadAssets (game) {
   const textureLoader = new TextureLoader()
   const meshLoader = {}
 
-  const textures = [...tiles, ...entities]
+  const core = [{ mesh: 'shadow-small', texture: '/assets/shadow-small.png' }]
+
+  const textures = [...core, ...tiles, ...entities]
     .filter(item => item.texture)
     .reduce((textures, item) => {
-      textures[item.texture] = loadTexture(textureLoader, `/assets/games/${game.id}/assets/${item.texture}`)
+      const path = getPath(game, item)
+      textures[item.texture] = loadTexture(textureLoader, path)
       return textures
     }, {})
 
-  const meshes = [...tiles, ...entities]
+  const meshes = [...core, ...tiles, ...entities]
     .filter(item => (item.mesh && item.texture))
     .reduce((meshes, item) => {
       meshes[item.mesh] = loadMesh(meshLoader, item.mesh, textures[item.texture])
       return meshes
     }, {})
 
+  meshes['shadow-small'].material.opacity = 0.5
+  meshes['shadow-small'].material.depthWrite = false
+  meshes['shadow-small'].material.transparent = true
+
   return { textures, meshes }
+}
+
+function getPath (game, item) {
+  if (item.texture.startsWith('/')) return item.texture
+  return `/assets/games/${game.id}/assets/${item.texture}`
 }
 
 function loadTexture (loader, path) {
@@ -38,6 +50,9 @@ function loadMesh (loader, path, map) {
   const material = new MeshBasicMaterial({ map })
   return new Mesh(geometry, material)
 }
+
+const shadowSmallGeometry = new PlaneGeometry(TILE_SIZE / 2, TILE_SIZE / 2)
+shadowSmallGeometry.rotateX(-Math.PI / 2)
 
 const wallGeometry = new BoxGeometry(TILE_SIZE, WALL_HEIGHT, TILE_SIZE)
 wallGeometry.translate(0, WALL_HEIGHT / 2, 0)
@@ -56,6 +71,7 @@ ceilingGeometry.translate(0, WALL_HEIGHT, 0)
 floorGeometry.merge(ceilingGeometry)
 
 const TEMP_GEOMETRY = {
+  'shadow-small': shadowSmallGeometry,
   'wall.obj': wallGeometry,
   'floor.obj': floorGeometry,
   'door.obj': doorGeometry,
