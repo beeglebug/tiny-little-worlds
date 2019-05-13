@@ -4,5 +4,8 @@
     height: 32px;
     display: flex;
     align-items: center;
-    padding: 0 15px;
+}
+
+.title {
+    margin-left: 15px;
 }

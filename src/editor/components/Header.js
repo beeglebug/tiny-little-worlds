@@ -4,7 +4,7 @@ import styles from './Header.css'
 export default function Header () {
   return (
     <div className={styles.container}>
-      Tiny Little World
+      <h1 className={styles.title}>Tiny Little World</h1>
     </div>
   )
 }
