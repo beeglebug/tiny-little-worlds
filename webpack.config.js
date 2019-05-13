@@ -25,7 +25,6 @@ module.exports = (env, argv) => {
         },
         {
           test: /\.(glsl|frag|vert)$/,
-          exclude: [nodeModulesDirectory],
           loader: 'webpack-glsl-loader',
         },
         {

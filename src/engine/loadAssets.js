@@ -1,4 +1,9 @@
-import { BoxGeometry, Mesh, MeshBasicMaterial, NearestFilter, PlaneGeometry, TextureLoader } from 'three'
+import { TextureLoader } from 'three/src/loaders/TextureLoader'
+import { NearestFilter } from 'three/src/constants'
+import { MeshBasicMaterial } from 'three/src/materials/MeshBasicMaterial'
+import { Mesh } from 'three/src/objects/Mesh'
+import { PlaneGeometry } from 'three/src/geometries/PlaneGeometry'
+import { BoxGeometry } from 'three/src/geometries/BoxGeometry'
 import { TILE_SIZE, WALL_HEIGHT } from './consts'
 
 export default function loadAssets (game) {

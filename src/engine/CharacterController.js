@@ -1,4 +1,5 @@
-import { Object3D, Vector3 } from 'three'
+import { Object3D } from 'three/src/core/Object3D'
+import { Vector3 } from 'three/src/math/Vector3'
 import KeyCode from './input/KeyCode'
 import Input from './input/Input'
 import clamp from './maths/clamp'

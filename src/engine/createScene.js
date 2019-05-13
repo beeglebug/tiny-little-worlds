@@ -1,4 +1,7 @@
-import { AmbientLight, Color, Fog, Scene } from 'three'
+import { Scene } from 'three/src/scenes/Scene'
+import { Fog } from 'three/src/scenes/Fog'
+import { Color } from 'three/src/math/Color'
+import { AmbientLight } from 'three/src/lights/AmbientLight'
 
 export default function createScene () {
 

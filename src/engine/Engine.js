@@ -1,4 +1,5 @@
-import { PerspectiveCamera, WebGLRenderer } from 'three'
+import { WebGLRenderer } from 'three/src/renderers/WebGLRenderer'
+import { PerspectiveCamera } from 'three/src/cameras/PerspectiveCamera'
 import createScene from './createScene'
 import CharacterController from './CharacterController'
 import Input from './input/Input'
