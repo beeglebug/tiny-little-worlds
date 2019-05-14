@@ -15,21 +15,14 @@ export default function createTiles (map, palette, assets) {
       const dx = x * TILE_SIZE
       const dy = y * TILE_SIZE
 
-      if (tileId === 0) {
-        // if any surrounding tiles are solid, make it collidable
-        const surroundingTiles = getSurrounding(map, x, y)
-        if (surroundingTiles.some(tileId => tileId === 1)) {
-          const collider = makeCollider(dx, dy)
-          colliders.push(collider)
-        }
-        continue
-      }
+      if (tileId === 0) continue
 
       const tile = palette.tiles.find(tile => tile.id === tileId)
       const mesh = assets.meshes[tile.mesh].clone()
 
       if (tileId === 2) {
         const collider = makeCollider(dx, dy)
+        collider.trigger = false
         colliders.push(collider)
       }
       // 2d to 3d

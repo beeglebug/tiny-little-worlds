@@ -2,12 +2,14 @@ import Vector2 from '../geometry/Vector2'
 
 export default class CollisionResponse {
 
+  target = null
   position = new Vector2()
   normal = new Vector2()
   depth = 0
   _mtd = new Vector2()
 
   reset () {
+    this.target = null
     this.position.zero()
     this.normal.zero()
     this.depth = 0

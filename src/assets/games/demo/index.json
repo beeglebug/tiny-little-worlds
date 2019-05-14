@@ -84,7 +84,8 @@
           "id": "KEY",
           "name": "Key",
           "sprite": "key.png",
-          "texture": "key.png"
+          "texture": "key.png",
+          "collectable": true
         }
       ]
     }

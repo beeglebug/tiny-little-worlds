@@ -4,7 +4,6 @@ import KeyCode from './input/KeyCode'
 import Input from './input/Input'
 import clamp from './maths/clamp'
 import Circle from './physics/geometry/Circle'
-import separate from './physics/separate'
 import Physics from './Physics'
 
 const halfPi = Math.PI / 2
@@ -83,13 +82,24 @@ export default class CharacterController extends Object3D {
     this.collider.x = this.position.x
     this.collider.y = this.position.z
 
-    // stop the player going into the cubes
+    // get nearby
     const colliders = Physics.getColliders(this)
 
-    separate(this.collider, colliders)
+    Physics.collide(this.collider, colliders, this.onCollision)
 
     // update the player controller based on the collider
     this.position.set(this.collider.x, 0, this.collider.y)
+  }
+
+  onCollision = (response) => {
+    const { mtd } = response
+
+    if (response.target.trigger) {
+      console.log(response.target)
+    } else {
+      this.collider.x += mtd.x
+      this.collider.y += mtd.y
+    }
   }
 
   update (delta) {

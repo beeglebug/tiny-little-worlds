@@ -3,6 +3,7 @@ import { SpriteMaterial } from 'three/src/materials/SpriteMaterial'
 import { Sprite } from 'three/src/objects/Sprite'
 import { ENTITY_TYPE, TILE_SIZE } from '../consts'
 import Rect from '../physics/geometry/Rect'
+import Circle from '../physics/geometry/Circle'
 
 export default function createEntities (map, palette, assets, controller) {
 
@@ -14,6 +15,7 @@ export default function createEntities (map, palette, assets, controller) {
     const entityDefinition = palette.entities.find(({ id }) => id === entity.id)
     const x = entity.x * TILE_SIZE
     const y = entity.y * TILE_SIZE
+    let collider
 
     switch (entity.id) {
       case ENTITY_TYPE.PLAYER:
@@ -25,7 +27,7 @@ export default function createEntities (map, palette, assets, controller) {
         const mesh = assets.meshes[entityDefinition.mesh].clone()
         mesh.position.set(x, 0, y)
         // TODO define this somewhere properly
-        const collider = new Rect(
+        collider = new Rect(
           x - TILE_SIZE / 2,
           y - TILE_SIZE / 4,
           TILE_SIZE,
@@ -36,6 +38,9 @@ export default function createEntities (map, palette, assets, controller) {
         break
       case ENTITY_TYPE.KEY:
         const key = createKey(assets, entityDefinition, x, y)
+        collider = new Circle(x, y, TILE_SIZE / 4)
+        collider.trigger = true
+        colliders.push(collider)
         entities.push(key)
         break
     }
