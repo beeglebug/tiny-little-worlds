@@ -83,6 +83,7 @@ module.exports = (env, argv) => {
       }),
       new CopyPlugin([
         { from: './src/assets', to: 'assets' },
+        { from: './src/output', to: '' },
       ]),
     ],
     devtool: DEV ? 'cheap-module-eval-source-map' : 'none',
