@@ -1,4 +1,5 @@
 const path = require('path')
+const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
@@ -88,12 +89,12 @@ module.exports = (env, argv) => {
         { from: './src/assets', to: 'assets' },
         { from: './src/output', to: '' },
       ]),
+      new webpack.HashedModuleIdsPlugin()
     ],
     devtool: DEV ? 'cheap-module-eval-source-map' : 'none',
     devServer: {
       contentBase: outputDirectory,
     },
-    performance: { hints: false }, // we know its big, ok?
     optimization: {
       splitChunks: {
         chunks: 'all',
