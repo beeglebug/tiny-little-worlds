@@ -162,7 +162,7 @@ export default class Editor {
   loadAssets () {
     const { tiles, entities } = this.palette
 
-    const basePath = `/assets/games/${this.game.id}/assets`
+    const basePath = `/${this.game.id}/assets`
     const toLoad = [...tiles, ...entities]
 
     return loadAssets(basePath, toLoad)

@@ -26,7 +26,7 @@ function App () {
 
   const [ loading, setLoading ] = useState(true)
   const dispatch = useDispatch()
-  const url = '/assets/games/demo/index.json'
+  const url = '/abc123/game.json'
 
   useEffect(() => {
     fetch(url)

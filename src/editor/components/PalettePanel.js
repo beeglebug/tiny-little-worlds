@@ -30,7 +30,7 @@ export default function PalettePanel () {
     <Panel title={'palette'}>
       <div className={styles.row}>
         {tiles.map(({ id, name, sprite }) => {
-          const src = `/assets/games/${game.id}/assets/${sprite}`
+          const src = `/${game.id}/assets/${sprite}`
           return (
             <img
               className={classnames(styles.swatch, selectedTile === id && styles.selected)}
@@ -44,7 +44,7 @@ export default function PalettePanel () {
       </div>
       <div className={styles.row}>
         {entities.map(({ id, name, sprite }) => {
-          const src = `/assets/games/${game.id}/assets/${sprite}`
+          const src = `/${game.id}/assets/${sprite}`
           return (
             <img
               className={classnames(styles.swatch, selectedEntity === id && styles.selected)}

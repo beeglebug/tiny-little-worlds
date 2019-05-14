@@ -39,7 +39,7 @@ export default function loadAssets (game) {
 
 function getPath (game, item) {
   if (item.texture.startsWith('/')) return item.texture
-  return `/assets/games/${game.id}/assets/${item.texture}`
+  return `/${game.id}/assets/${item.texture}`
 }
 
 function loadTexture (loader, path) {
