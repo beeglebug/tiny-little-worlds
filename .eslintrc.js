@@ -54,7 +54,7 @@ module.exports = {
       },
     ],
     'import/newline-after-import': ERROR,
-    'import/order': [ERROR, { 'groups': [['builtin', 'external', 'internal'], 'parent', 'sibling', 'index.js'] }],
+    'import/order': [ERROR, { 'groups': [['builtin', 'external', 'internal'], 'parent', 'sibling', 'index'] }],
     'no-console': [ERROR, { allow: ['warn', 'error'] }],
     'object-curly-spacing': [ERROR, 'always'],
     'react/jsx-curly-spacing': [ERROR, 'never'],

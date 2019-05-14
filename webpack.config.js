@@ -1,5 +1,6 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 
@@ -11,6 +12,7 @@ module.exports = (env, argv) => {
   return {
     entry: {
       editor: path.resolve(__dirname, './src/editor/index.js'),
+      player: path.resolve(__dirname, './src/engine/index.js'),
     },
     output: {
       path: outputDirectory,
@@ -81,6 +83,7 @@ module.exports = (env, argv) => {
       new HtmlWebpackPlugin({
         template: 'src/assets/index.html',
       }),
+      new ScriptExtHtmlWebpackPlugin({ defaultAttribute: 'defer' }),
       new CopyPlugin([
         { from: './src/assets', to: 'assets' },
         { from: './src/output', to: '' },
