@@ -27,7 +27,10 @@ export default function PalettePanel () {
   const { tiles, entities } = game.palettes[0]
 
   return (
-    <Panel title={'palette'}>
+    <Panel
+      name={'palette'}
+      title={'palette'}
+    >
       <div className={styles.row}>
         {tiles.map(({ id, name, sprite }) => {
           const src = `/${game.id}/assets/${sprite}`

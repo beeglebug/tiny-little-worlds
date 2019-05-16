@@ -8,6 +8,7 @@ export const CLEAR_MAP_ENTITIES = 'CLEAR_MAP_ENTITIES'
 export const CLEAR_MAP = 'CLEAR_MAP'
 export const SET_GAME = 'SET_GAME'
 export const SET_SHOW_GRID = 'SET_SHOW_GRID'
+export const SET_WINDOW_VISIBILITY = 'SET_WINDOW_VISIBILITY'
 
 export const selectEntityAction = (entityType) => ({
   type: SELECT_ENTITY,
@@ -57,4 +58,9 @@ export const setGameAction = game => ({
 export const setShowGridAction = showGrid => ({
   type: SET_SHOW_GRID,
   payload: showGrid,
+})
+
+export const setWindowVisibilityAction = (window, visibility) => ({
+  type: SET_WINDOW_VISIBILITY,
+  payload: { window, visibility },
 })

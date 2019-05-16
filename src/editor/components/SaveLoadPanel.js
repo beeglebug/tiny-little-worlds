@@ -32,7 +32,10 @@ export default function SaveLoadPanel () {
   }
 
   return (
-    <Panel title={'save / load'}>
+    <Panel
+      name='saveLoad'
+      title={'save / load'}
+    >
       <textarea
         ref={textAreaRef}
         onChange={handleChange}

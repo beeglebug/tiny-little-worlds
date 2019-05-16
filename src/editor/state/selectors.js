@@ -12,3 +12,8 @@ export const currentLevelSelector = state => {
   if (!state.game) return null
   return state.game.levels[0]
 }
+
+export const windowVisibilitySelector = (state, window) => {
+  if (window) return state.windows[window]
+  return state.windows
+}

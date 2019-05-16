@@ -25,7 +25,10 @@ export default function Tools () {
   }
 
   return (
-    <Panel title={'tools'}>
+    <Panel
+      name={'tools'}
+      title={'tools'}
+    >
       <Button
         onClick={() => selectTool(TOOLS.PAINT)}
         selected={selectedTool === TOOLS.PAINT}

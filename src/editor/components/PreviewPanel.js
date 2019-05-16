@@ -7,7 +7,10 @@ const Preview = lazy(() => import('./Preview'))
 
 export default function PreviewPanel () {
   return (
-    <Panel title={'preview'}>
+    <Panel
+      name={'preview'}
+      title={'preview'}
+    >
       <Suspense fallback={<Placeholder />}>
         <Preview />
       </Suspense>

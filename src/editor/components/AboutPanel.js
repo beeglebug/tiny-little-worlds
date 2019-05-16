@@ -3,7 +3,10 @@ import Panel from './Panel'
 
 export default function AboutPanel () {
   return (
-    <Panel title={'about'}>
+    <Panel
+      name={'about'}
+      title={'about'}
+    >
       <h2>What is this?</h2>
       <p>Tiny Little Worlds is a set of tools for creating small first person games, think <a href="https://ledoux.itch.io/bitsy">bitsy</a>, but in 3D</p>
       <p>It&apos;s pretty early at this point, but being actively developed. New features are being added all the time, so keep checking back!</p>

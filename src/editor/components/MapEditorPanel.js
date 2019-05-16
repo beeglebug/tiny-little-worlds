@@ -7,7 +7,10 @@ const MapEditor = lazy(() => import('./MapEditor'))
 
 export default function MapEditorPanel () {
   return (
-    <Panel title={'edit level'}>
+    <Panel
+      name={'mapEditor'}
+      title={'edit level'}
+    >
       <Suspense fallback={<Placeholder />}>
         <MapEditor />
       </Suspense>
