@@ -78,14 +78,18 @@
           "name": "Door",
           "sprite": "door.png",
           "texture": "door.png",
-          "mesh": "door.obj"
+          "mesh": "door.obj",
+          "collider": ["rect", 2, 1]
         },
         {
           "id": "KEY",
           "name": "Key",
           "sprite": "key.png",
           "texture": "key.png",
-          "collectable": true
+          "billboard": true,
+          "collider": ["circle", 0.5],
+          "collectable": true,
+          "shadow": true
         }
       ]
     }
