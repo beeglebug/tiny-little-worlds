@@ -1,4 +1,5 @@
-# Tiny Little World
-### Tools for creating tiny little worlds
+# Tiny Little Worlds
+
+Tools for creating small first person games
 
 https://tinylittle.world
