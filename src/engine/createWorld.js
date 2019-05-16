@@ -5,6 +5,8 @@ import createEntities from './create/createEntities'
 
 export default function createWorld (game, assets, controller) {
 
+  Physics.clearColliders()
+
   const world = new Object3D()
 
   // TODO current level
