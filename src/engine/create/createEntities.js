@@ -1,70 +1,78 @@
-import { Object3D } from 'three/src/core/Object3D'
 import { SpriteMaterial } from 'three/src/materials/SpriteMaterial'
 import { Sprite } from 'three/src/objects/Sprite'
 import { ENTITY_TYPE, TILE_SIZE } from '../consts'
 import Rect from '../physics/geometry/Rect'
 import Circle from '../physics/geometry/Circle'
+import Entity from '../Entity'
 
 export default function createEntities (map, palette, assets, controller) {
 
   const entities = []
-  const colliders = []
 
-  map.entities.forEach(entity => {
+  map.entities.forEach(entityData => {
 
-    const entityDefinition = palette.entities.find(({ id }) => id === entity.id)
-    const x = entity.x * TILE_SIZE
-    const y = entity.y * TILE_SIZE
-    let collider
+    const entityDefinition = palette.entities.find(({ id }) => id === entityData.id)
 
-    switch (entity.id) {
+    let entity
+
+    // TODO make all this via props from config
+    switch (entityData.id) {
+
       case ENTITY_TYPE.PLAYER:
+
         // just set player position, nothing to add to world
         // TODO player orientation?
-        controller.position.set(entity.x * TILE_SIZE, 0, entity.y * TILE_SIZE)
+        controller.position.set(entityData.x * TILE_SIZE, 0, entityData.y * TILE_SIZE)
         break
+
       case ENTITY_TYPE.DOOR:
+
+        entity = new Entity(entityData)
         const mesh = assets.meshes[entityDefinition.mesh].clone()
-        mesh.position.set(x, 0, y)
+
         // TODO define this somewhere properly
-        collider = new Rect(
-          x - TILE_SIZE / 2,
-          y - TILE_SIZE / 4,
+        entity.collider = new Rect(
+          (entityData.x * TILE_SIZE) - TILE_SIZE / 2,
+          (entityData.y * TILE_SIZE) - TILE_SIZE / 4,
           TILE_SIZE,
           TILE_SIZE / 2
         )
-        entities.push(mesh)
-        colliders.push(collider)
+
+        entity.add(mesh)
+
+        entities.push(entity)
         break
+
       case ENTITY_TYPE.KEY:
-        const key = createKey(assets, entityDefinition, x, y)
-        collider = new Circle(x, y, TILE_SIZE / 4)
+
+        entity = new Entity(entityData)
+
+        const map = assets.textures[entityDefinition.texture]
+        const spriteMaterial = new SpriteMaterial({ map, transparent: true, depthWrite: false })
+        const sprite = new Sprite(spriteMaterial)
+
+        const shadow = assets.meshes['shadow-small'].clone()
+
+        sprite.position.set(0, 0.5, 0)
+        shadow.position.set(0, 0.1, 0)
+
+        entity.add(sprite)
+        entity.add(shadow)
+
+        const collider = new Circle(
+          entityData.x * TILE_SIZE,
+          entityData.y * TILE_SIZE,
+          TILE_SIZE / 4
+        )
         collider.trigger = true
-        colliders.push(collider)
-        entities.push(key)
+
+        entity.collider = collider
+
+        entities.push(entity)
         break
     }
 
   })
 
-  return [ entities, colliders ]
-}
-
-function createKey (assets, entityDefinition, x, y) {
-  const map = assets.textures[entityDefinition.texture]
-  const spriteMaterial = new SpriteMaterial({ map, transparent: true, depthWrite: false })
-  const sprite = new Sprite(spriteMaterial)
-
-  const shadow = assets.meshes['shadow-small'].clone()
-
-  sprite.position.set(0, 0.5, 0)
-  shadow.position.set(0, 0.1, 0)
-
-  const root = new Object3D()
-  root.add(sprite)
-  root.add(shadow)
-
-  root.position.set(x, 0, y)
-
-  return root
+  return entities
 }

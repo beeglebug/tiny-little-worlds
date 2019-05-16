@@ -20,11 +20,11 @@ export default function createWorld (game, assets, controller) {
 
   Physics.addColliders(tileColliders)
 
-  const [ entities, entityColliders ] = createEntities(map, palette, assets, controller)
+  const entities = createEntities(map, palette, assets, controller)
 
   if (entities.length) world.add(...entities)
 
-  Physics.addColliders(entityColliders)
+  Physics.addColliders(entities.map(entity => entity.collider))
 
   return world
 }
