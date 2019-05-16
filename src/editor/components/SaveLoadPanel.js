@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { setGameAction } from '../state/actions'
 import { gameSelector } from '../state/selectors'
@@ -8,16 +8,14 @@ import styles from './SaveLoadPanel.css'
 
 export default function SaveLoadPanel () {
 
-  const [ data, setData ] = useState('')
-  const dispatch = useDispatch()
   const game = useSelector(gameSelector)
+  const [ data, setData ] = useState(JSON.stringify(game))
+  const dispatch = useDispatch()
   const textAreaRef = useRef()
 
-  const save = () => {
+  useEffect(() => {
     setData(JSON.stringify(game))
-    // TODO better way of doing this?
-    setTimeout(() => textAreaRef.current.select(), 10)
-  }
+  }, [game])
 
   const load = () => {
     try {
@@ -27,7 +25,6 @@ export default function SaveLoadPanel () {
     } catch (error) {
       alert(`Error parsing map: ${error}`)
     }
-
   }
 
   const handleChange = (event) => {
@@ -42,14 +39,9 @@ export default function SaveLoadPanel () {
         className={styles.textarea}
         value={data}
       />
-      <div>
-        <Button onClick={save}>
-          save
-        </Button>
-        <Button onClick={load}>
-          load
-        </Button>
-      </div>
+      <Button onClick={load}>
+        load
+      </Button>
     </Panel>
   )
 }
