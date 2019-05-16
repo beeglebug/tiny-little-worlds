@@ -1,10 +1,10 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import classnames from 'classnames'
 import { selectEntityAction, selectTileAction } from '../state/actions'
 import { gameSelector, selectedEntitySelector, selectedTileSelector } from '../state/selectors'
 import useReduxState from '../hooks/useReduxState'
 import Panel from './Panel'
+import PaletteSwatch from './PaletteSwatch'
 import styles from './PalettePanel.css'
 
 export default function PalettePanel () {
@@ -32,9 +32,9 @@ export default function PalettePanel () {
         {tiles.map(({ id, name, sprite }) => {
           const src = `/${game.id}/assets/${sprite}`
           return (
-            <img
-              className={classnames(styles.swatch, selectedTile === id && styles.selected)}
+            <PaletteSwatch
               key={id}
+              selected={selectedTile === id}
               src={src}
               title={name}
               onClick={() => handleClickTile(id)}
@@ -46,9 +46,9 @@ export default function PalettePanel () {
         {entities.map(({ id, name, sprite }) => {
           const src = `/${game.id}/assets/${sprite}`
           return (
-            <img
-              className={classnames(styles.swatch, selectedEntity === id && styles.selected)}
+            <PaletteSwatch
               key={id}
+              selected={selectedEntity === id}
               src={src}
               title={name}
               onClick={() => handleClickEntity(id)}

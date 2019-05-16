@@ -1,29 +1,8 @@
-.name {
+.row {
+    display: flex;
     margin-bottom: 10px;
 }
 
-.swatch {
-    width: 32px;
-    height: 32px;
-    margin: 0 10px 10px 0;
-    border: 2px solid #ffffff;
-    image-rendering: pixelated;
-    display: block;
-    background-color: #2d3747;
-}
-
-.swatch:last-child {
-    margin-right: 0;
-}
-
-.selected {
-    border: 2px solid #ecab08;
-}
-
-.row {
-    display: flex;
-}
-
-.row:last-child .swatch {
+.row:last-child {
     margin-bottom: 0;
 }

@@ -1,0 +1,25 @@
+
+.swatch {
+    width: 32px;
+    height: 32px;
+    margin: 0 10px 0 0;
+    padding: 0;
+    border: 2px solid #ffffff;
+    display: block;
+    box-sizing: content-box;
+    background-color: #2d3747;
+}
+
+.swatch img {
+    width: 32px;
+    height: 32px;
+    image-rendering: pixelated;
+}
+
+.swatch:last-child {
+    margin-right: 0;
+}
+
+.selected {
+    border: 2px solid #ecab08;
+}
