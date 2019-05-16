@@ -16,6 +16,10 @@
     text-transform: capitalize;
 }
 
+.header h2 {
+    font-weight: normal;
+}
+
 .body {
     padding: 10px;
     font-size: 10pt;

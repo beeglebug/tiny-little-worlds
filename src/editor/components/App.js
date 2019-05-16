@@ -11,6 +11,8 @@ import PreviewPanel from './PreviewPanel'
 import MapEditorPanel from './MapEditorPanel'
 import LoadingIndicator from './LoadingIndicator'
 import Header from './Header'
+import AboutPanel from './AboutPanel'
+import Row from './Row'
 
 const store = createStore()
 
@@ -47,11 +49,16 @@ function App () {
       <Header />
       <div className={styles.body}>
         <PseudoSuspense loading={loading}>
-          <MapEditorPanel />
-          <PalettePanel />
-          <Tools />
-          <PreviewPanel />
-          <SaveLoadPanel />
+          <Row>
+            <AboutPanel />
+          </Row>
+          <Row>
+            <MapEditorPanel />
+            <PalettePanel />
+            <Tools />
+            <PreviewPanel />
+            <SaveLoadPanel />
+          </Row>
         </PseudoSuspense>
       </div>
     </div>
