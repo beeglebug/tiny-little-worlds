@@ -6,6 +6,7 @@ export default function Panel ({ title, children }) {
     <div className={styles.container}>
       <div className={styles.header}>
         <h2>{title}</h2>
+        <button className={styles.closeButton}>x</button>
       </div>
       <div className={styles.body}>
         {children}
