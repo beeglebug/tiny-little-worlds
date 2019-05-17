@@ -11,7 +11,7 @@ const halfPi = Math.PI / 2
 export default class CharacterController extends Object3D {
 
   enabled = false
-  eyeHeight = 1.8
+  eyeHeight = 1.5
   velocity = new Vector3()
   direction = new Vector3()
 

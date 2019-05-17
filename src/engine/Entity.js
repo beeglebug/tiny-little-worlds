@@ -32,15 +32,20 @@ export default class Entity extends Object3D {
       const map = assets.textures[props.texture]
       const spriteMaterial = new SpriteMaterial({ map, transparent: true, depthWrite: false })
       const sprite = new Sprite(spriteMaterial)
-      // TODO position from json
-      sprite.position.set(0, 0.5, 0)
+      sprite.renderOrder = 1
+      sprite.center.set(0.5, 0)
+
+      // always scale to match tiles, but multiply by definition
+      let scale = TILE_SIZE
+      if (props.scale) scale *= props.scale
+
+      sprite.scale.set(scale, scale, scale)
       this.add(sprite)
     }
 
     if (props.shadow) {
       // TODO size from json
       const shadow = assets.meshes['shadow-small'].clone()
-      shadow.position.set(0, 0.1, 0)
       this.add(shadow)
     }
   }

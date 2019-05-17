@@ -13,6 +13,7 @@ export default function loadAssets (game) {
   const textureLoader = new TextureLoader()
   const meshLoader = {}
 
+  // TODO multiple shadow sizes
   const core = [{ mesh: 'shadow-small', texture: '/assets/shadow-small.png' }]
 
   const textures = [...core, ...tiles, ...entities]
@@ -30,8 +31,9 @@ export default function loadAssets (game) {
       return meshes
     }, {})
 
+  // just off the floor
+  meshes['shadow-small'].position.set(0, 0.01, 0)
   meshes['shadow-small'].material.opacity = 0.5
-  meshes['shadow-small'].material.depthWrite = false
   meshes['shadow-small'].material.transparent = true
 
   return { textures, meshes }

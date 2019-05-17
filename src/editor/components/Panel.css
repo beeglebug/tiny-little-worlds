@@ -5,6 +5,12 @@
     box-shadow: 5px 5px 0 #809CB0;
 }
 
+@media (max-width: 425px) {
+    .container {
+        width: 100%;
+    }
+}
+
 .header {
     background-color: #deecff;
     color: #69779b;
