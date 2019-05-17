@@ -13,8 +13,10 @@ export default function loadAssets (game) {
   const textureLoader = new TextureLoader()
   const meshLoader = {}
 
-  // TODO multiple shadow sizes
-  const core = [{ mesh: 'shadow-small', texture: '/assets/shadow-small.png' }]
+  const core = [
+    { mesh: 'shadow-small', texture: '/assets/shadow-small.png' },
+    { mesh: 'shadow', texture: '/assets/shadow.png' },
+  ]
 
   const textures = [...core, ...tiles, ...entities]
     .filter(item => item.texture)
@@ -31,12 +33,17 @@ export default function loadAssets (game) {
       return meshes
     }, {})
 
-  // just off the floor
-  meshes['shadow-small'].position.set(0, 0.01, 0)
-  meshes['shadow-small'].material.opacity = 0.5
-  meshes['shadow-small'].material.transparent = true
+  setShadowProps(meshes['shadow'])
+  setShadowProps(meshes['shadow-small'])
 
   return { textures, meshes }
+}
+
+function setShadowProps (shadow) {
+  // just off the floor
+  shadow.position.set(0, 0.01, 0)
+  shadow.material.opacity = 0.3
+  shadow.material.transparent = true
 }
 
 function getPath (game, item) {
@@ -58,6 +65,9 @@ function loadMesh (loader, path, map) {
   return new Mesh(geometry, material)
 }
 
+const shadowGeometry = new PlaneGeometry(TILE_SIZE, TILE_SIZE)
+shadowGeometry.rotateX(-Math.PI / 2)
+
 const shadowSmallGeometry = new PlaneGeometry(TILE_SIZE / 2, TILE_SIZE / 2)
 shadowSmallGeometry.rotateX(-Math.PI / 2)
 
@@ -78,6 +88,7 @@ ceilingGeometry.translate(0, WALL_HEIGHT, 0)
 floorGeometry.merge(ceilingGeometry)
 
 const TEMP_GEOMETRY = {
+  'shadow': shadowGeometry,
   'shadow-small': shadowSmallGeometry,
   'wall.obj': wallGeometry,
   'floor.obj': floorGeometry,

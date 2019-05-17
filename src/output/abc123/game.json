@@ -99,7 +99,8 @@
           "billboard": true,
           "scale": 0.5,
           "collider": ["circle", 0.5],
-          "shadow": true
+          "shadow": true,
+          "shadowSize": "small"
         },
         {
           "id": "SKELETON",

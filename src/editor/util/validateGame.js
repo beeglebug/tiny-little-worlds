@@ -8,7 +8,8 @@ export default function validateGame (game) {
 
   // TODO validate unique entities are unique
 
-  // TODO validate entity types against ENTITY_TYPE consts
+  // TODO validate entity props are valid
+  // shadowSize can only be "small"
 
   return game
 }

@@ -44,8 +44,14 @@ export default class Entity extends Object3D {
     }
 
     if (props.shadow) {
-      // TODO size from json
-      const shadow = assets.meshes['shadow-small'].clone()
+      let key = 'shadow'
+      if (props.shadowSize) {
+        key = `${key}-${props.shadowSize}`
+      }
+
+      // TODO verify valid shadow size
+      const shadow = assets.meshes[key].clone()
+      console.log(shadow)
       this.add(shadow)
     }
   }
