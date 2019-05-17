@@ -7,7 +7,7 @@ import Circle from './physics/geometry/Circle'
 
 export default class Entity extends Object3D {
 
-  constructor (props, definition, assets) {
+  constructor (props, assets) {
     super()
 
     this.position.set(
@@ -16,20 +16,20 @@ export default class Entity extends Object3D {
       props.y * TILE_SIZE
     )
 
-    if (definition.collider) {
-      this.collider = createCollider(this.position.x, this.position.z, definition.collider)
-      if (definition.collectable) {
+    if (props.collider) {
+      this.collider = createCollider(this.position.x, this.position.z, props.collider)
+      if (props.collectable) {
         this.collider.trigger = true
       }
     }
 
-    if (definition.mesh) {
-      const mesh = assets.meshes[definition.mesh].clone()
+    if (props.mesh) {
+      const mesh = assets.meshes[props.mesh].clone()
       this.add(mesh)
     }
 
-    if (definition.billboard && definition.texture) {
-      const map = assets.textures[definition.texture]
+    if (props.billboard && props.texture) {
+      const map = assets.textures[props.texture]
       const spriteMaterial = new SpriteMaterial({ map, transparent: true, depthWrite: false })
       const sprite = new Sprite(spriteMaterial)
       // TODO position from json
@@ -37,7 +37,7 @@ export default class Entity extends Object3D {
       this.add(sprite)
     }
 
-    if (definition.shadow) {
+    if (props.shadow) {
       // TODO size from json
       const shadow = assets.meshes['shadow-small'].clone()
       shadow.position.set(0, 0.1, 0)
