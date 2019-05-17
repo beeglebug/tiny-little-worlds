@@ -99,8 +99,7 @@
           "billboard": true,
           "scale": 0.5,
           "collider": ["circle", 0.5],
-          "shadow": true,
-          "shadowSize": "small"
+          "shadow": 0.4
         },
         {
           "id": "SKELETON",
@@ -109,7 +108,7 @@
           "texture": "skeleton.png",
           "billboard": true,
           "collider": ["circle", 0.5],
-          "shadow": true
+          "shadow": 0.7
         }
       ]
     }

@@ -4,6 +4,7 @@ import { MeshBasicMaterial } from 'three/src/materials/MeshBasicMaterial'
 import { Mesh } from 'three/src/objects/Mesh'
 import { PlaneGeometry } from 'three/src/geometries/PlaneGeometry'
 import { BoxGeometry } from 'three/src/geometries/BoxGeometry'
+import createShadow from './createShadow'
 import { TILE_SIZE, WALL_HEIGHT } from './consts'
 
 export default function loadAssets (game) {
@@ -13,12 +14,7 @@ export default function loadAssets (game) {
   const textureLoader = new TextureLoader()
   const meshLoader = {}
 
-  const core = [
-    { mesh: 'shadow-small', texture: '/assets/shadow-small.png' },
-    { mesh: 'shadow', texture: '/assets/shadow.png' },
-  ]
-
-  const textures = [...core, ...tiles, ...entities]
+  const textures = [...tiles, ...entities]
     .filter(item => item.texture)
     .reduce((textures, item) => {
       const path = getPath(game, item)
@@ -26,24 +22,22 @@ export default function loadAssets (game) {
       return textures
     }, {})
 
-  const meshes = [...core, ...tiles, ...entities]
+  const meshes = [...tiles, ...entities]
     .filter(item => (item.mesh && item.texture))
     .reduce((meshes, item) => {
       meshes[item.mesh] = loadMesh(meshLoader, item.mesh, textures[item.texture])
       return meshes
     }, {})
 
-  setShadowProps(meshes['shadow'])
-  setShadowProps(meshes['shadow-small'])
+  const shadows = entities
+    .filter(entity => entity.shadow)
+    .map(entity => entity.shadow)
+    .reduce((shadows, size) => {
+      shadows[size] = createShadow(size, shadowGeometry)
+      return shadows
+    }, {})
 
-  return { textures, meshes }
-}
-
-function setShadowProps (shadow) {
-  // just off the floor
-  shadow.position.set(0, 0.01, 0)
-  shadow.material.opacity = 0.3
-  shadow.material.transparent = true
+  return { textures, meshes, shadows }
 }
 
 function getPath (game, item) {
@@ -68,9 +62,6 @@ function loadMesh (loader, path, map) {
 const shadowGeometry = new PlaneGeometry(TILE_SIZE, TILE_SIZE)
 shadowGeometry.rotateX(-Math.PI / 2)
 
-const shadowSmallGeometry = new PlaneGeometry(TILE_SIZE / 2, TILE_SIZE / 2)
-shadowSmallGeometry.rotateX(-Math.PI / 2)
-
 const wallGeometry = new BoxGeometry(TILE_SIZE, WALL_HEIGHT, TILE_SIZE)
 wallGeometry.translate(0, WALL_HEIGHT / 2, 0)
 
@@ -88,8 +79,6 @@ ceilingGeometry.translate(0, WALL_HEIGHT, 0)
 floorGeometry.merge(ceilingGeometry)
 
 const TEMP_GEOMETRY = {
-  'shadow': shadowGeometry,
-  'shadow-small': shadowSmallGeometry,
   'wall.obj': wallGeometry,
   'floor.obj': floorGeometry,
   'door.obj': doorGeometry,
