@@ -70,4 +70,8 @@ module.exports = {
       version: 'detect',
     },
   },
+  globals: {
+    __VERSION: true,
+    __MODE: true
+  }
 }

@@ -13,6 +13,7 @@ import LoadingIndicator from './LoadingIndicator'
 import Header from './Header'
 import AboutPanel from './AboutPanel'
 import Row from './Row'
+import ExternalLink from './ExternalLink'
 
 const store = createStore()
 
@@ -60,6 +61,9 @@ function App () {
             <SaveLoadPanel />
           </Row>
         </PseudoSuspense>
+      </div>
+      <div className={styles.footer}>
+        <ExternalLink href={'https://github.com/beeglebug/tiny-little-worlds'}>{`v${__VERSION}`}</ExternalLink>
       </div>
     </div>
   )

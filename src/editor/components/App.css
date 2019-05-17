@@ -9,3 +9,10 @@
     align-items: flex-start;
     flex-flow: wrap;
 }
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    padding: 10px;
+    font-size: 12px;
+}

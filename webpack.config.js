@@ -1,9 +1,10 @@
 const path = require('path')
-const webpack = require('webpack');
+const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
+const packageJson = require('./package.json')
 
 const outputDirectory = path.resolve(__dirname, 'dist')
 const nodeModulesDirectory = path.resolve(__dirname, 'node_modules')
@@ -80,16 +81,20 @@ module.exports = (env, argv) => {
       ],
     },
     plugins: [
+      new webpack.DefinePlugin({
+        __VERSION: JSON.stringify(packageJson.version),
+        __MODE: JSON.stringify(argv.mode),
+      }),
       new CleanWebpackPlugin(['dist']),
       new HtmlWebpackPlugin({
         template: 'src/assets/index.html',
       }),
       new ScriptExtHtmlWebpackPlugin({ defaultAttribute: 'defer' }),
       new CopyPlugin([
-        { from: './src/assets', to: 'assets' },
+        { from: './src/assets', to: '' },
         { from: './src/output', to: '' },
       ]),
-      new webpack.HashedModuleIdsPlugin()
+      new webpack.HashedModuleIdsPlugin(),
     ],
     devtool: DEV ? 'cheap-module-eval-source-map' : 'none',
     devServer: {
