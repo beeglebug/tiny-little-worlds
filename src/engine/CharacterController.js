@@ -138,22 +138,9 @@ export default class CharacterController extends Object3D {
 
       const closest = inRange[0]
 
-      const mesh = closest.object
-
-      // hovering something new
-      if (this.interactionTarget && this.interactionTarget !== mesh) {
-        // reset the old one first
-        this.interactionTarget.material.color.set('#FFFFFF')
-      }
-
-      this.interactionTarget = mesh
-
-      // show interactivity
-      this.interactionTarget.material.color.set('#FF00FF')
-
-    // we were over something, now we're not
-    } else if (this.interactionTarget) {
-      this.interactionTarget.material.color.set('#FFFFFF')
+      // the target is the parent Entity
+      this.interactionTarget = closest.object.parent
+    } else {
       this.interactionTarget = null
     }
 

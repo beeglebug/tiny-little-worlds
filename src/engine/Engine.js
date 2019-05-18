@@ -1,28 +1,31 @@
 import { WebGLRenderer } from 'three/src/renderers/WebGLRenderer'
 import { PerspectiveCamera } from 'three/src/cameras/PerspectiveCamera'
+import { Object3D } from 'three/src/core/Object3D'
 import createScene from './createScene'
 import CharacterController from './CharacterController'
 import Input from './input/Input'
-import { HEIGHT, TILE_SIZE, WIDTH } from './consts'
+import { HEIGHT, WIDTH } from './consts'
 import loop from './loop'
 import createContent from './createContent'
 import loadAssets from './loadAssets'
-import { Object3D } from 'three/src/core/Object3D'
 import Physics from './Physics'
-import Rect from './physics/geometry/Rect'
 
 export default class Engine {
 
-  constructor (canvas) {
+  constructor (canvas3d, canvas2d) {
 
-    this.canvas = canvas
+    this.canvas3d = canvas3d
+    this.canvas2d = canvas2d
+
     this.scene = createScene()
-    this.renderer = new WebGLRenderer({ canvas })
+    this.renderer = new WebGLRenderer({ canvas: canvas3d })
     this.camera = new PerspectiveCamera(45, WIDTH / HEIGHT, 0.1, 1000)
     this.controller = new CharacterController(this.camera)
     this.scene.add(this.controller)
 
-    this.setupPointerLock(canvas)
+    this.setupPointerLock(canvas3d)
+
+    this.ctx = canvas2d.getContext('2d')
   }
 
   load (game) {
@@ -59,10 +62,10 @@ export default class Engine {
   }
 
   start () {
-    Input.bind(this.canvas)
+    Input.bind(this.canvas3d)
 
-    this.canvas.focus()
-    this.canvas.requestPointerLock()
+    this.canvas3d.focus()
+    this.canvas3d.requestPointerLock()
 
     this.cancelLoop = loop(this.tick)
   }
@@ -78,8 +81,8 @@ export default class Engine {
   }
 
   stop () {
-    Input.unbind(this.canvas)
-    this.canvas.blur()
+    Input.unbind(this.canvas3d)
+    this.canvas3d.blur()
     this.cancelLoop()
     this.onStop()
   }
@@ -98,6 +101,16 @@ export default class Engine {
 
   render () {
     this.renderer.render(this.scene, this.camera)
+
+    // 2d rendering
+    this.ctx.fillStyle = this.controller.interactionTarget ? '#FF0000' : '#FFFFFF'
+    const size = 4
+    this.ctx.fillRect(
+      (WIDTH / 2) - (size / 2),
+      (HEIGHT / 2) - (size / 2),
+      size,
+      size
+    )
   }
 
   setupPointerLock (domElement) {

@@ -1,4 +1,10 @@
-.canvas {
+.canvas2d {
+    display: block;
+    position: absolute;
+    top: 0;
+}
+
+.canvas3d {
     display: block;
 }
 

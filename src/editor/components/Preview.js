@@ -7,13 +7,14 @@ import styles from './Preview.css'
 
 export default function Preview () {
 
-  const canvasRef = useRef(null)
+  const canvas2DRef = useRef(null)
+  const canvas3DRef = useRef(null)
   const [ running, setRunning ] = useState(false)
   const [ engine, setEngine ] = useState(null)
   const game = useSelector(gameSelector)
 
   useLayoutEffect(() => {
-    const engine = new Engine(canvasRef.current)
+    const engine = new Engine(canvas3DRef.current, canvas2DRef.current)
     setEngine(engine)
   }, [])
 
@@ -36,9 +37,15 @@ export default function Preview () {
       style={{ width, height }}
     >
       <canvas
-        ref={canvasRef}
+        ref={canvas2DRef}
+        className={styles.canvas2d}
+        width={width}
+        height={height}
+      />
+      <canvas
+        ref={canvas3DRef}
         tabIndex={1}
-        className={styles.canvas}
+        className={styles.canvas3d}
         width={width}
         height={height}
       />
