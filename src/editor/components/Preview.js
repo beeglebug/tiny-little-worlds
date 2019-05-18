@@ -26,14 +26,21 @@ export default function Preview () {
     }
   }
 
+  // TODO resolution from config
+  const width = 320
+  const height = 180
+
   return (
-    <div className={styles.container}>
+    <div
+      className={styles.container}
+      style={{ width, height }}
+    >
       <canvas
         ref={canvasRef}
         tabIndex={1}
         className={styles.canvas}
-        width={320}
-        height={180}
+        width={width}
+        height={height}
       />
       {!running && (
         <div className={styles.overlay}>

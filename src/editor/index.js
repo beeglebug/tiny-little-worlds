@@ -3,7 +3,6 @@ import { render } from 'react-dom'
 import './analytics'
 import App from './components/App'
 
-const container = document.createElement('div')
-document.body.appendChild(container)
+const container = document.getElementById('root')
 
 render(<App />, container)

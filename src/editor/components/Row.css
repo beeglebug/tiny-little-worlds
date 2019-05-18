@@ -4,3 +4,7 @@
     align-items: flex-start;
     flex-flow: wrap;
 }
+
+.row:last-child {
+    margin-bottom: 32px;
+}

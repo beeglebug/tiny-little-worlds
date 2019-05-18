@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: column;
     position: relative;
-    padding-bottom: 40px;
+    min-height: 100%;
 }
 
 .body {
