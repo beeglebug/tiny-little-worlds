@@ -97,7 +97,6 @@
           "texture": "key.png",
           "billboard": true,
           "scale": 0.5,
-          "collider": ["circle", 0.5],
           "shadow": 0.4
         },
         {

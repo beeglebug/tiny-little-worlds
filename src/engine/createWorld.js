@@ -24,7 +24,11 @@ export default function createWorld (game, assets, controller) {
 
   if (entities.length) world.add(...entities)
 
-  Physics.addColliders(entities.map(entity => entity.collider))
+  const colliders = entities
+    .filter(entity => entity.collider)
+    .map(entity => entity.collider)
+
+  Physics.addColliders(colliders)
 
   return world
 }
