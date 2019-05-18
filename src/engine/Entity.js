@@ -18,9 +18,6 @@ export default class Entity extends Object3D {
 
     if (props.collider) {
       this.collider = createCollider(this.position.x, this.position.z, props.collider)
-      if (props.collectable) {
-        this.collider.trigger = true
-      }
     }
 
     if (props.mesh) {
@@ -47,6 +44,11 @@ export default class Entity extends Object3D {
       const shadow = assets.shadows[props.shadow].clone()
       this.add(shadow)
     }
+  }
+
+  // pass through to child
+  raycast (raycaster, intersects) {
+    this.children[0].raycast(raycaster, intersects)
   }
 }
 

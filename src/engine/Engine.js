@@ -89,7 +89,7 @@ export default class Engine {
     // TODO actual broadphase
     const nearbyEntities = this.entities
 
-    this.controller.update(deltaTime)
+    this.controller.update(deltaTime, nearbyEntities)
 
     this.render()
 

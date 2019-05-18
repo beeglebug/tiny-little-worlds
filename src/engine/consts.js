@@ -3,6 +3,9 @@ export const HEIGHT = 400
 export const TILE_SIZE = 2
 export const WALL_HEIGHT = 2.4
 
+// TODO from config?
+export const INTERACTION_RANGE = 2
+
 // TODO remove
 export const ENTITY_TYPE = Object.freeze({
   PLAYER: 'PLAYER',

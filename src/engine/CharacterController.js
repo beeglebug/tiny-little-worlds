@@ -1,12 +1,16 @@
 import { Object3D } from 'three/src/core/Object3D'
 import { Vector3 } from 'three/src/math/Vector3'
+import { Vector2 } from 'three/src/math/Vector2'
+import { Raycaster } from 'three/src/core/Raycaster'
 import KeyCode from './input/KeyCode'
 import Input from './input/Input'
 import clamp from './maths/clamp'
 import Circle from './physics/geometry/Circle'
 import Physics from './Physics'
+import { INTERACTION_RANGE } from './consts'
 
 const halfPi = Math.PI / 2
+const screenCenter = new Vector2()
 
 export default class CharacterController extends Object3D {
 
@@ -23,6 +27,8 @@ export default class CharacterController extends Object3D {
   constructor (camera) {
     super()
 
+    this.camera = camera
+
     this.pitch = new Object3D()
     this.pitch.position.y = this.eyeHeight
 
@@ -30,6 +36,8 @@ export default class CharacterController extends Object3D {
     this.pitch.add(camera)
 
     this.collider = new Circle(0, 0, 0.6)
+
+    this.raycaster = new Raycaster()
 
     this.controls = {
       forward: Input.createButton('forward', KeyCode.W, KeyCode.UpArrow),
@@ -93,16 +101,11 @@ export default class CharacterController extends Object3D {
 
   onCollision = (response) => {
     const { mtd } = response
-
-    if (response.target.trigger) {
-      console.log(response.target)
-    } else {
-      this.collider.x += mtd.x
-      this.collider.y += mtd.y
-    }
+    this.collider.x += mtd.x
+    this.collider.y += mtd.y
   }
 
-  update (delta) {
+  update (delta, entities) {
     if (!this.enabled) return
 
     this.handleMouseInput(delta)
@@ -112,5 +115,18 @@ export default class CharacterController extends Object3D {
     this.translateZ(this.velocity.z * delta)
 
     this.handlePhysics()
+
+    // check for interaction
+
+    this.raycaster.setFromCamera(screenCenter, this.camera)
+
+    const intersections = this.raycaster.intersectObjects(entities)
+
+    if (intersections.length) {
+      const closest = intersections[0]
+      if (closest.distance > INTERACTION_RANGE) return
+      const entity = closest.object.parent
+      // TODO something to show possible interaction
+    }
   }
 }
