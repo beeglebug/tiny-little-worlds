@@ -31,6 +31,7 @@ const determineCode = event => {
 
 const handleKeyDown = event => {
   const code = determineCode(event)
+  if (downKeys[code]) return
   downKeys[code] = true
   downKeysThisFrame[code] = true
 }

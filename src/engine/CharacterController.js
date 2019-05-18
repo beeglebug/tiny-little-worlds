@@ -24,6 +24,9 @@ export default class CharacterController extends Object3D {
   speed = 100
   runSpeed = 200
 
+  // an entity in front of us which we could interact with
+  interactionTarget = null
+
   constructor (camera) {
     super()
 
@@ -39,12 +42,14 @@ export default class CharacterController extends Object3D {
 
     this.raycaster = new Raycaster()
 
+    // TODO from config
     this.controls = {
       forward: Input.createButton('forward', KeyCode.W, KeyCode.UpArrow),
       back: Input.createButton('back', KeyCode.S, KeyCode.DownArrow),
       left: Input.createButton('left', KeyCode.A, KeyCode.LeftArrow),
       right: Input.createButton('right', KeyCode.D, KeyCode.RightArrow),
-      run: Input.createButton('run', KeyCode.LeftShift),
+      interact: Input.createButton('interact', KeyCode.E),
+      // run: Input.createButton('run', KeyCode.LeftShift),
     }
   }
 
@@ -105,7 +110,7 @@ export default class CharacterController extends Object3D {
     this.collider.y += mtd.y
   }
 
-  update (delta, entities) {
+  update (delta, nearbyEntities) {
     if (!this.enabled) return
 
     this.handleMouseInput(delta)
@@ -116,17 +121,44 @@ export default class CharacterController extends Object3D {
 
     this.handlePhysics()
 
-    // check for interaction
+    this.handleInteraction(nearbyEntities)
+  }
+
+  handleInteraction (nearbyEntities) {
 
     this.raycaster.setFromCamera(screenCenter, this.camera)
 
-    const intersections = this.raycaster.intersectObjects(entities)
+    const interactiveEntities = nearbyEntities.filter(entity => entity.interactive)
 
-    if (intersections.length) {
-      const closest = intersections[0]
-      if (closest.distance > INTERACTION_RANGE) return
-      const entity = closest.object.parent
-      // TODO something to show possible interaction
+    const intersections = this.raycaster.intersectObjects(interactiveEntities)
+
+    const inRange = intersections.filter(intersection => intersection.distance < INTERACTION_RANGE)
+
+    if (inRange.length) {
+
+      const closest = inRange[0]
+
+      const mesh = closest.object
+
+      // hovering something new
+      if (this.interactionTarget && this.interactionTarget !== mesh) {
+        // reset the old one first
+        this.interactionTarget.material.color.set('#FFFFFF')
+      }
+
+      this.interactionTarget = mesh
+
+      // show interactivity
+      this.interactionTarget.material.color.set('#FF00FF')
+
+    // we were over something, now we're not
+    } else if (this.interactionTarget) {
+      this.interactionTarget.material.color.set('#FFFFFF')
+      this.interactionTarget = null
+    }
+
+    if (Input.getButtonDown(this.controls.interact)) {
+      console.log('interact', this.interactionTarget)
     }
   }
 }

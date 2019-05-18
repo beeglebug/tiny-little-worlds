@@ -89,7 +89,8 @@
           "sprite": "door.png",
           "texture": "door.png",
           "mesh": "door.obj",
-          "collider": ["rect", 2, 1]
+          "collider": ["rect", 2, 1],
+          "interactive": true
         },
         {
           "id": "KEY",
@@ -98,7 +99,8 @@
           "texture": "key.png",
           "billboard": true,
           "scale": 0.5,
-          "shadow": 0.4
+          "shadow": 0.4,
+          "interactive": true
         },
         {
           "id": "SKELETON",
@@ -107,7 +109,8 @@
           "texture": "skeleton.png",
           "billboard": true,
           "collider": ["circle", 0.5],
-          "shadow": 0.7
+          "shadow": 0.7,
+          "interactive": true
         }
       ]
     }

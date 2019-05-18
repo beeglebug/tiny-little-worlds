@@ -44,6 +44,8 @@ export default class Entity extends Object3D {
       const shadow = assets.shadows[props.shadow].clone()
       this.add(shadow)
     }
+
+    this.interactive = Boolean(props.interactive)
   }
 
   // pass through to child
