@@ -60,8 +60,18 @@ function windows (state = initialWindowState, action) {
   }
 }
 
+function currentLevel (state = 0, action) {
+  return state
+}
+
+function currentPalette (state = 0, action) {
+  return state
+}
+
 export default combineReducers({
   game,
+  currentLevel,
+  currentPalette,
   selectedEntity,
   selectedTile,
   selectedTool,

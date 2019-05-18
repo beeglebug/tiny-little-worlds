@@ -25,29 +25,29 @@ export const selectToolAction = (tool) => ({
   payload: tool,
 })
 
-export const setMapTileAction = (x, y, tileId, levelId = 1) => ({
+export const setMapTileAction = (x, y, tileId, levelIndex = 0) => ({
   type: SET_MAP_TILE,
-  payload: { x, y, tileId, levelId },
+  payload: { x, y, tileId, levelIndex },
 })
 
-export const setMapEntityAction = (x, y, entityId, levelId = 1) => ({
+export const setMapEntityAction = (x, y, entityId, levelIndex = 0) => ({
   type: SET_MAP_ENTITY,
-  payload: { x, y, entityId, levelId },
+  payload: { x, y, entityId, levelIndex },
 })
 
-export const clearMapEntityAction = (x, y, levelId = 1) => ({
+export const clearMapEntityAction = (x, y, levelIndex = 0) => ({
   type: CLEAR_MAP_ENTITY,
-  payload: { x, y, levelId },
+  payload: { x, y, levelIndex },
 })
 
-export const clearMapEntitiesAction = (entityId, levelId = 1) => ({
+export const clearMapEntitiesAction = (entityId, levelIndex = 0) => ({
   type: CLEAR_MAP_ENTITIES,
-  payload: { entityId, levelId },
+  payload: { entityId, levelIndex },
 })
 
-export const clearMapAction = (levelId = 1) => ({
+export const clearMapAction = (levelIndex = 0) => ({
   type: CLEAR_MAP,
-  payload: levelId,
+  payload: levelIndex,
 })
 
 export const setGameAction = game => ({

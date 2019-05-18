@@ -9,9 +9,9 @@ export default function createWorld (game, assets, controller) {
 
   const world = new Object3D()
 
-  // TODO current level
+  // TODo more than first level
   const map = game.levels[0]
-  const palette = game.palettes[0]
+  const palette = game.palettes[map.palette]
 
   // TODO split collider stuff out
   const [ tiles, tileColliders ] = createTiles(map, palette, assets)

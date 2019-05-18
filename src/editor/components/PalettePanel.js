@@ -12,6 +12,7 @@ export default function PalettePanel () {
   const [ selectedTile, setSelectedTile ] = useReduxState(selectedTileSelector, selectTileAction)
   const [ selectedEntity, setSelectedEntity ] = useReduxState(selectedEntitySelector, selectEntityAction)
   const game = useSelector(gameSelector)
+  const currentLevel = useSelector(state => state.currentLevel)
 
   if (!game) return null
 
@@ -23,8 +24,8 @@ export default function PalettePanel () {
     setSelectedEntity(id)
   }
 
-  // TODO per level palette
-  const { tiles, entities } = game.palettes[0]
+  const level = game.levels[currentLevel]
+  const { tiles, entities } = game.palettes[level.palette]
 
   return (
     <Panel

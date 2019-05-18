@@ -49,8 +49,8 @@ export default class Editor {
     this.showGrid = state.showGrid
 
     // computed state
-    this.map = this.game.levels[0]
-    this.palette = this.game.palettes[0]
+    this.map = this.game.levels[state.currentLevel]
+    this.palette = this.game.palettes[state.currentPalette]
   }
 
   subscribeToStore () {
@@ -116,9 +116,7 @@ export default class Editor {
 
       // handle entities
       if (this.selectedEntity !== null) {
-        // TODO current palette
-        const palette = this.game.palettes[0]
-        const entity = palette.entities.find(entity => entity.id === this.selectedEntity)
+        const entity = this.palette.entities.find(entity => entity.id === this.selectedEntity)
         if (entity.unique) {
           this.store.dispatch(clearMapEntitiesAction(this.selectedEntity))
         }
@@ -138,9 +136,7 @@ export default class Editor {
   }
 
   isEntityAt (x, y) {
-    // TODO current level
-    const map = this.game.levels[0]
-    return map.entities.some(entity => (entity.x === x && entity.y === y))
+    return this.map.entities.some(entity => (entity.x === x && entity.y === y))
   }
 
   bindListeners () {

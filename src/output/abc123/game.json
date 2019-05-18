@@ -5,7 +5,7 @@
     {
       "id": 1,
       "name": "Level 1",
-      "palette": 1,
+      "palette": 0,
       "width": 20,
       "height": 20,
       "data": [
@@ -56,7 +56,6 @@
   ],
   "palettes": [
     {
-      "id": 1,
       "name": "Demo Palette",
       "tiles": [
         {

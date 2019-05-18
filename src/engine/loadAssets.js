@@ -9,8 +9,10 @@ import { TILE_SIZE, WALL_HEIGHT } from './consts'
 
 export default function loadAssets (game) {
 
-  // TODO multiple palettes
-  const { tiles, entities } = game.palettes[0]
+  // TODO more than first level
+  const level = game.levels[0]
+  const { tiles, entities } = game.palettes[level.palette]
+
   const textureLoader = new TextureLoader()
   const meshLoader = {}
 
