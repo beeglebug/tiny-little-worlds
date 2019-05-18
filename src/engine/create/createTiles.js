@@ -4,7 +4,6 @@ import Rect from '../physics/geometry/Rect'
 export default function createTiles (map, palette, assets) {
 
   const meshes = []
-  const colliders = []
 
   for (let y = 0; y < map.height; y++) {
 
@@ -15,23 +14,23 @@ export default function createTiles (map, palette, assets) {
       const dx = x * TILE_SIZE
       const dy = y * TILE_SIZE
 
+      // empty space
       if (tileId === 0) continue
 
       const tile = palette.tiles.find(tile => tile.id === tileId)
       const mesh = assets.meshes[tile.mesh].clone()
 
-      if (tileId === 2) {
-        const collider = makeCollider(dx, dy)
-        collider.trigger = false
-        colliders.push(collider)
+      if (tile.collide === true) {
+        mesh.collider = makeCollider(dx, dy)
       }
+
       // 2d to 3d
       mesh.position.set(dx, 0, dy)
       meshes.push(mesh)
     }
   }
 
-  return [ meshes, colliders ]
+  return meshes
 }
 
 function get (map, x, y) {
@@ -39,14 +38,14 @@ function get (map, x, y) {
   return map.data[ix]
 }
 
-const offsets = [[-1, -1], [0, -1], [1, -1], [-1, 0], [1, 0], [-1, 1], [0, 1], [1, 1]]
-
-function getSurrounding (map, x, y) {
-  return offsets
-    .map(([ox, oy]) => [ox + x, oy + y])
-    .filter(([ox, oy]) => (ox >= 0 && ox < map.width && oy >= 0 && oy < map.height))
-    .map(([ox, oy]) => get(map, ox, oy))
-}
+// const offsets = [[-1, -1], [0, -1], [1, -1], [-1, 0], [1, 0], [-1, 1], [0, 1], [1, 1]]
+//
+// function getSurrounding (map, x, y) {
+//   return offsets
+//     .map(([ox, oy]) => [ox + x, oy + y])
+//     .filter(([ox, oy]) => (ox >= 0 && ox < map.width && oy >= 0 && oy < map.height))
+//     .map(([ox, oy]) => get(map, ox, oy))
+// }
 
 function makeCollider (x, y) {
   return new Rect(

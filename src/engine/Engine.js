@@ -3,10 +3,13 @@ import { PerspectiveCamera } from 'three/src/cameras/PerspectiveCamera'
 import createScene from './createScene'
 import CharacterController from './CharacterController'
 import Input from './input/Input'
-import { HEIGHT, WIDTH } from './consts'
+import { HEIGHT, TILE_SIZE, WIDTH } from './consts'
 import loop from './loop'
-import createWorld from './createWorld'
+import createContent from './createContent'
 import loadAssets from './loadAssets'
+import { Object3D } from 'three/src/core/Object3D'
+import Physics from './Physics'
+import Rect from './physics/geometry/Rect'
 
 export default class Engine {
 
@@ -28,7 +31,27 @@ export default class Engine {
 
     const assets = loadAssets(game)
 
-    this.world = createWorld(game, assets, this.controller)
+    this.world = new Object3D()
+
+    const [ tiles, entities ] = createContent(game, assets, this.controller)
+
+    if (tiles.length) this.world.add(...tiles)
+    if (entities.length) this.world.add(...entities)
+
+    const entityColliders = entities
+      .filter(obj => obj.collider)
+      .map(obj => obj.collider)
+
+    const tileColliders = tiles
+      .filter(obj => obj.collider)
+      .map(obj => obj.collider)
+
+    // TODO handle colliders separately to allow for easy broadphase on tiles
+    Physics.setColliders([...entityColliders, ...tileColliders])
+
+    this.tiles = tiles
+    this.entities = entities
+
     this.scene.add(this.world)
 
     this.controller.resetRotation(Math.PI, 0)
@@ -45,10 +68,12 @@ export default class Engine {
   }
 
   clear () {
-    if (!this.world) return
-    // loop backwards to a void mid loop splice reindexing
-    for (let i = this.world.children.length - 1; i >= 0; i--) {
-      this.world.remove(this.world.children[i])
+    Physics.clearColliders()
+    if (this.world) {
+      // loop backwards to a void mid loop splice reindexing
+      for (let i = this.world.children.length - 1; i >= 0; i--) {
+        this.world.remove(this.world.children[i])
+      }
     }
   }
 
@@ -60,6 +85,9 @@ export default class Engine {
   }
 
   tick = (deltaTime) => {
+
+    // TODO actual broadphase
+    const nearbyEntities = this.entities
 
     this.controller.update(deltaTime)
 

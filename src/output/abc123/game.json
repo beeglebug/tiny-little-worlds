@@ -70,7 +70,8 @@
           "name": "Wall",
           "sprite": "wall.png",
           "texture": "wall.png",
-          "mesh": "wall.obj"
+          "mesh": "wall.obj",
+          "collide": true
         }
       ],
       "entities": [
