@@ -31,6 +31,8 @@ export default function loadAssets (game) {
       return meshes
     }, {})
 
+  meshes['sprite'] = new Mesh(TEMP_GEOMETRY['sprite'])
+
   const shadows = entities
     .filter(entity => entity.shadow)
     .map(entity => entity.shadow)
@@ -80,8 +82,13 @@ ceilingGeometry.translate(0, WALL_HEIGHT, 0)
 
 floorGeometry.merge(ceilingGeometry)
 
+const spriteGeometry = new PlaneGeometry(TILE_SIZE, TILE_SIZE)
+spriteGeometry.translate(0, TILE_SIZE / 2, 0)
+spriteGeometry.rotateY(Math.PI)
+
 const TEMP_GEOMETRY = {
   'wall.obj': wallGeometry,
   'floor.obj': floorGeometry,
   'door.obj': doorGeometry,
+  'sprite': spriteGeometry,
 }

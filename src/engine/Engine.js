@@ -94,6 +94,8 @@ export default class Engine {
 
     this.controller.update(deltaTime, nearbyEntities)
 
+    this.entities.forEach(entity => entity.update(this))
+
     this.render()
 
     Input.clear()

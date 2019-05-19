@@ -1,10 +1,10 @@
 import { Object3D } from 'three/src/core/Object3D'
-import { SpriteMaterial } from 'three/src/materials/SpriteMaterial'
-import { Sprite } from 'three/src/objects/Sprite'
+import { MeshBasicMaterial } from 'three/src/materials/MeshBasicMaterial'
 import { TILE_SIZE } from './consts'
 import Rect from './physics/geometry/Rect'
 import Circle from './physics/geometry/Circle'
 
+// TODO split into two classes for billboard / mesh
 export default class Entity extends Object3D {
 
   constructor (props, assets) {
@@ -27,16 +27,15 @@ export default class Entity extends Object3D {
 
     if (props.billboard && props.texture) {
       const map = assets.textures[props.texture]
-      const spriteMaterial = new SpriteMaterial({ map, transparent: true, depthWrite: false })
-      const sprite = new Sprite(spriteMaterial)
+      const sprite = assets.meshes.sprite.clone()
+      sprite.material = new MeshBasicMaterial({ map, transparent: true, depthWrite: false })
       sprite.renderOrder = 1
-      sprite.center.set(0.5, 0)
 
-      // always scale to match tiles, but multiply by definition
-      let scale = TILE_SIZE
-      if (props.scale) scale *= props.scale
+      if (props.scale) {
+        sprite.scale.set(props.scale, props.scale, props.scale)
+      }
 
-      sprite.scale.set(scale, scale, scale)
+      this.isCameraFacing = true
       this.add(sprite)
     }
 
@@ -51,6 +50,12 @@ export default class Entity extends Object3D {
   // pass through to child
   raycast (raycaster, intersects) {
     this.children[0].raycast(raycaster, intersects)
+  }
+
+  update (engine) {
+    if (this.isCameraFacing) {
+      this.children[0].rotation.y = Math.PI + engine.controller.rotation.y
+    }
   }
 }
 
