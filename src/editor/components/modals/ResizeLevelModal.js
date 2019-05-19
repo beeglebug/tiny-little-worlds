@@ -14,7 +14,8 @@ export default function ResizeLevelModal () {
   const [ height, setHeight ] = useState(level && level.height)
 
   const handleSave = () => {
-    dispatch(resizeMapAction(width, height))
+    // TODO warn in this will delete tiles
+    dispatch(resizeMapAction(parseInt(width), parseInt(height)))
     setVisible(false)
   }
 

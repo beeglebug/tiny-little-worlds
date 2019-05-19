@@ -7,18 +7,18 @@ export default function resizeMap (state, action) {
 
   const level = state.levels[levelIndex]
 
-  const resized = { ...level }
+  const resized = {
+    ...level,
+    height,
+    width,
+  }
 
   if (width > level.width) {
-
-    console.log(resized.data.length)
 
     const newColumns = width - level.width
 
     // get old rows
     const rows = chunk(level.data, level.width)
-
-    console.log('rows', rows.length, level.data, level.height)
 
     // add blanks to end of each row
     rows.forEach(row => {
@@ -28,23 +28,29 @@ export default function resizeMap (state, action) {
 
     resized.data = [].concat(...rows)
 
-    console.log(resized.data.length)
-
   } else if (width < level.width) {
 
+    // TODO remove from ends of rows
     // TODO remove any entities at x < new width
 
   }
 
   if (height > level.height) {
 
+    const newRows = height - level.height
+
+    const tiles = arrayOf(width * newRows, 0)
+
+    resized.data.push(...tiles)
+
   } else if (height < level.height) {
 
+    const tilesToRemove = (level.height - height) * width
+
+    resized.data = resized.data.slice(0, -tilesToRemove)
+
     // TODO remove any entities at y < new height
-
   }
-
-  resized.width = width
 
   const levels = [...state.levels]
   levels[levelIndex] = resized
