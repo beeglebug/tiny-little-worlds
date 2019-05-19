@@ -3,6 +3,7 @@ import { MeshBasicMaterial } from 'three/src/materials/MeshBasicMaterial'
 import { TILE_SIZE } from './consts'
 import Rect from './physics/geometry/Rect'
 import Circle from './physics/geometry/Circle'
+import isPixelTransparent from './isPixelTransparent'
 
 // TODO split into two classes for billboard / mesh
 export default class Entity extends Object3D {
@@ -36,6 +37,7 @@ export default class Entity extends Object3D {
       }
 
       this.isCameraFacing = true
+
       this.add(sprite)
     }
 
@@ -49,7 +51,26 @@ export default class Entity extends Object3D {
 
   // pass through to child
   raycast (raycaster, intersects) {
-    this.children[0].raycast(raycaster, intersects)
+
+    // hack because raycaster does not return anything it just adds the intersection to the intersects array
+    const preCount = intersects.length
+
+    const mesh = this.children[0]
+
+    mesh.raycast(raycaster, intersects)
+
+    const postCount = intersects.length
+
+    if (postCount > preCount) {
+      const intersection = intersects[intersects.length - 1]
+      if (this.isCameraFacing) {
+        const isTransparentPixel = isPixelTransparent(intersection.uv, mesh.material.map)
+        // remove the intersection
+        if (isTransparentPixel) {
+          intersects.pop()
+        }
+      }
+    }
   }
 
   update (engine) {

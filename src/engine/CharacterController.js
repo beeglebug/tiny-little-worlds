@@ -41,6 +41,7 @@ export default class CharacterController extends Object3D {
     this.collider = new Circle(0, 0, 0.6)
 
     this.raycaster = new Raycaster()
+    this.raycaster.far = INTERACTION_RANGE
 
     // TODO from config
     this.controls = {
@@ -132,11 +133,9 @@ export default class CharacterController extends Object3D {
 
     const intersections = this.raycaster.intersectObjects(interactiveEntities)
 
-    const inRange = intersections.filter(intersection => intersection.distance < INTERACTION_RANGE)
+    if (intersections.length) {
 
-    if (inRange.length) {
-
-      const closest = inRange[0]
+      const closest = intersections[0]
 
       // the target is the parent Entity
       this.interactionTarget = closest.object.parent
@@ -144,8 +143,8 @@ export default class CharacterController extends Object3D {
       this.interactionTarget = null
     }
 
-    if (Input.getButtonDown(this.controls.interact)) {
-      console.log('interact', this.interactionTarget)
+    if (this.interactionTarget && Input.getButtonDown(this.controls.interact)) {
+      console.log('interacting with', this.interactionTarget)
     }
   }
 }
