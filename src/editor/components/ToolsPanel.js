@@ -1,7 +1,7 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { TOOLS } from '../consts'
-import { clearMapAction, selectToolAction } from '../state/actions'
+import { clearMapAction, selectToolAction, setModalVisibilityAction } from '../state/actions'
 import { selectedToolSelector } from '../state/selectors'
 import Panel from './Panel'
 import Button from './Button'
@@ -24,6 +24,10 @@ export default function ToolsPanel () {
     }
   }
 
+  const resizeLevel = () => {
+    dispatch(setModalVisibilityAction('resizeLevel', true))
+  }
+
   return (
     <Panel
       name={'tools'}
@@ -43,6 +47,9 @@ export default function ToolsPanel () {
       </Button>
       <Button onClick={clearMap}>
         clear
+      </Button>
+      <Button onClick={resizeLevel}>
+        resize
       </Button>
     </Panel>
   )

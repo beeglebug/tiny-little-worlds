@@ -1,7 +1,9 @@
 import { combineReducers } from 'redux'
 import { TOOLS } from '../../consts'
-import { SELECT_ENTITY, SELECT_TILE, SELECT_TOOL, SET_SHOW_GRID, SET_WINDOW_VISIBILITY } from '../actions'
+import { SELECT_ENTITY, SELECT_TILE, SELECT_TOOL, SET_SHOW_GRID } from '../actions'
 import game from './game'
+import modals from './modals'
+import windows from './windows'
 
 const selectedEntity = (state = null, action) => {
   switch (action.type) {
@@ -40,26 +42,6 @@ function showGrid (state = true, action) {
   return state
 }
 
-const initialWindowState = {
-  about: true,
-  mapEditor: true,
-  palette: true,
-  tools: true,
-  preview: true,
-  saveLoad: true,
-}
-
-function windows (state = initialWindowState, action) {
-  switch (action.type) {
-    case SET_WINDOW_VISIBILITY:
-      return {
-        ...state,
-        [action.payload.window]: action.payload.visibility,
-      }
-    default: return state
-  }
-}
-
 function currentLevel (state = 0, action) {
   return state
 }
@@ -76,5 +58,6 @@ export default combineReducers({
   selectedTile,
   selectedTool,
   showGrid,
+  modals,
   windows,
 })

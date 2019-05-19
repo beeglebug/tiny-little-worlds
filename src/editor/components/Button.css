@@ -10,6 +10,10 @@
     text-transform: capitalize;
 }
 
+.button:active {
+    background-color: #d9e6f9;
+}
+
 .button:last-child {
     margin-right: 0;
 }

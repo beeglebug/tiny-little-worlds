@@ -67,6 +67,14 @@ export default function WindowMenu () {
           </div>
           <div>
             <button
+              disabled={windowVisibility['levelProperties']}
+              onClick={() => handleOpenWindow('levelProperties')}
+            >
+              Level Properties
+            </button>
+          </div>
+          <div>
+            <button
               disabled={windowVisibility['saveLoad']}
               onClick={() => handleOpenWindow('saveLoad')}
             >

@@ -14,6 +14,8 @@ import Header from './Header'
 import AboutPanel from './AboutPanel'
 import Row from './Row'
 import ExternalLink from './ExternalLink'
+import LevelPropertiesWindow from './windows/LevelPropertiesWindow'
+import ResizeLevelModal from './modals/ResizeLevelModal'
 
 const store = createStore()
 
@@ -55,6 +57,7 @@ function App () {
           </Row>
           <Row>
             <MapEditorPanel />
+            <LevelPropertiesWindow />
             <PalettePanel />
             <ToolsPanel />
             <PreviewPanel />
@@ -62,6 +65,7 @@ function App () {
           </Row>
         </PseudoSuspense>
       </div>
+      <ResizeLevelModal />
       <div className={styles.footer}>
         <ExternalLink href={'https://github.com/beeglebug/tiny-little-worlds'}>{`v${__VERSION}`}</ExternalLink>
       </div>

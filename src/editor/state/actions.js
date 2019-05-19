@@ -6,6 +6,7 @@ export const SET_MAP_ENTITY = 'SET_MAP_ENTITY'
 export const CLEAR_MAP_ENTITY = 'CLEAR_MAP_ENTITY'
 export const CLEAR_MAP_ENTITIES = 'CLEAR_MAP_ENTITIES'
 export const CLEAR_MAP = 'CLEAR_MAP'
+export const SET_MODAL_VISIBILITY = 'SET_MODAL_VISIBILITY'
 export const SET_GAME = 'SET_GAME'
 export const SET_SHOW_GRID = 'SET_SHOW_GRID'
 export const SET_WINDOW_VISIBILITY = 'SET_WINDOW_VISIBILITY'
@@ -63,4 +64,9 @@ export const setShowGridAction = showGrid => ({
 export const setWindowVisibilityAction = (window, visibility) => ({
   type: SET_WINDOW_VISIBILITY,
   payload: { window, visibility },
+})
+
+export const setModalVisibilityAction = (modal, visibility) => ({
+  type: SET_MODAL_VISIBILITY,
+  payload: { modal, visibility },
 })

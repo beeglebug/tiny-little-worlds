@@ -10,3 +10,8 @@ export const windowVisibilitySelector = (state, window) => {
   if (window) return state.windows[window]
   return state.windows
 }
+
+export const modalVisibilitySelector = (state, modal) => {
+  if (modal) return state.modals[modal]
+  return state.modals
+}
