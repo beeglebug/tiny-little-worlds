@@ -29,18 +29,24 @@ export default function Modal ({ name, title, children }) {
 
   if (!visible) return null
 
+  const captureClick = event => {
+    event.stopPropagation()
+  }
+
   return (
     <div
       className={styles.container}
       onClick={handleClose}
     >
-      <Window
-        title={title}
-        onClose={handleClose}
-        className={styles.windowOverride}
-      >
-        {children}
-      </Window>
+      <div onClick={captureClick}>
+        <Window
+          title={title}
+          onClose={handleClose}
+          className={styles.windowOverride}
+        >
+          {children}
+        </Window>
+      </div>
     </div>
   )
 }
