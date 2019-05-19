@@ -9,6 +9,13 @@ import { TILE_SIZE, WALL_HEIGHT } from './consts'
 
 export default function loadAssets (game) {
 
+  // TODO custom font
+  const font = '16pt m5x7'
+  const canvas = document.createElement('canvas')
+  const ctx = canvas.getContext('2d')
+  ctx.font = font
+  ctx.fillText('hello', 0, 0)
+
   // TODO more than first level
   const level = game.levels[0]
   const { tiles, entities } = game.palettes[level.palette]
