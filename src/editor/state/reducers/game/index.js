@@ -4,10 +4,11 @@ import {
   SET_MAP_TILE,
   SET_MAP_ENTITY,
   CLEAR_MAP_ENTITY,
-  CLEAR_MAP_ENTITIES,
+  CLEAR_MAP_ENTITIES, RESIZE_MAP,
 } from '../../actions'
 import arrayOf from '../../../util/arrayOf'
 import clearMapEntities from './clearMapEntities'
+import resizeMap from './resizeMap'
 
 function setMapTile (game, action) {
 
@@ -99,6 +100,7 @@ export default function game (state = null, action) {
     case CLEAR_MAP_ENTITY: return clearMapEntity(state, action)
     case CLEAR_MAP_ENTITIES: return clearMapEntities(state, action)
     case CLEAR_MAP: return clearMap(state, action)
+    case RESIZE_MAP: return resizeMap(state, action)
     default: return state
   }
 }

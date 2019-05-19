@@ -38,10 +38,7 @@ export default class Editor {
 
   getState () {
     const state = this.store.getState()
-    this.setState(state)
-  }
 
-  setState (state) {
     this.selectedEntity = state.selectedEntity
     this.selectedTool = state.selectedTool
     this.selectedTile = state.selectedTile
@@ -51,6 +48,15 @@ export default class Editor {
     // computed state
     this.map = this.game.levels[state.currentLevel]
     this.palette = this.game.palettes[state.currentPalette]
+
+    // react to changes
+    if (this.lastMap) {
+      if (this.map.width !== this.lastMap.width || this.map.height !== this.lastMap.height) {
+        this.resizeCanvas()
+      }
+    }
+
+    this.lastMap = this.map
   }
 
   subscribeToStore () {
