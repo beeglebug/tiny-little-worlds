@@ -9,7 +9,7 @@ import styles from './SaveLoadPanel.css'
 export default function SaveLoadPanel () {
 
   const game = useSelector(gameSelector)
-  const [ data, setData ] = useState(JSON.stringify(game))
+  const [ data, setData ] = useState(prettyPrint(game))
   const dispatch = useDispatch()
   const textAreaRef = useRef()
 
@@ -49,8 +49,12 @@ export default function SaveLoadPanel () {
   )
 }
 
-// TODO see if we can pretty print the map data
+// TODO see if we can print the map data in a grid for manual editing
 function prettyPrint (game) {
   const spaces = 2
-  return JSON.stringify(game, undefined, spaces)
+  return JSON
+    .stringify(game, undefined, spaces)
+    // find anything between "key: [" and "]" and replace all whitespace with single space (stops indenting)
+    .replace(/("data": \[)([^\]]+)/g, (_, a, b) => a + b.replace(/\s+/g, ' '))
+    .replace(/("collider": \[)([^\]]+)/g, (_, a, b) => a + b.replace(/\s+/g, ' '))
 }
