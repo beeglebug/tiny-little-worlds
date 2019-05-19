@@ -9,6 +9,8 @@ import loop from './loop'
 import createContent from './createContent'
 import loadAssets from './loadAssets'
 import Physics from './Physics'
+import renderReticle from './2d/renderReticle'
+import renderText from './2d/renderText'
 
 export default class Engine {
 
@@ -26,6 +28,8 @@ export default class Engine {
     this.setupPointerLock(canvas3d)
 
     this.ctx = canvas2d.getContext('2d')
+    this.ctx.imageSmoothingEnabled = false
+    canvas2d.style.imageRendering = 'pixelated'
   }
 
   load (game) {
@@ -105,14 +109,9 @@ export default class Engine {
     this.renderer.render(this.scene, this.camera)
 
     // 2d rendering
-    this.ctx.fillStyle = this.controller.interactionTarget ? '#FF0000' : '#FFFFFF'
-    const size = 4
-    this.ctx.fillRect(
-      (WIDTH / 2) - (size / 2),
-      (HEIGHT / 2) - (size / 2),
-      size,
-      size
-    )
+    renderReticle(this.ctx, this.controller)
+
+    // renderText(this.ctx, 'hello')
   }
 
   setupPointerLock (domElement) {

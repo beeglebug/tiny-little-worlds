@@ -41,6 +41,7 @@ export default function Preview () {
         className={styles.canvas2d}
         width={width}
         height={height}
+        style={{ width, height }}
       />
       <canvas
         ref={canvas3DRef}
@@ -48,6 +49,7 @@ export default function Preview () {
         className={styles.canvas3d}
         width={width}
         height={height}
+        style={{ width, height }}
       />
       {!running && (
         <div className={styles.overlay}>
