@@ -4,7 +4,7 @@ import createStore from '../state/store'
 import { setGameAction } from '../state/actions'
 import validateGame from '../util/validateGame'
 import PalettePanel from './PalettePanel'
-import Tools from './Tools'
+import ToolsPanel from './ToolsPanel'
 import SaveLoadPanel from './SaveLoadPanel'
 import styles from './App.css'
 import PreviewPanel from './PreviewPanel'
@@ -56,7 +56,7 @@ function App () {
           <Row>
             <MapEditorPanel />
             <PalettePanel />
-            <Tools />
+            <ToolsPanel />
             <PreviewPanel />
             <SaveLoadPanel />
           </Row>

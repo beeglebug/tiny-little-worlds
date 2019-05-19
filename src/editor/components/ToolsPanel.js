@@ -6,7 +6,7 @@ import { selectedToolSelector } from '../state/selectors'
 import Panel from './Panel'
 import Button from './Button'
 
-export default function Tools () {
+export default function ToolsPanel () {
 
   const selectedTool = useSelector(selectedToolSelector)
   const dispatch = useDispatch()

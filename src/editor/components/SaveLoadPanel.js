@@ -14,7 +14,7 @@ export default function SaveLoadPanel () {
   const textAreaRef = useRef()
 
   useEffect(() => {
-    setData(JSON.stringify(game))
+    setData(prettyPrint(game))
   }, [game])
 
   const load = () => {
@@ -47,4 +47,10 @@ export default function SaveLoadPanel () {
       </Button>
     </Panel>
   )
+}
+
+// TODO see if we can pretty print the map data
+function prettyPrint (game) {
+  const spaces = 2
+  return JSON.stringify(game, undefined, spaces)
 }
