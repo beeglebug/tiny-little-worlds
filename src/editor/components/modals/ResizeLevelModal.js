@@ -1,10 +1,7 @@
 import React, { useEffect } from 'react'
-import { Window } from '../Panel'
-import Button from '../Button'
-import useReduxState from '../../hooks/useReduxState'
-import { modalVisibilitySelector } from '../../state/selectors'
-import { setModalVisibilityAction } from '../../state/actions'
 import styles from './ResizeLevelModal.css'
+import Modal from '../Modal'
+import Button from '../Button'
 
 export default function ResizeLevelModal () {
   return (
@@ -12,42 +9,34 @@ export default function ResizeLevelModal () {
       name={'resizeLevel'}
       title={'Resize Level'}
     >
-      content
+      <table>
+        <tbody>
+          <tr>
+            <td>
+              <label htmlFor={'level_width'}>width</label>
+            </td>
+            <td>
+              <input
+                id={'level_width'}
+                type={'text'}
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label htmlFor={'level_height'}>height</label>
+            </td>
+            <td>
+              <input
+                id={'level_height'}
+                type={'text'}
+              />
+            </td>
+          </tr>
+          {/* TODO crop options */}
+        </tbody>
+        <Button>Resize</Button>
+      </table>
     </Modal>
   )
-}
-
-function Modal ({ name, title, children }) {
-
-  const [ visible, setVisible ] = useReduxState(state => modalVisibilitySelector(state, name), setModalVisibilityAction)
-
-  useModalOpenClass(visible)
-
-  if (!visible) return null
-
-  const handleClose = () => setVisible(name, false)
-
-  return (
-    <div
-      className={styles.container}
-      onClick={handleClose}
-    >
-      <Window
-        title={title}
-        onClose={handleClose}
-      >
-        {children}
-      </Window>
-    </div>
-  )
-}
-
-function useModalOpenClass (visible) {
-  useEffect(() => {
-    if (visible) {
-      document.body.classList.add('modal-open')
-    } else {
-      document.body.classList.remove('modal-open')
-    }
-  }, [visible])
 }
