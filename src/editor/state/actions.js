@@ -6,6 +6,7 @@ export const SET_MAP_ENTITY = 'SET_MAP_ENTITY'
 export const CLEAR_MAP_ENTITY = 'CLEAR_MAP_ENTITY'
 export const CLEAR_MAP_ENTITIES = 'CLEAR_MAP_ENTITIES'
 export const CLEAR_MAP = 'CLEAR_MAP'
+export const RESIZE_MAP = 'RESIZE_MAP'
 export const SET_MODAL_VISIBILITY = 'SET_MODAL_VISIBILITY'
 export const SET_GAME = 'SET_GAME'
 export const SET_SHOW_GRID = 'SET_SHOW_GRID'
@@ -49,6 +50,15 @@ export const clearMapEntitiesAction = (entityId, levelIndex = 0) => ({
 export const clearMapAction = (levelIndex = 0) => ({
   type: CLEAR_MAP,
   payload: levelIndex,
+})
+
+export const resizeMapAction = (width, height, levelIndex = 0) => ({
+  type: RESIZE_MAP,
+  payload: {
+    width,
+    height,
+    levelIndex,
+  },
 })
 
 export const setGameAction = game => ({

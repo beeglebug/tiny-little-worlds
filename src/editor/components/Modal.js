@@ -1,20 +1,12 @@
 import React, { useEffect } from 'react'
-import useReduxState from '../hooks/useReduxState'
-import { modalVisibilitySelector } from '../state/selectors'
-import { setModalVisibilityAction } from '../state/actions'
 import styles from './Modal.css'
 import { Window } from './Panel'
 
-export default function Modal ({ name, title, children }) {
-
-  const [ visible, setVisible ] = useReduxState(state => modalVisibilitySelector(state, name), setModalVisibilityAction)
-
-  const handleClose = () => setVisible(name, false)
+export default function Modal ({ visible, title, children, onClose }) {
 
   const closeIfEscape = (event) => {
-    if (event.keyCode === 27) {
-      handleClose()
-    }
+    if (event.keyCode !== 27) return
+    onClose()
   }
 
   useEffect(() => {
@@ -36,12 +28,12 @@ export default function Modal ({ name, title, children }) {
   return (
     <div
       className={styles.container}
-      onClick={handleClose}
+      onClick={onClose}
     >
       <div onClick={captureClick}>
         <Window
           title={title}
-          onClose={handleClose}
+          onClose={onClose}
           className={styles.windowOverride}
         >
           {children}
