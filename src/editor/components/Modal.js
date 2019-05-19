@@ -37,6 +37,7 @@ export default function Modal ({ name, title, children }) {
       <Window
         title={title}
         onClose={handleClose}
+        className={styles.windowOverride}
       >
         {children}
       </Window>
