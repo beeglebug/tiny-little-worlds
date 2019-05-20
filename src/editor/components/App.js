@@ -63,9 +63,9 @@ function App () {
             <PreviewPanel />
             <SaveLoadPanel />
           </Row>
-          <ResizeLevelModal />
         </PseudoSuspense>
       </div>
+      {!loading && <ResizeLevelModal />}
       <div className={styles.footer}>
         <ExternalLink href={'https://github.com/beeglebug/tiny-little-worlds'}>{`v${__VERSION}`}</ExternalLink>
       </div>
