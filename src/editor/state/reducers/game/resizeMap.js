@@ -15,14 +15,14 @@ export default function resizeMap (state, action) {
 
   if (width > level.width) {
 
-    const newColumns = width - level.width
+    const columnsToAdd = width - level.width
 
     // get old rows
     const rows = chunk(level.data, level.width)
 
     // add blanks to end of each row
     rows.forEach(row => {
-      const newTiles = arrayOf(newColumns, 0)
+      const newTiles = arrayOf(columnsToAdd, 0)
       row.push(...newTiles)
     })
 
@@ -30,16 +30,26 @@ export default function resizeMap (state, action) {
 
   } else if (width < level.width) {
 
-    // TODO remove from ends of rows
+    const columnsToRemove = level.width - width
+
+    const rows = chunk(level.data, level.width)
+
+    // shrink each row
+    resized.data = rows.reduce((data, row) => {
+      const newRow = row.slice(0, -columnsToRemove)
+      data.push(...newRow)
+      return data
+    }, [])
+
     // TODO remove any entities at x < new width
 
   }
 
   if (height > level.height) {
 
-    const newRows = height - level.height
+    const rowsToAdd = height - level.height
 
-    const tiles = arrayOf(width * newRows, 0)
+    const tiles = arrayOf(width * rowsToAdd, 0)
 
     resized.data.push(...tiles)
 
