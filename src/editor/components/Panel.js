@@ -7,7 +7,7 @@ import styles from './Panel.css'
 
 export default function WindowWithVisibility (props) {
 
-  const [ visible, setVisible ] = useReduxState(state => windowVisibilitySelector(state, props.name), setWindowVisibilityAction)
+  const [ visible, setVisible ] = useReduxState(state => windowVisibilitySelector(state, props.name), visible => setWindowVisibilityAction(props.name, visible))
 
   if (!visible) return null
 
