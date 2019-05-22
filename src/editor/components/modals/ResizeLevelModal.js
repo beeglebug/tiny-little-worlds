@@ -4,6 +4,7 @@ import Modal from '../Modal'
 import Button from '../Button'
 import { resizeMapAction } from '../../state/actions'
 import useModalVisibility from '../../hooks/useModalVisibility'
+import styles from './ResizeLevelModal.css'
 
 export default function ResizeLevelModal () {
 
