@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Provider, useDispatch } from 'react-redux'
-import createStore from '../state/store'
+import { useDispatch } from 'react-redux'
 import { setGameAction } from '../state/actions'
 import validateGame from '../util/validateGame'
 import PalettePanel from './PalettePanel'
@@ -17,17 +16,7 @@ import ExternalLink from './ExternalLink'
 import LevelPropertiesWindow from './windows/LevelPropertiesWindow'
 import ResizeLevelModal from './modals/ResizeLevelModal'
 
-const store = createStore()
-
-export default function AppContainer () {
-  return (
-    <Provider store={store}>
-      <App />
-    </Provider>
-  )
-}
-
-function App () {
+export default function App () {
 
   const [ loading, setLoading ] = useState(true)
   const dispatch = useDispatch()

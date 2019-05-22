@@ -46,6 +46,8 @@
     "webpack-glsl-loader": "^1.0.1"
   },
   "dependencies": {
+    "@bugsnag/js": "^6.2.0",
+    "@bugsnag/plugin-react": "^6.2.0",
     "classnames": "^2.2.6",
     "mersenne-twister": "^1.1.0",
     "react": "^16.8.6",
