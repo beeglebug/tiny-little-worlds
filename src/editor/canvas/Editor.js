@@ -8,8 +8,6 @@ import loadAssets from './loadAssets'
 
 export default class Editor {
 
-  currentTileIndex = null
-
   constructor (canvas, store) {
 
     this.canvas = canvas
@@ -20,20 +18,20 @@ export default class Editor {
     this.getState()
     this.subscribeToStore()
 
-    this.resizeCanvas()
+    this.offset = { x: 10, y: 10 }
+
+    // TODO decide if these are sensible numbers
+    this.canvas.width = 368
+    this.canvas.height = 368
 
     this.loadAssets().then(() => this.render())
 
     this.mousePosition = { x: -99, y: -99 }
-    this.mouseDown = false
+    this.currentTileIndex = null
+    this.leftMouseDown = false
     this.mouseOver = false
 
     this.bindListeners()
-  }
-
-  resizeCanvas () {
-    this.canvas.width = this.map.width * SIZE
-    this.canvas.height = this.map.height * SIZE
   }
 
   getState () {
@@ -49,14 +47,6 @@ export default class Editor {
     this.map = this.game.levels[state.currentLevel]
     this.palette = this.game.palettes[state.currentPalette]
 
-    // react to changes
-    if (this.lastMap) {
-      if (this.map.width !== this.lastMap.width || this.map.height !== this.lastMap.height) {
-        this.resizeCanvas()
-      }
-    }
-
-    this.lastMap = this.map
   }
 
   subscribeToStore () {
@@ -73,11 +63,15 @@ export default class Editor {
     const x = Math.floor(this.mousePosition.x / SIZE)
     const y = Math.floor(this.mousePosition.y / SIZE)
 
-    const index = (y * this.map.width) + x
-    if (this.mouseDown && this.currentTileIndex !== index) {
-      this.paintCurrent()
+    if (x < this.map.width && y < this.map.height) {
+      const index = (y * this.map.width) + x
+      if (this.leftMouseDown && this.currentTileIndex !== index) {
+        this.paintCurrent()
+      }
+      this.currentTileIndex = index
+    } else {
+      this.currentTileIndex = null
     }
-    this.currentTileIndex = index
 
     this.render()
   }
@@ -88,19 +82,19 @@ export default class Editor {
 
   handleMouseLeave = () => {
     this.mouseOver = false
-    this.mouseDown = false
-    this.mousePosition.x = -99
-    this.mousePosition.y = -99
-    this.render()
   }
 
-  handleMouseDown = () => {
-    this.mouseDown = true
-    this.paintCurrent()
+  handleMouseDown = (e) => {
+    if (e.button === 0) {
+      this.leftMouseDown = true
+      if (this.currentTileIndex) {
+        this.paintCurrent()
+      }
+    }
   }
 
   handleMouseUp = () => {
-    this.mouseDown = false
+    this.leftMouseDown = false
   }
 
   paintCurrent () {
@@ -182,7 +176,7 @@ export default class Editor {
     const height = this.map.height * SIZE
 
     this.ctx.fillStyle = '#deecff'
-    this.ctx.fillRect(0, 0, width, height)
+    this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height)
 
     drawTiles(this.ctx, this.map, this.assets)
     drawEntities(this.ctx, this.map, this.assets)
