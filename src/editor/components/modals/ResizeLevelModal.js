@@ -15,7 +15,7 @@ export default function ResizeLevelModal () {
   const [ height, setHeight ] = useState(level && level.height)
 
   const handleSave = () => {
-    // TODO warn in this will delete tiles
+    // TODO warn if this will delete tiles
     dispatch(resizeMapAction(parseInt(width), parseInt(height)))
     setVisible(false)
   }
@@ -26,7 +26,7 @@ export default function ResizeLevelModal () {
       visible={visible}
       onClose={() => setVisible(false)}
     >
-      <table>
+      <table className={styles.table}>
         <tbody>
           <tr>
             <td>
@@ -35,9 +35,12 @@ export default function ResizeLevelModal () {
             <td>
               <input
                 id={'level_width'}
+                className={styles.input}
                 type={'number'}
                 value={width}
                 onChange={e => setWidth(e.target.value)}
+                autoFocus={true}
+                onKeyDown={onPressEnter(handleSave)}
               />
             </td>
           </tr>
@@ -48,9 +51,11 @@ export default function ResizeLevelModal () {
             <td>
               <input
                 id={'level_height'}
+                className={styles.input}
                 type={'number'}
                 value={height}
                 onChange={e => setHeight(e.target.value)}
+                onKeyDown={onPressEnter(handleSave)}
               />
             </td>
           </tr>
@@ -60,4 +65,11 @@ export default function ResizeLevelModal () {
       <Button onClick={handleSave}>Resize</Button>
     </Modal>
   )
+}
+
+const onPressEnter = callback => event => {
+  if (event.keyCode !== 13) return
+  event.preventDefault()
+  event.stopPropagation()
+  callback()
 }
