@@ -72,6 +72,6 @@ module.exports = {
   },
   globals: {
     __VERSION: true,
-    __MODE: true
+    __ENVIRONMENT: true
   }
 }

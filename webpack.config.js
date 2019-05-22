@@ -83,7 +83,7 @@ module.exports = (env, argv) => {
     plugins: [
       new webpack.DefinePlugin({
         __VERSION: JSON.stringify(packageJson.version),
-        __MODE: JSON.stringify(argv.mode),
+        __ENVIRONMENT: JSON.stringify(argv.mode || 'development'),
       }),
       new CleanWebpackPlugin(['dist']),
       new HtmlWebpackPlugin({
