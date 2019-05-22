@@ -7,6 +7,7 @@ const client = bugsnag({
   appVersion: __VERSION,
   releaseStage: __ENVIRONMENT,
   notifyReleaseStages: ['production'],
+  logger: null,
 })
 
 client.use(bugsnagReact, React)
