@@ -21,16 +21,16 @@ export default function Modal ({ visible, title, children, onClose }) {
 
   if (!visible) return null
 
-  const captureClick = event => {
+  const capture = event => {
     event.stopPropagation()
   }
 
   return (
     <div
       className={styles.container}
-      onClick={onClose}
+      onMouseDown={onClose}
     >
-      <div onClick={captureClick}>
+      <div onMouseDown={capture}>
         <Window
           title={title}
           onClose={onClose}
