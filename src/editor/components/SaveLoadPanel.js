@@ -2,6 +2,8 @@ import React, { useState, useRef, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { setGameAction } from '../state/actions'
 import { gameSelector } from '../state/selectors'
+import downloadGame from '../util/downloadGame'
+import prettyPrint from '../util/prettyPrint'
 import Panel from './Panel'
 import Button from './Button'
 import styles from './SaveLoadPanel.css'
@@ -31,6 +33,8 @@ export default function SaveLoadPanel () {
     setData(event.target.value)
   }
 
+  const download = () => downloadGame(game)
+
   return (
     <Panel
       name='saveLoad'
@@ -45,16 +49,9 @@ export default function SaveLoadPanel () {
       <Button onClick={load}>
         load
       </Button>
+      <Button onClick={download}>
+        download
+      </Button>
     </Panel>
   )
-}
-
-// TODO see if we can print the map data in a grid for manual editing
-function prettyPrint (game) {
-  const spaces = 2
-  return JSON
-    .stringify(game, undefined, spaces)
-    // find anything between "key: [" and "]" and replace all whitespace with single space (stops indenting)
-    .replace(/("data": \[)([^\]]+)/g, (_, a, b) => a + b.replace(/\s+/g, ' '))
-    .replace(/("collider": \[)([^\]]+)/g, (_, a, b) => a + b.replace(/\s+/g, ' '))
 }
