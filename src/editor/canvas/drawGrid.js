@@ -6,12 +6,12 @@ export default function drawGrid (ctx, width, height, gridColor) {
   ctx.beginPath()
   ctx.strokeStyle = gridColor
 
-  for (let y = SIZE; y <= height; y += SIZE) {
+  for (let y = 0; y <= height; y += SIZE) {
     ctx.moveTo(0, y)
     ctx.lineTo(width, y)
   }
 
-  for (let x = SIZE; x <= width; x += SIZE) {
+  for (let x = 0; x <= width; x += SIZE) {
     ctx.moveTo(x, 0)
     ctx.lineTo(x, height)
   }
