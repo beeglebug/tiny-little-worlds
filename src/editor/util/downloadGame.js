@@ -8,10 +8,11 @@ export default function (game) {
 
   const zip = new Zip()
 
-  const root = zip.folder(name)
-
-  root.file('readme.txt', generateReadme(game))
-  root.file('game.json', prettyPrint(game))
+  zip
+    .folder(name)
+    .file('readme.txt', generateReadme(game))
+    .file('game.json', prettyPrint(game))
+    .file('index.html', generateHtml(game))
 
   zip.generateAsync({ type: 'blob' })
     .then(content => saveAs(content, `${name}.zip`))
@@ -26,5 +27,27 @@ function generateReadme (game) {
 ${game.name}
 
 downloaded from http://tinylittle.world
+`
+}
+
+function generateHtml (game) {
+  // TODO generate preview image
+  const image = ''
+  return `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@maketinyworlds" />
+  <meta name="twitter:title" content="${game.name}" />
+  <meta name="twitter:description" content="Made with http://tinylittle.world" />
+  <meta name="twitter:image" content="${image}" />
+  <title>${game.name}</title>
+</head>
+<body>
+  game goes here
+</body>
+</html>
 `
 }
