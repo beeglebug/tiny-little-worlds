@@ -11,6 +11,9 @@ export const SET_MODAL_VISIBILITY = 'SET_MODAL_VISIBILITY'
 export const SET_GAME = 'SET_GAME'
 export const SET_SHOW_GRID = 'SET_SHOW_GRID'
 export const SET_WINDOW_VISIBILITY = 'SET_WINDOW_VISIBILITY'
+export const UPDATE_LEVEL = 'UPDATE_LEVEL'
+
+// TODO rename map stuff to level
 
 export const selectEntityAction = (entityType) => ({
   type: SELECT_ENTITY,
@@ -25,6 +28,11 @@ export const selectTileAction = (tile) => ({
 export const selectToolAction = (tool) => ({
   type: SELECT_TOOL,
   payload: tool,
+})
+
+export const updateLevelAction = (data, levelIndex = 0) => ({
+  type: UPDATE_LEVEL,
+  payload: { data, levelIndex },
 })
 
 export const setMapTileAction = (x, y, tileId, levelIndex = 0) => ({
