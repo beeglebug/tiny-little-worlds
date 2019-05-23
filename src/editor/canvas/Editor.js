@@ -1,3 +1,4 @@
+import Vector2 from '../../engine/physics/geometry/Vector2'
 import { SIZE, TOOLS } from '../consts'
 import { clearMapEntitiesAction, clearMapEntityAction, setMapEntityAction, setMapTileAction } from '../state/actions'
 import drawTiles from './drawTiles'
@@ -19,23 +20,25 @@ export default class Editor {
     this.subscribeToStore()
 
     // TODO decide if these are sensible numbers
-    this.canvas.width = 368
-    this.canvas.height = 368
+    this.canvas.width = 360
+    this.canvas.height = 360
 
-    // TODO implement properly (for larger than canvas)
-    this.offset = {
-      x: (this.canvas.width - (this.map.width * SIZE)) / 2,
-      y: (this.canvas.height - (this.map.height * SIZE)) / 2,
-    }
+    this.offset = new Vector2()
+    this.calculateOffset()
 
     this.loadAssets().then(() => this.render())
 
-    this.mousePosition = { x: -99, y: -99 }
+    this.mousePosition = new Vector2(-99, -99)
     this.currentTileIndex = null
     this.leftMouseDown = false
     this.mouseOver = false
 
     this.bindListeners()
+  }
+
+  calculateOffset () {
+    this.offset.x = (this.canvas.width - (this.map.width * SIZE)) / 2
+    this.offset.y = (this.canvas.height - (this.map.height * SIZE)) / 2
   }
 
   getState () {
@@ -50,12 +53,11 @@ export default class Editor {
     // computed state
     this.map = this.game.levels[state.currentLevel]
     this.palette = this.game.palettes[state.currentPalette]
-
   }
 
   subscribeToStore () {
     this.store.subscribe(() => {
-      this.getState(this.store)
+      this.getState()
       this.render()
     })
   }
