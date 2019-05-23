@@ -18,11 +18,15 @@ export default class Editor {
     this.getState()
     this.subscribeToStore()
 
-    this.offset = { x: 10, y: 10 }
-
     // TODO decide if these are sensible numbers
     this.canvas.width = 368
     this.canvas.height = 368
+
+    // TODO implement properly (for larger than canvas)
+    this.offset = {
+      x: (this.canvas.width - (this.map.width * SIZE)) / 2,
+      y: (this.canvas.height - (this.map.height * SIZE)) / 2,
+    }
 
     this.loadAssets().then(() => this.render())
 
@@ -57,8 +61,8 @@ export default class Editor {
   }
 
   handleMouseMove = (e) => {
-    this.mousePosition.x = e.pageX - this.canvas.offsetLeft
-    this.mousePosition.y = e.pageY - this.canvas.offsetTop
+    this.mousePosition.x = e.pageX - this.canvas.offsetLeft - this.offset.x
+    this.mousePosition.y = e.pageY - this.canvas.offsetTop - this.offset.y
 
     const x = Math.floor(this.mousePosition.x / SIZE)
     const y = Math.floor(this.mousePosition.y / SIZE)
@@ -178,6 +182,8 @@ export default class Editor {
     this.ctx.fillStyle = '#deecff'
     this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height)
 
+    this.ctx.translate(this.offset.x, this.offset.y)
+
     drawTiles(this.ctx, this.map, this.assets)
     drawEntities(this.ctx, this.map, this.assets)
 
@@ -188,6 +194,16 @@ export default class Editor {
     const x = Math.floor(this.mousePosition.x / SIZE) * SIZE
     const y = Math.floor(this.mousePosition.y / SIZE) * SIZE
 
-    drawCursor(this.ctx, x, y, this.selectedEntity, this.selectedTile, this.selectedTool, this.assets)
+    drawCursor(
+      this.ctx,
+      x,
+      y,
+      this.selectedEntity,
+      this.selectedTile,
+      this.selectedTool,
+      this.assets
+    )
+
+    this.ctx.translate(-this.offset.x, -this.offset.y)
   }
 }
