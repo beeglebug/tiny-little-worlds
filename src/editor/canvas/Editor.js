@@ -67,7 +67,8 @@ export default class Editor {
     const x = Math.floor(this.mousePosition.x / SIZE)
     const y = Math.floor(this.mousePosition.y / SIZE)
 
-    if (x < this.map.width && y < this.map.height) {
+    // bounds check
+    if (x >= 0 && y >= 0 && x < this.map.width && y < this.map.height) {
       const index = (y * this.map.width) + x
       if (this.leftMouseDown && this.currentTileIndex !== index) {
         this.paintCurrent()
