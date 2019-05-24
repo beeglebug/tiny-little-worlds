@@ -4,17 +4,17 @@ import { setGameAction } from '../state/actions'
 import validateGame from '../util/validateGame'
 import PalettePanel from './PalettePanel'
 import ToolsPanel from './ToolsPanel'
-import SaveLoadWindow from './windows/SaveLoadWindow'
-import styles from './App.css'
 import PreviewPanel from './PreviewPanel'
 import MapEditorPanel from './MapEditorPanel'
 import LoadingIndicator from './LoadingIndicator'
 import Header from './Header'
-import AboutPanel from './AboutPanel'
 import Row from './Row'
 import ExternalLink from './ExternalLink'
 import LevelPropertiesWindow from './windows/LevelPropertiesWindow'
+import SaveLoadWindow from './windows/SaveLoadWindow'
+import AboutWindow from './windows/AboutWindow'
 import ResizeLevelModal from './modals/ResizeLevelModal'
+import styles from './App.css'
 
 export default function App () {
 
@@ -42,7 +42,7 @@ export default function App () {
       <div className={styles.body}>
         <PseudoSuspense loading={loading}>
           <Row>
-            <AboutPanel />
+            <AboutWindow />
           </Row>
           <Row>
             <MapEditorPanel />
