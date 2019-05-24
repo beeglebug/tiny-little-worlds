@@ -116,6 +116,7 @@ export default class Editor {
 
   handleMouseLeave = () => {
     this.mouseOver = false
+    this.currentTileIndex
   }
 
   handleMouseDown = (e) => {
@@ -224,15 +225,17 @@ export default class Editor {
       drawGrid(this.ctx, width, height, '#ffffff')
     }
 
-    drawCursor(
-      this.ctx,
-      this.mouseTilePosition.x * SIZE,
-      this.mouseTilePosition.y * SIZE,
-      this.selectedEntity,
-      this.selectedTile,
-      this.selectedTool,
-      this.assets
-    )
+    if (this.currentTileIndex !== null) {
+      drawCursor(
+        this.ctx,
+        this.mouseTilePosition.x * SIZE,
+        this.mouseTilePosition.y * SIZE,
+        this.selectedEntity,
+        this.selectedTile,
+        this.selectedTool,
+        this.assets
+      )
+    }
 
     this.ctx.translate(-this.offset.x, -this.offset.y)
   }
