@@ -20,7 +20,7 @@ export default function App () {
 
   const [ loading, setLoading ] = useState(true)
   const dispatch = useDispatch()
-  const url = '/abc123/game.json'
+  const url = '/game.json'
 
   useEffect(() => {
     fetch(url)

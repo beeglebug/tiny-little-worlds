@@ -34,12 +34,11 @@ export default function PalettePanel () {
     >
       <div className={styles.row}>
         {tiles.map(({ id, name, sprite }) => {
-          const src = `/${game.id}/assets/${sprite}`
           return (
             <PaletteSwatch
               key={id}
               selected={selectedTile === id}
-              src={src}
+              src={sprite}
               title={name}
               onClick={() => handleClickTile(id)}
             />
@@ -48,12 +47,11 @@ export default function PalettePanel () {
       </div>
       <div className={styles.row}>
         {entities.map(({ id, name, sprite }) => {
-          const src = `/${game.id}/assets/${sprite}`
           return (
             <PaletteSwatch
               key={id}
               selected={selectedEntity === id}
-              src={src}
+              src={sprite}
               title={name}
               onClick={() => handleClickEntity(id)}
             />
