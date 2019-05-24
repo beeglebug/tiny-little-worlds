@@ -39,6 +39,7 @@ export default class Editor {
     this.currentTileIndex = null
 
     // TODO try and remove the -99 stuff and just use mouseover
+    this.mouseTilePosition = new Vector2()
     this.mousePosition = new Vector2(-99, -99)
     this.mouseOver = false
     this.mouseDown = {
@@ -80,21 +81,22 @@ export default class Editor {
     this.mousePosition.x = e.pageX - this.canvas.offsetLeft
     this.mousePosition.y = e.pageY - this.canvas.offsetTop
 
-    const x = Math.floor(this.mousePosition.x / SIZE)
-    const y = Math.floor(this.mousePosition.y / SIZE)
+    this.mouseTilePosition.x = Math.floor((this.mousePosition.x - this.offset.x) / SIZE) * SIZE
+    this.mouseTilePosition.y = Math.floor((this.mousePosition.y - this.offset.y) / SIZE) * SIZE
 
     if (this.dragging) {
 
       const dx = this.mousePosition.x - this.dragStart.x
       const dy = this.mousePosition.y - this.dragStart.y
+
       this.offset.x = this.dragOffsetStart.x + dx
       this.offset.y = this.dragOffsetStart.y + dy
 
     } else {
 
       // bounds check
-      if (x >= 0 && y >= 0 && x < this.map.width && y < this.map.height) {
-        const index = (y * this.map.width) + x
+      if (this.mouseTilePosition.x >= 0 && this.mouseTilePosition.y >= 0 && this.mouseTilePosition.x < this.map.width && this.mouseTilePosition.y < this.map.height) {
+        const index = (this.mouseTilePosition.y * this.map.width) + this.mouseTilePosition.x
         if (this.mouseDown[MOUSE_LEFT] && this.currentTileIndex !== index) {
           this.paintCurrent()
         }
@@ -227,20 +229,15 @@ export default class Editor {
       drawGrid(this.ctx, width, height, '#ffffff')
     }
 
-    const x = Math.floor(this.mousePosition.x / SIZE) * SIZE
-    const y = Math.floor(this.mousePosition.y / SIZE) * SIZE
-
-    if (!this.dragging) {
-      drawCursor(
-        this.ctx,
-        x,
-        y,
-        this.selectedEntity,
-        this.selectedTile,
-        this.selectedTool,
-        this.assets
-      )
-    }
+    drawCursor(
+      this.ctx,
+      this.mouseTilePosition.x,
+      this.mouseTilePosition.y,
+      this.selectedEntity,
+      this.selectedTile,
+      this.selectedTool,
+      this.assets
+    )
 
     this.ctx.translate(-this.offset.x, -this.offset.y)
   }
