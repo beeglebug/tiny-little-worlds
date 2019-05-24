@@ -7,6 +7,9 @@ import drawCursor from './drawCursor'
 import drawEntities from './drawEntities'
 import loadAssets from './loadAssets'
 
+const MOUSE_LEFT = 0
+const MOUSE_MIDDLE = 1
+
 export default class Editor {
 
   constructor (canvas, store) {
@@ -28,10 +31,20 @@ export default class Editor {
 
     this.loadAssets().then(() => this.render())
 
-    this.mousePosition = new Vector2(-99, -99)
+    // handle middle mouse pan
+    this.dragging = false
+    this.dragStart = new Vector2()
+    this.dragOffsetStart = new Vector2()
+
     this.currentTileIndex = null
-    this.leftMouseDown = false
+
+    // TODO try and remove the -99 stuff and just use mouseover
+    this.mousePosition = new Vector2(-99, -99)
     this.mouseOver = false
+    this.mouseDown = {
+      [MOUSE_LEFT]: false,
+      [MOUSE_MIDDLE]: false,
+    }
 
     this.bindListeners()
   }
@@ -63,21 +76,33 @@ export default class Editor {
   }
 
   handleMouseMove = (e) => {
-    this.mousePosition.x = e.pageX - this.canvas.offsetLeft - this.offset.x
-    this.mousePosition.y = e.pageY - this.canvas.offsetTop - this.offset.y
+
+    this.mousePosition.x = e.pageX - this.canvas.offsetLeft
+    this.mousePosition.y = e.pageY - this.canvas.offsetTop
 
     const x = Math.floor(this.mousePosition.x / SIZE)
     const y = Math.floor(this.mousePosition.y / SIZE)
 
-    // bounds check
-    if (x >= 0 && y >= 0 && x < this.map.width && y < this.map.height) {
-      const index = (y * this.map.width) + x
-      if (this.leftMouseDown && this.currentTileIndex !== index) {
-        this.paintCurrent()
-      }
-      this.currentTileIndex = index
+    if (this.dragging) {
+
+      const dx = this.mousePosition.x - this.dragStart.x
+      const dy = this.mousePosition.y - this.dragStart.y
+      this.offset.x = this.dragOffsetStart.x + dx
+      this.offset.y = this.dragOffsetStart.y + dy
+
     } else {
-      this.currentTileIndex = null
+
+      // bounds check
+      if (x >= 0 && y >= 0 && x < this.map.width && y < this.map.height) {
+        const index = (y * this.map.width) + x
+        if (this.mouseDown[MOUSE_LEFT] && this.currentTileIndex !== index) {
+          this.paintCurrent()
+        }
+        this.currentTileIndex = index
+      } else {
+        this.currentTileIndex = null
+      }
+
     }
 
     this.render()
@@ -92,16 +117,24 @@ export default class Editor {
   }
 
   handleMouseDown = (e) => {
-    if (e.button === 0) {
-      this.leftMouseDown = true
+    this.mouseDown[e.button] = true
+    if (e.button === MOUSE_LEFT) {
       if (this.currentTileIndex) {
         this.paintCurrent()
       }
     }
+    if (e.button === MOUSE_MIDDLE) {
+      this.dragging = true
+      this.dragStart.copy(this.mousePosition)
+      this.dragOffsetStart.copy(this.offset)
+    }
   }
 
-  handleMouseUp = () => {
-    this.leftMouseDown = false
+  handleMouseUp = (e) => {
+    this.mouseDown[e.button] = false
+    if (e.button === MOUSE_MIDDLE) {
+      this.dragging = false
+    }
   }
 
   paintCurrent () {
@@ -197,15 +230,17 @@ export default class Editor {
     const x = Math.floor(this.mousePosition.x / SIZE) * SIZE
     const y = Math.floor(this.mousePosition.y / SIZE) * SIZE
 
-    drawCursor(
-      this.ctx,
-      x,
-      y,
-      this.selectedEntity,
-      this.selectedTile,
-      this.selectedTool,
-      this.assets
-    )
+    if (!this.dragging) {
+      drawCursor(
+        this.ctx,
+        x,
+        y,
+        this.selectedEntity,
+        this.selectedTile,
+        this.selectedTool,
+        this.assets
+      )
+    }
 
     this.ctx.translate(-this.offset.x, -this.offset.y)
   }
