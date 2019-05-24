@@ -119,6 +119,10 @@ export default class Vector2 {
   toArray () {
     return [this.x, this.y]
   }
+
+  toString () {
+    return `[${this.x}, ${this.y}]`
+  }
 }
 
 Vector2.right = new Vector2(1, 0)

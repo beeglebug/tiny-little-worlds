@@ -81,8 +81,8 @@ export default class Editor {
     this.mousePosition.x = e.pageX - this.canvas.offsetLeft
     this.mousePosition.y = e.pageY - this.canvas.offsetTop
 
-    this.mouseTilePosition.x = Math.floor((this.mousePosition.x - this.offset.x) / SIZE) * SIZE
-    this.mouseTilePosition.y = Math.floor((this.mousePosition.y - this.offset.y) / SIZE) * SIZE
+    this.mouseTilePosition.x = Math.floor((this.mousePosition.x - this.offset.x) / SIZE)
+    this.mouseTilePosition.y = Math.floor((this.mousePosition.y - this.offset.y) / SIZE)
 
     if (this.dragging) {
 
@@ -121,7 +121,7 @@ export default class Editor {
   handleMouseDown = (e) => {
     this.mouseDown[e.button] = true
     if (e.button === MOUSE_LEFT) {
-      if (this.currentTileIndex) {
+      if (this.currentTileIndex !== null) {
         this.paintCurrent()
       }
     }
@@ -141,8 +141,7 @@ export default class Editor {
 
   paintCurrent () {
 
-    const x = Math.floor(this.mousePosition.x / SIZE)
-    const y = Math.floor(this.mousePosition.y / SIZE)
+    const { x, y } = this.mouseTilePosition
 
     if (this.selectedTool === TOOLS.PAINT) {
 
@@ -227,8 +226,8 @@ export default class Editor {
 
     drawCursor(
       this.ctx,
-      this.mouseTilePosition.x,
-      this.mouseTilePosition.y,
+      this.mouseTilePosition.x * SIZE,
+      this.mouseTilePosition.y * SIZE,
       this.selectedEntity,
       this.selectedTile,
       this.selectedTool,
