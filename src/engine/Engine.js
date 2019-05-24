@@ -19,6 +19,9 @@ export default class Engine {
     this.canvas3d = canvas3d
     this.canvas2d = canvas2d
 
+    // needed for keyboard input
+    this.canvas3d.tabIndex = 1
+
     this.scene = createScene()
     this.renderer = new WebGLRenderer({ canvas: canvas3d })
     this.camera = new PerspectiveCamera(45, WIDTH / HEIGHT, 0.1, 1000)
@@ -88,7 +91,7 @@ export default class Engine {
     Input.unbind(this.canvas3d)
     this.canvas3d.blur()
     this.cancelLoop()
-    this.onStop()
+    this.onStop && this.onStop()
   }
 
   tick = (deltaTime) => {

@@ -5,6 +5,7 @@
   "license": "MIT",
   "scripts": {
     "build": "webpack --mode=production",
+    "build:standalone": "webpack --config=webpack.standalone.config.js",
     "lint": "eslint src",
     "start": "webpack-dev-server",
     "test": "jest",

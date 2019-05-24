@@ -8,11 +8,23 @@ export default function (game) {
 
   const zip = new Zip()
 
-  zip
-    .folder(name)
-    .file('readme.txt', generateReadme(game))
-    .file('game.json', prettyPrint(game))
-    .file('index.html', generateHtml(game))
+  const player = `player.${__VERSION}.js`
+
+  const folder = zip.folder(name)
+
+  folder.file('readme.txt', generateReadme(game))
+  folder.file('game.js', generateJS(game))
+  folder.file(player, fetch(player).then(response => response.text()))
+  folder.file('index.html', generateHtml(game))
+
+  // TODO more than first level
+  const level = game.levels[0]
+  const { tiles, entities } = game.palettes[level.palette]
+  const textures = [...tiles, ...entities].filter(item => item.texture).map(item => item.texture)
+
+  textures.forEach((texture) => {
+    folder.file(texture, fetch(texture).then(response => response.blob()), { binary: true })
+  })
 
   zip.generateAsync({ type: 'blob' })
     .then(content => saveAs(content, `${name}.zip`))
@@ -30,23 +42,30 @@ downloaded from http://tinylittle.world
 `
 }
 
+function generateJS (game) {
+  const json = prettyPrint(game)
+  return `window.game = ${json}`
+}
+
 function generateHtml (game) {
-  // TODO generate preview image
-  const image = ''
   return `
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="twitter:card" content="summary" />
-  <meta name="twitter:site" content="@maketinyworlds" />
-  <meta name="twitter:title" content="${game.name}" />
-  <meta name="twitter:description" content="Made with http://tinylittle.world" />
-  <meta name="twitter:image" content="${image}" />
+  <script src="player.${__VERSION}.js"></script>
+  <script src="game.js"></script>
   <title>${game.name}</title>
 </head>
 <body>
-  game goes here
+  <canvas id="canvas2d"></canvas>
+  <canvas id="canvas3d"></canvas>
+  <script> 
+    const canvas3d = document.getElementById('canvas3d')
+    const canvas2d = document.getElementById('canvas2d')
+    const engine = new Engine(canvas3d, canvas2d)
+    engine.load(window.game)
+    canvas3d.addEventListener('click', () => engine.start())
+  </script>
 </body>
 </html>
 `

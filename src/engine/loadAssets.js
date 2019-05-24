@@ -26,8 +26,7 @@ export default function loadAssets (game) {
   const textures = [...tiles, ...entities]
     .filter(item => item.texture)
     .reduce((textures, item) => {
-      const path = getPath(game, item)
-      textures[item.texture] = loadTexture(textureLoader, path)
+      textures[item.texture] = loadTexture(textureLoader, item.texture)
       return textures
     }, {})
 
@@ -49,11 +48,6 @@ export default function loadAssets (game) {
     }, {})
 
   return { textures, meshes, shadows }
-}
-
-function getPath (game, item) {
-  if (item.texture.startsWith('/')) return item.texture
-  return `/${game.id}/assets/${item.texture}`
 }
 
 function loadTexture (loader, path) {

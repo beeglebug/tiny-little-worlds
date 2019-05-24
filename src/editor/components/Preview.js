@@ -45,7 +45,6 @@ export default function Preview () {
       />
       <canvas
         ref={canvas3DRef}
-        tabIndex={1}
         className={styles.canvas3d}
         width={width}
         height={height}
