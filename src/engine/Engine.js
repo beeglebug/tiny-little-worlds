@@ -4,35 +4,42 @@ import { Object3D } from 'three/src/core/Object3D'
 import createScene from './createScene'
 import CharacterController from './CharacterController'
 import Input from './input/Input'
-import { HEIGHT, WIDTH } from './consts'
 import loop from './loop'
 import createContent from './createContent'
 import loadAssets from './loadAssets'
 import Physics from './Physics'
 import renderReticle from './2d/renderReticle'
 import renderText from './2d/renderText'
+import createCanvas from './util/createCanvas'
 
 export default class Engine {
 
-  constructor (canvas3d, canvas2d) {
+  constructor (container, width, height) {
 
-    this.canvas3d = canvas3d
-    this.canvas2d = canvas2d
+    this.container = container
+    this.container.style.position = 'relative'
+    this.container.style.width = `${width}px`
+    this.container.style.height = `${height}px`
 
-    // needed for keyboard input
-    this.canvas3d.tabIndex = 1
+    // setup dom
+    this.canvas3d = createCanvas(width, height)
+    this.canvas3d.tabIndex = 1 // needed for keyboard input
+
+    this.canvas2d = createCanvas(width, height)
+
+    this.ctx = this.canvas2d.getContext('2d')
+    this.ctx.imageSmoothingEnabled = false
+
+    this.container.appendChild(this.canvas3d)
+    this.container.appendChild(this.canvas2d)
+
+    this.setupPointerLock(this.canvas3d)
 
     this.scene = createScene()
-    this.renderer = new WebGLRenderer({ canvas: canvas3d })
-    this.camera = new PerspectiveCamera(45, WIDTH / HEIGHT, 0.1, 1000)
+    this.renderer = new WebGLRenderer({ canvas: this.canvas3d })
+    this.camera = new PerspectiveCamera(45, width / height, 0.1, 1000)
     this.controller = new CharacterController(this.camera)
     this.scene.add(this.controller)
-
-    this.setupPointerLock(canvas3d)
-
-    this.ctx = canvas2d.getContext('2d')
-    this.ctx.imageSmoothingEnabled = false
-    canvas2d.style.imageRendering = 'pixelated'
   }
 
   load (game) {

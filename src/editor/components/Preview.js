@@ -7,14 +7,17 @@ import styles from './Preview.css'
 
 export default function Preview () {
 
-  const canvas2DRef = useRef(null)
-  const canvas3DRef = useRef(null)
+  const gameContainer = useRef(null)
   const [ running, setRunning ] = useState(false)
   const [ engine, setEngine ] = useState(null)
   const game = useSelector(gameSelector)
 
+  // TODO resolution from config
+  const width = 320
+  const height = 180
+
   useLayoutEffect(() => {
-    const engine = new Engine(canvas3DRef.current, canvas2DRef.current)
+    const engine = new Engine(gameContainer.current, width, height)
     setEngine(engine)
   }, [])
 
@@ -27,29 +30,12 @@ export default function Preview () {
     }
   }
 
-  // TODO resolution from config
-  const width = 320
-  const height = 180
-
   return (
     <div
       className={styles.container}
       style={{ width, height }}
     >
-      <canvas
-        ref={canvas2DRef}
-        className={styles.canvas2d}
-        width={width}
-        height={height}
-        style={{ width, height }}
-      />
-      <canvas
-        ref={canvas3DRef}
-        className={styles.canvas3d}
-        width={width}
-        height={height}
-        style={{ width, height }}
-      />
+      <div ref={gameContainer} />
       {!running && (
         <div className={styles.overlay}>
           <Button onClick={handlePlay}>{'play'}</Button>

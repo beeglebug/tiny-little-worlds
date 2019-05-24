@@ -55,16 +55,30 @@ function generateHtml (game) {
   <script src="player.${__VERSION}.js"></script>
   <script src="game.js"></script>
   <title>${game.name}</title>
+  <style>
+  html, body {
+    height: 100%;
+    padding: 0;
+    margin: 0;
+  }
+  main {
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }
+  </style>
 </head>
 <body>
-  <canvas id="canvas2d"></canvas>
-  <canvas id="canvas3d"></canvas>
+  <main>
+    <div id="game"></div>
+  </main>
   <script> 
-    const canvas3d = document.getElementById('canvas3d')
-    const canvas2d = document.getElementById('canvas2d')
-    const engine = new Engine(canvas3d, canvas2d)
+    const container = document.getElementById('game')
+    const engine = new Engine(container, 320, 180)
     engine.load(window.game)
-    canvas3d.addEventListener('click', () => engine.start())
+    container.addEventListener('click', () => engine.start())
   </script>
 </body>
 </html>
