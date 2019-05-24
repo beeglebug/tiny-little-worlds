@@ -1,14 +1,13 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef, useEffect, Fragment } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { setGameAction } from '../state/actions'
-import { gameSelector } from '../state/selectors'
-import downloadGame from '../util/downloadGame'
-import prettyPrint from '../util/prettyPrint'
-import Panel from './Panel'
-import Button from './Button'
-import styles from './SaveLoadPanel.css'
+import { setGameAction } from '../../state/actions'
+import { gameSelector } from '../../state/selectors'
+import downloadGame from '../../util/downloadGame'
+import prettyPrint from '../../util/prettyPrint'
+import Button from '../Button'
+import styles from './SaveLoad.css'
 
-export default function SaveLoadPanel () {
+export default function SaveLoad () {
 
   const game = useSelector(gameSelector)
   const [ data, setData ] = useState(prettyPrint(game))
@@ -36,10 +35,7 @@ export default function SaveLoadPanel () {
   const download = () => downloadGame(game)
 
   return (
-    <Panel
-      name='saveLoad'
-      title={'save / load'}
-    >
+    <Fragment>
       <textarea
         ref={textAreaRef}
         onChange={handleChange}
@@ -52,6 +48,6 @@ export default function SaveLoadPanel () {
       <Button onClick={download}>
         download
       </Button>
-    </Panel>
+    </Fragment>
   )
 }

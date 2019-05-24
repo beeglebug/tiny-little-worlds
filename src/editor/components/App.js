@@ -4,7 +4,7 @@ import { setGameAction } from '../state/actions'
 import validateGame from '../util/validateGame'
 import PalettePanel from './PalettePanel'
 import ToolsPanel from './ToolsPanel'
-import SaveLoadPanel from './SaveLoadPanel'
+import SaveLoadWindow from './windows/SaveLoadWindow'
 import styles from './App.css'
 import PreviewPanel from './PreviewPanel'
 import MapEditorPanel from './MapEditorPanel'
@@ -50,7 +50,7 @@ export default function App () {
             <PalettePanel />
             <ToolsPanel />
             <PreviewPanel />
-            <SaveLoadPanel />
+            <SaveLoadWindow />
           </Row>
         </PseudoSuspense>
       </div>

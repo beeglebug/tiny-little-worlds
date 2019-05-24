@@ -7,7 +7,7 @@ const initialWindowState = {
   palette: true,
   tools: true,
   preview: true,
-  saveLoad: true,
+  saveLoad: false,
 }
 
 export default function windows (state = initialWindowState, action) {

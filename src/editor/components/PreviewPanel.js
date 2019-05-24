@@ -1,7 +1,6 @@
 import React, { lazy, Suspense } from 'react'
 import Panel from './Panel'
-import LoadingIndicator from './LoadingIndicator'
-import styles from './PreviewPanel.css'
+import Placeholder from './Placeholder'
 
 const Preview = lazy(() => import('./Preview'))
 
@@ -15,13 +14,5 @@ export default function PreviewPanel () {
         <Preview />
       </Suspense>
     </Panel>
-  )
-}
-
-function Placeholder () {
-  return (
-    <div className={styles.loading}>
-      <LoadingIndicator />
-    </div>
   )
 }
