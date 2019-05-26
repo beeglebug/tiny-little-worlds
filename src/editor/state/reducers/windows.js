@@ -2,12 +2,13 @@ import { SET_WINDOW_VISIBILITY } from '../actions'
 
 const initialWindowState = {
   about: true,
-  mapEditor: true,
+  inspector: true,
   levelProperties: false,
+  mapEditor: true,
   palette: true,
-  tools: true,
   preview: true,
   saveLoad: false,
+  tools: true,
 }
 
 export default function windows (state = initialWindowState, action) {

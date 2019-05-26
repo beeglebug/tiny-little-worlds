@@ -45,6 +45,12 @@ export default function ToolsPanel () {
       >
         erase
       </Button>
+      <Button
+        onClick={() => selectTool(TOOLS.SELECT)}
+        selected={selectedTool === TOOLS.SELECT}
+      >
+        select
+      </Button>
       <Button onClick={clearMap}>
         clear
       </Button>

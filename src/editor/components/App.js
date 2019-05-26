@@ -15,6 +15,7 @@ import SaveLoadWindow from './windows/SaveLoadWindow'
 import AboutWindow from './windows/AboutWindow'
 import ResizeLevelModal from './modals/ResizeLevelModal'
 import styles from './App.css'
+import InspectorWindow from './windows/InspectorWindow'
 
 export default function App () {
 
@@ -46,6 +47,7 @@ export default function App () {
           </Row>
           <Row>
             <MapEditorPanel />
+            <InspectorWindow />
             <LevelPropertiesWindow />
             <PalettePanel />
             <ToolsPanel />
