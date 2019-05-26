@@ -2,6 +2,14 @@ export const currentEntitySelector = state => state.currentEntity
 export const currentTileSelector = state => state.currentTile
 export const currentToolSelector = state => state.currentTool
 
+export const selectedEntitySelector = state => {
+  if (state.selectedEntity === null) return null
+  const game = state.game
+  const currentLevel = state.currentLevel
+  const level = game.levels[currentLevel]
+  return level.entities.find(entity => entity.id === state.selectedEntity)
+}
+
 export const gameSelector = state => state.game
 
 export const showGridSelector = state => state.showGrid

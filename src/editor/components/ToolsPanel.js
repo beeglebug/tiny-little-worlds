@@ -1,7 +1,7 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { TOOLS } from '../consts'
-import { clearMapAction, setCurrentTool, setModalVisibilityAction } from '../state/actions'
+import { clearMapAction, setCurrentToolAction, setModalVisibilityAction } from '../state/actions'
 import { currentToolSelector } from '../state/selectors'
 import Panel from './Panel'
 import Button from './Button'
@@ -14,7 +14,7 @@ export default function ToolsPanel () {
 
   const selectTool = (tool) => {
     if (tool !== currentTool) {
-      dispatch(setCurrentTool(tool))
+      dispatch(setCurrentToolAction(tool))
     }
   }
 

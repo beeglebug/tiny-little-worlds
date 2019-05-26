@@ -4,7 +4,7 @@ import {
   SET_MAP_TILE,
   SET_MAP_ENTITY,
   CLEAR_MAP_ENTITY,
-  CLEAR_MAP_ENTITIES, RESIZE_MAP, UPDATE_LEVEL,
+  CLEAR_MAP_ENTITIES, RESIZE_MAP, UPDATE_LEVEL, UPDATE_ENTITY,
 } from '../../actions'
 import arrayOf from '../../../util/arrayOf'
 import clearMapEntities from './clearMapEntities'
@@ -111,6 +111,30 @@ function updateLevel (game, action) {
   }
 }
 
+function updateEntity (game, action) {
+
+  const { id, data, levelIndex } = action.payload
+
+  const levels = [...game.levels]
+  const level = levels[levelIndex]
+  const entities = level.entities.map(entity => {
+    if (entity.id === id) {
+      return { ...entity, ...data }
+    }
+    return entity
+  })
+
+  levels[levelIndex] = {
+    ...level,
+    entities,
+  }
+
+  return {
+    ...game,
+    levels,
+  }
+}
+
 export default function game (state = null, action) {
   switch (action.type) {
     case SET_GAME: return action.payload
@@ -121,6 +145,7 @@ export default function game (state = null, action) {
     case CLEAR_MAP: return clearMap(state, action)
     case RESIZE_MAP: return resizeMap(state, action)
     case UPDATE_LEVEL: return updateLevel(state, action)
+    case UPDATE_ENTITY: return updateEntity(state, action)
     default: return state
   }
 }

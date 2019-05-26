@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
 import { TOOLS } from '../../consts'
-import { SET_CURRENT_ENTITY, SET_CURRENT_TILE, SET_CURRENT_TOOL, SET_SHOW_GRID } from '../actions'
+import { SET_CURRENT_ENTITY, SET_CURRENT_TILE, SET_CURRENT_TOOL, SET_SELECTED_ENTITY, SET_SHOW_GRID } from '../actions'
 import game from './game'
 import modals from './modals'
 import windows from './windows'
@@ -32,6 +32,11 @@ const currentTool = (state = TOOLS.PAINT, action) => {
   }
 }
 
+function selectedEntity (state = null, action) {
+  if (action.type === SET_SELECTED_ENTITY) return action.payload
+  return state
+}
+
 function showGrid (state = true, action) {
   if (action.type === SET_SHOW_GRID) return action.payload
   return state
@@ -52,6 +57,7 @@ export default combineReducers({
   currentEntity,
   currentTile,
   currentTool,
+  selectedEntity,
   showGrid,
   modals,
   windows,

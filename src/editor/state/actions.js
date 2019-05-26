@@ -1,3 +1,4 @@
+export const SET_SELECTED_ENTITY = 'SET_SELECTED_ENTITY'
 export const SET_CURRENT_ENTITY = 'SET_CURRENT_ENTITY'
 export const SET_CURRENT_TILE = 'SET_CURRENT_TILE'
 export const SET_CURRENT_TOOL = 'SET_CURRENT_TOOL'
@@ -12,6 +13,7 @@ export const SET_GAME = 'SET_GAME'
 export const SET_SHOW_GRID = 'SET_SHOW_GRID'
 export const SET_WINDOW_VISIBILITY = 'SET_WINDOW_VISIBILITY'
 export const UPDATE_LEVEL = 'UPDATE_LEVEL'
+export const UPDATE_ENTITY = 'UPDATE_ENTITY'
 
 // TODO rename map stuff to level
 
@@ -25,9 +27,14 @@ export const setCurrentTileAction = (tile) => ({
   payload: tile,
 })
 
-export const setCurrentTool = (tool) => ({
+export const setCurrentToolAction = (tool) => ({
   type: SET_CURRENT_TOOL,
   payload: tool,
+})
+
+export const setSelectedEntityAction = (entityId) => ({
+  type: SET_SELECTED_ENTITY,
+  payload: entityId,
 })
 
 export const updateLevelAction = (data, levelIndex = 0) => ({
@@ -88,4 +95,9 @@ export const setWindowVisibilityAction = (window, visibility) => ({
 export const setModalVisibilityAction = (modal, visibility) => ({
   type: SET_MODAL_VISIBILITY,
   payload: { modal, visibility },
+})
+
+export const updateEntityAction = (id, data, levelIndex = 0) => ({
+  type: UPDATE_ENTITY,
+  payload: { id, data, levelIndex },
 })

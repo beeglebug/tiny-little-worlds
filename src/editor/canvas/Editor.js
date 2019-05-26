@@ -1,6 +1,12 @@
 import Vector2 from '../../engine/physics/geometry/Vector2'
 import { SIZE, TOOLS } from '../consts'
-import { clearMapEntitiesAction, clearMapEntityAction, setMapEntityAction, setMapTileAction } from '../state/actions'
+import {
+  clearMapEntitiesAction,
+  clearMapEntityAction,
+  setMapEntityAction,
+  setMapTileAction,
+  setSelectedEntityAction
+} from '../state/actions'
 import drawTiles from './drawTiles'
 import drawGrid from './drawGrid'
 import drawCursor from './drawCursor'
@@ -149,7 +155,12 @@ export default class Editor {
   selectCurrent () {
     const { x, y } = this.mouseTilePosition
     const entity = this.getEntityAt(x, y)
-    //this.dispatch(selectEntityAction(entity))
+    if (entity) {
+      this.dispatch(setSelectedEntityAction(entity.id))
+    } else {
+      // TODO only clear if something selected
+      this.dispatch(setSelectedEntityAction(null))
+    }
   }
 
   paintOrEraseCurrent () {
