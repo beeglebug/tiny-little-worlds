@@ -116,7 +116,8 @@ export default class Editor {
 
   handleMouseLeave = () => {
     this.mouseOver = false
-    this.currentTileIndex
+    this.currentTileIndex = null
+    this.render()
   }
 
   handleMouseDown = (e) => {
