@@ -8,7 +8,7 @@ export default function InspectorWindow () {
       name={'inspector'}
       title={'Inspector'}
     >
-      selected thing
+      Nothing selected
     </Window>
   )
 }

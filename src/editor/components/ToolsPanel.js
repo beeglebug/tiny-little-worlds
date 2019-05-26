@@ -5,6 +5,7 @@ import { clearMapAction, selectToolAction, setModalVisibilityAction } from '../s
 import { currentToolSelector } from '../state/selectors'
 import Panel from './Panel'
 import Button from './Button'
+import styles from './ToolsPanel.css'
 
 export default function ToolsPanel () {
 
@@ -33,30 +34,32 @@ export default function ToolsPanel () {
       name={'tools'}
       title={'tools'}
     >
-      <Button
-        onClick={() => selectTool(TOOLS.PAINT)}
-        selected={currentTool === TOOLS.PAINT}
-      >
-        paint
-      </Button>
-      <Button
-        onClick={() => selectTool(TOOLS.ERASE)}
-        selected={currentTool === TOOLS.ERASE}
-      >
-        erase
-      </Button>
-      <Button
-        onClick={() => selectTool(TOOLS.SELECT)}
-        selected={currentTool === TOOLS.SELECT}
-      >
-        select
-      </Button>
-      <Button onClick={clearMap}>
-        clear
-      </Button>
-      <Button onClick={resizeLevel}>
-        resize
-      </Button>
+      <div className={styles.buttonContainer}>
+        <Button
+          onClick={() => selectTool(TOOLS.PAINT)}
+          selected={currentTool === TOOLS.PAINT}
+        >
+          paint
+        </Button>
+        <Button
+          onClick={() => selectTool(TOOLS.ERASE)}
+          selected={currentTool === TOOLS.ERASE}
+        >
+          erase
+        </Button>
+        <Button
+          onClick={() => selectTool(TOOLS.SELECT)}
+          selected={currentTool === TOOLS.SELECT}
+        >
+          select
+        </Button>
+        <Button onClick={clearMap}>
+          clear
+        </Button>
+        <Button onClick={resizeLevel}>
+          resize
+        </Button>
+      </div>
     </Panel>
   )
 }

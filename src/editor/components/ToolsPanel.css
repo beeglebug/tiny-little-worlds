@@ -1,0 +1,23 @@
+.buttonContainer {
+  display: flex;
+  flex-direction: column;
+  max-width: 80px;
+}
+
+.buttonContainer button {
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+.buttonContainer button:last-child {
+  margin-bottom: 0;
+}
+
+@media (max-width: 425px) {
+  .buttonContainer {
+    flex-direction: row;
+  }
+  .buttonContainer button {
+    margin-bottom: 0px;
+  }
+}
