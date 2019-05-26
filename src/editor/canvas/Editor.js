@@ -149,7 +149,7 @@ export default class Editor {
   selectCurrent () {
     const { x, y } = this.mouseTilePosition
     const entity = this.getEntityAt(x, y)
-    // this.dispatch(selectEntityAction(entity))
+    //this.dispatch(selectEntityAction(entity))
   }
 
   paintOrEraseCurrent () {

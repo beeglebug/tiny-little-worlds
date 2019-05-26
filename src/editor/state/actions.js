@@ -25,7 +25,7 @@ export const setCurrentTileAction = (tile) => ({
   payload: tile,
 })
 
-export const selectToolAction = (tool) => ({
+export const setCurrentTool = (tool) => ({
   type: SET_CURRENT_TOOL,
   payload: tool,
 })
