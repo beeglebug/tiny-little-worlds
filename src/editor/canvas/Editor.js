@@ -59,8 +59,8 @@ export default class Editor {
     const state = this.store.getState()
 
     this.currentEntity = state.currentEntity
-    this.selectedTool = state.selectedTool
-    this.selectedTile = state.selectedTile
+    this.currentTool = state.currentTool
+    this.currentTile = state.currentTile
     this.game = state.game
     this.showGrid = state.showGrid
 
@@ -144,16 +144,16 @@ export default class Editor {
 
     const { x, y } = this.mouseTilePosition
 
-    if (this.selectedTool === TOOLS.PAINT) {
+    if (this.currentTool === TOOLS.PAINT) {
 
       // handle tiles
-      if (this.selectedTile !== null) {
+      if (this.currentTile !== null) {
 
         if (this.isEntityAt(x, y)) {
           this.store.dispatch(clearMapEntityAction(x, y))
         }
 
-        this.store.dispatch(setMapTileAction(x, y, this.selectedTile))
+        this.store.dispatch(setMapTileAction(x, y, this.currentTile))
       }
 
       // handle entities
@@ -168,7 +168,7 @@ export default class Editor {
       }
     }
 
-    if (this.selectedTool === TOOLS.ERASE) {
+    if (this.currentTool === TOOLS.ERASE) {
       if (this.isEntityAt(x, y)) {
         this.store.dispatch(clearMapEntityAction(x, y))
       } else {
@@ -231,8 +231,8 @@ export default class Editor {
         this.mouseTilePosition.x * SIZE,
         this.mouseTilePosition.y * SIZE,
         this.currentEntity,
-        this.selectedTile,
-        this.selectedTool,
+        this.currentTile,
+        this.currentTool,
         this.assets
       )
     }

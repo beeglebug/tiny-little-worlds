@@ -1,6 +1,6 @@
 export const SET_CURRENT_ENTITY = 'SET_CURRENT_ENTITY'
-export const SELECT_TILE = 'SELECT_TILE'
-export const SELECT_TOOL = 'SELECT_TOOL'
+export const SET_CURRENT_TILE = 'SET_CURRENT_TILE'
+export const SET_CURRENT_TOOL = 'SET_CURRENT_TOOL'
 export const SET_MAP_TILE = 'SET_MAP_TILE'
 export const SET_MAP_ENTITY = 'SET_MAP_ENTITY'
 export const CLEAR_MAP_ENTITY = 'CLEAR_MAP_ENTITY'
@@ -20,13 +20,13 @@ export const setCurrentEntityAction = (entityType) => ({
   payload: entityType,
 })
 
-export const selectTileAction = (tile) => ({
-  type: SELECT_TILE,
+export const setCurrentTileAction = (tile) => ({
+  type: SET_CURRENT_TILE,
   payload: tile,
 })
 
 export const selectToolAction = (tool) => ({
-  type: SELECT_TOOL,
+  type: SET_CURRENT_TOOL,
   payload: tool,
 })
 
