@@ -40,9 +40,9 @@ export const setMapTileAction = (x, y, tileId, levelIndex = 0) => ({
   payload: { x, y, tileId, levelIndex },
 })
 
-export const setMapEntityAction = (x, y, entityId, levelIndex = 0) => ({
+export const setMapEntityAction = (x, y, id, levelIndex = 0) => ({
   type: SET_MAP_ENTITY,
-  payload: { x, y, entityId, levelIndex },
+  payload: { x, y, id, levelIndex },
 })
 
 export const clearMapEntityAction = (x, y, levelIndex = 0) => ({
@@ -50,9 +50,10 @@ export const clearMapEntityAction = (x, y, levelIndex = 0) => ({
   payload: { x, y, levelIndex },
 })
 
-export const clearMapEntitiesAction = (entityId, levelIndex = 0) => ({
+// clear all entities of a certain type from a level
+export const clearMapEntitiesAction = (type, levelIndex = 0) => ({
   type: CLEAR_MAP_ENTITIES,
-  payload: { entityId, levelIndex },
+  payload: { type, levelIndex },
 })
 
 export const clearMapAction = (levelIndex = 0) => ({

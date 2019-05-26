@@ -18,6 +18,7 @@ export default class Editor {
     this.ctx = canvas.getContext('2d')
 
     this.store = store
+    this.dispatch = store.dispatch
 
     this.getState()
     this.subscribeToStore()
@@ -98,7 +99,7 @@ export default class Editor {
       if (this.mouseTilePosition.x >= 0 && this.mouseTilePosition.y >= 0 && this.mouseTilePosition.x < this.map.width && this.mouseTilePosition.y < this.map.height) {
         const index = (this.mouseTilePosition.y * this.map.width) + this.mouseTilePosition.x
         if (this.mouseDown[MOUSE_LEFT] && this.currentTileIndex !== index) {
-          this.paintCurrent()
+          this.paintOrEraseCurrent()
         }
         this.currentTileIndex = index
       } else {
@@ -124,7 +125,11 @@ export default class Editor {
     this.mouseDown[e.button] = true
     if (e.button === MOUSE_LEFT) {
       if (this.currentTileIndex !== null) {
-        this.paintCurrent()
+        if (this.currentTool === TOOLS.PAINT || this.currentTool === TOOLS.ERASE) {
+          this.paintOrEraseCurrent()
+        } else if (this.currentTool === TOOLS.SELECT) {
+          this.selectCurrent()
+        }
       }
     }
     if (e.button === MOUSE_MIDDLE) {
@@ -141,7 +146,13 @@ export default class Editor {
     }
   }
 
-  paintCurrent () {
+  selectCurrent () {
+    const { x, y } = this.mouseTilePosition
+    const entity = this.getEntityAt(x, y)
+    // this.dispatch(selectEntityAction(entity))
+  }
+
+  paintOrEraseCurrent () {
 
     const { x, y } = this.mouseTilePosition
 
@@ -150,36 +161,40 @@ export default class Editor {
       // handle tiles
       if (this.currentTile !== null) {
 
-        if (this.isEntityAt(x, y)) {
-          this.store.dispatch(clearMapEntityAction(x, y))
+        // TODO move multi action dispatching into reducer or thunks
+        if (this.getEntityAt(x, y)) {
+          this.dispatch(clearMapEntityAction(x, y))
         }
 
-        this.store.dispatch(setMapTileAction(x, y, this.currentTile))
+        this.dispatch(setMapTileAction(x, y, this.currentTile))
       }
 
       // handle entities
       if (this.currentEntity !== null) {
         const entity = this.palette.entities.find(entity => entity.id === this.currentEntity)
+
+        // TODO move multi action dispatching into reducer or thunks
         if (entity.unique) {
-          this.store.dispatch(clearMapEntitiesAction(this.currentEntity))
+          this.dispatch(clearMapEntitiesAction(this.currentEntity))
         }
-        this.store.dispatch(setMapEntityAction(x, y, this.currentEntity))
+        this.dispatch(setMapEntityAction(x, y, this.currentEntity))
+
         // also set the square under the entity to "base floor" for safety
-        this.store.dispatch(setMapTileAction(x, y, 1))
+        this.dispatch(setMapTileAction(x, y, 1))
       }
     }
 
     if (this.currentTool === TOOLS.ERASE) {
-      if (this.isEntityAt(x, y)) {
-        this.store.dispatch(clearMapEntityAction(x, y))
+      if (this.getEntityAt(x, y)) {
+        this.dispatch(clearMapEntityAction(x, y))
       } else {
-        this.store.dispatch(setMapTileAction(x, y, 0))
+        this.dispatch(setMapTileAction(x, y, 0))
       }
     }
   }
 
-  isEntityAt (x, y) {
-    return this.map.entities.some(entity => (entity.x === x && entity.y === y))
+  getEntityAt (x, y) {
+    return this.map.entities.find(entity => (entity.x === x && entity.y === y))
   }
 
   bindListeners () {
@@ -223,7 +238,7 @@ export default class Editor {
     drawEntities(this.ctx, this.map, this.assets)
 
     if (this.showGrid) {
-      drawGrid(this.ctx, width, height, '#ffffff')
+      drawGrid(this.ctx, width, height, '#afbdd0')
     }
 
     if (this.currentTileIndex !== null) {

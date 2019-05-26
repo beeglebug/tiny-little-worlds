@@ -35,11 +35,11 @@ function setMapTile (game, action) {
 
 function setMapEntity (game, action) {
 
-  const { x, y, entityId, levelIndex } = action.payload
+  const { x, y, id, levelIndex } = action.payload
 
   const level = game.levels[levelIndex]
 
-  const entities = [...level.entities, { x, y, id: entityId }]
+  const entities = [...level.entities, { x, y, type: id }]
 
   const levels = [...game.levels]
   levels[levelIndex] = {

@@ -1,10 +1,10 @@
 export default function clearMapEntities (state, action) {
 
-  const { entityId, levelIndex } = action.payload
+  const { type, levelIndex } = action.payload
 
   const level = state.levels[levelIndex]
 
-  const entities = level.entities.filter(entity => entity.id !== entityId)
+  const entities = level.entities.filter(entity => entity.type !== type)
 
   const levels = [...state.levels]
   levels[levelIndex] = {

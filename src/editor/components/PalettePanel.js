@@ -16,14 +16,6 @@ export default function PalettePanel () {
 
   if (!game) return null
 
-  function handleClickTile (tileId) {
-    setCurrentTile(tileId)
-  }
-
-  function handleClickEntity (id) {
-    setCurrentEntity(id)
-  }
-
   const level = game.levels[currentLevel]
   const { tiles, entities } = game.palettes[level.palette]
 
@@ -40,7 +32,7 @@ export default function PalettePanel () {
               selected={currentTile === id}
               src={sprite}
               title={name}
-              onClick={() => handleClickTile(id)}
+              onClick={() => setCurrentTile(id)}
             />
           )
         })}
@@ -53,7 +45,7 @@ export default function PalettePanel () {
               selected={currentEntity === id}
               src={sprite}
               title={name}
-              onClick={() => handleClickEntity(id)}
+              onClick={() => setCurrentEntity(id)}
             />
           )
         })}

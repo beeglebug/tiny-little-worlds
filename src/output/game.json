@@ -32,22 +32,26 @@
       ],
       "entities": [
         {
-          "id": "PLAYER",
+          "id": 1,
+          "type": "PLAYER",
           "x": 8,
           "y": 4
         },
         {
-          "id": "DOOR",
+          "id": 2,
+          "type": "DOOR",
           "x": 8,
           "y": 9
         },
         {
-          "id": "KEY",
+          "id": 3,
+          "type": "KEY",
           "x": 8,
           "y": 7
         },
         {
-          "id": "SKELETON",
+          "id": 4,
+          "type": "SKELETON",
           "x": 5,
           "y": 7
         }

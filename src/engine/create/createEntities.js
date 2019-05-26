@@ -7,9 +7,9 @@ export default function createEntities (map, palette, assets, controller) {
 
   map.entities.forEach(instance => {
 
-    const definition = palette.entities.find(({ id }) => id === instance.id)
+    const definition = palette.entities.find(({ id }) => id === instance.type)
 
-    if (instance.id === ENTITY_TYPE.PLAYER) {
+    if (instance.type === ENTITY_TYPE.PLAYER) {
       // just set player position, nothing to add to world
       // TODO player orientation?
       controller.position.set(instance.x * TILE_SIZE, 0, instance.y * TILE_SIZE)
