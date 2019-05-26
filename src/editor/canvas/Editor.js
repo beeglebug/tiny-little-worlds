@@ -58,7 +58,7 @@ export default class Editor {
   getState () {
     const state = this.store.getState()
 
-    this.selectedEntity = state.selectedEntity
+    this.currentEntity = state.currentEntity
     this.selectedTool = state.selectedTool
     this.selectedTile = state.selectedTile
     this.game = state.game
@@ -157,12 +157,12 @@ export default class Editor {
       }
 
       // handle entities
-      if (this.selectedEntity !== null) {
-        const entity = this.palette.entities.find(entity => entity.id === this.selectedEntity)
+      if (this.currentEntity !== null) {
+        const entity = this.palette.entities.find(entity => entity.id === this.currentEntity)
         if (entity.unique) {
-          this.store.dispatch(clearMapEntitiesAction(this.selectedEntity))
+          this.store.dispatch(clearMapEntitiesAction(this.currentEntity))
         }
-        this.store.dispatch(setMapEntityAction(x, y, this.selectedEntity))
+        this.store.dispatch(setMapEntityAction(x, y, this.currentEntity))
         // also set the square under the entity to "base floor" for safety
         this.store.dispatch(setMapTileAction(x, y, 1))
       }
@@ -230,7 +230,7 @@ export default class Editor {
         this.ctx,
         this.mouseTilePosition.x * SIZE,
         this.mouseTilePosition.y * SIZE,
-        this.selectedEntity,
+        this.currentEntity,
         this.selectedTile,
         this.selectedTool,
         this.assets

@@ -1,6 +1,6 @@
 import { SIZE, TOOLS } from '../consts'
 
-export default function drawCursor (ctx, dx, dy, selectedEntity, selectedTile, selectedTool, assets) {
+export default function drawCursor (ctx, dx, dy, currentEntity, selectedTile, selectedTool, assets) {
 
   if (selectedTool === TOOLS.PAINT) {
 
@@ -8,8 +8,8 @@ export default function drawCursor (ctx, dx, dy, selectedEntity, selectedTile, s
 
     if (selectedTile) {
       image = assets[selectedTile]
-    } else if (selectedEntity) {
-      image = assets[selectedEntity]
+    } else if (currentEntity) {
+      image = assets[currentEntity]
     }
 
     if (!image) return

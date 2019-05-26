@@ -1,4 +1,4 @@
-export const selectedEntitySelector = state => state.selectedEntity
+export const currentEntitySelector = state => state.currentEntity
 export const selectedTileSelector = state => state.selectedTile
 export const selectedToolSelector = state => state.selectedTool
 

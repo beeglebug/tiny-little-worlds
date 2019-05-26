@@ -1,4 +1,4 @@
-export const SELECT_ENTITY = 'SELECT_ENTITY'
+export const SET_CURRENT_ENTITY = 'SET_CURRENT_ENTITY'
 export const SELECT_TILE = 'SELECT_TILE'
 export const SELECT_TOOL = 'SELECT_TOOL'
 export const SET_MAP_TILE = 'SET_MAP_TILE'
@@ -15,8 +15,8 @@ export const UPDATE_LEVEL = 'UPDATE_LEVEL'
 
 // TODO rename map stuff to level
 
-export const selectEntityAction = (entityType) => ({
-  type: SELECT_ENTITY,
+export const setCurrentEntityAction = (entityType) => ({
+  type: SET_CURRENT_ENTITY,
   payload: entityType,
 })
 

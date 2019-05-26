@@ -1,7 +1,7 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { selectEntityAction, selectTileAction } from '../state/actions'
-import { gameSelector, selectedEntitySelector, selectedTileSelector } from '../state/selectors'
+import { setCurrentEntityAction, selectTileAction } from '../state/actions'
+import { gameSelector, currentEntitySelector, selectedTileSelector } from '../state/selectors'
 import useReduxState from '../hooks/useReduxState'
 import Panel from './Panel'
 import PaletteSwatch from './PaletteSwatch'
@@ -10,7 +10,7 @@ import styles from './PalettePanel.css'
 export default function PalettePanel () {
 
   const [ selectedTile, setSelectedTile ] = useReduxState(selectedTileSelector, selectTileAction)
-  const [ selectedEntity, setSelectedEntity ] = useReduxState(selectedEntitySelector, selectEntityAction)
+  const [ currentEntity, setCurrentEntity ] = useReduxState(currentEntitySelector, setCurrentEntityAction)
   const game = useSelector(gameSelector)
   const currentLevel = useSelector(state => state.currentLevel)
 
@@ -21,7 +21,7 @@ export default function PalettePanel () {
   }
 
   function handleClickEntity (id) {
-    setSelectedEntity(id)
+    setCurrentEntity(id)
   }
 
   const level = game.levels[currentLevel]
@@ -50,7 +50,7 @@ export default function PalettePanel () {
           return (
             <PaletteSwatch
               key={id}
-              selected={selectedEntity === id}
+              selected={currentEntity === id}
               src={sprite}
               title={name}
               onClick={() => handleClickEntity(id)}

@@ -1,13 +1,13 @@
 import { combineReducers } from 'redux'
 import { TOOLS } from '../../consts'
-import { SELECT_ENTITY, SELECT_TILE, SELECT_TOOL, SET_SHOW_GRID } from '../actions'
+import { SET_CURRENT_ENTITY, SELECT_TILE, SELECT_TOOL, SET_SHOW_GRID } from '../actions'
 import game from './game'
 import modals from './modals'
 import windows from './windows'
 
-const selectedEntity = (state = null, action) => {
+const currentEntity = (state = null, action) => {
   switch (action.type) {
-    case SELECT_ENTITY: return action.payload
+    case SET_CURRENT_ENTITY: return action.payload
     case SELECT_TILE: return null
     case SELECT_TOOL: return maybeClear(state, action)
     default: return state
@@ -17,7 +17,7 @@ const selectedEntity = (state = null, action) => {
 const selectedTile = (state = 1, action) => {
   switch (action.type) {
     case SELECT_TILE: return action.payload
-    case SELECT_ENTITY: return null
+    case SET_CURRENT_ENTITY: return null
     case SELECT_TOOL: return maybeClear(state, action)
     default: return state
   }
@@ -32,7 +32,7 @@ const selectedTool = (state = TOOLS.PAINT, action) => {
   switch (action.type) {
     case SELECT_TOOL: return action.payload
     case SELECT_TILE:
-    case SELECT_ENTITY: return TOOLS.PAINT
+    case SET_CURRENT_ENTITY: return TOOLS.PAINT
     default: return state
   }
 }
@@ -54,7 +54,7 @@ export default combineReducers({
   game,
   currentLevel,
   currentPalette,
-  selectedEntity,
+  currentEntity,
   selectedTile,
   selectedTool,
   showGrid,
