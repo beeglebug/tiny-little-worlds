@@ -1,33 +1,36 @@
 import React, { useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { selectedEntitySelector } from '../../state/selectors'
+import { currentLevelSelector, selectedEntitySelector } from '../../state/selectors'
 import Window from '../Panel'
-import Input from '../Input'
 import { updateEntityAction } from '../../state/actions'
+import ValidatedIntegerInput from '../ValidatedIntegerInput'
 
 export default function InspectorWindow () {
   const selected = useSelector(selectedEntitySelector)
+  const level = useSelector(currentLevelSelector)
   return (
     <Window
       name={'inspector'}
       title={'Inspector'}
     >
       <div style={{ width: 200 }}>
-        <Inspector entity={selected} />
+        <Inspector
+          entity={selected}
+          level={level}
+        />
       </div>
     </Window>
   )
 }
 
-function Inspector ({ entity }) {
+function Inspector ({ entity, level }) {
   const dispatch = useDispatch()
+
   const updateEntity = useCallback(props => {
     dispatch(updateEntityAction(entity.id, props))
   }, [dispatch, entity])
 
   if (!entity) return 'Nothing selected'
-
-  // TODO buffer the changes and dont allow invalid values to hit redux
 
   return (
     <table>
@@ -45,11 +48,12 @@ function Inspector ({ entity }) {
             <label htmlFor={'entity_x'}>x</label>
           </td>
           <td>
-            <Input
+            <ValidatedIntegerInput
               id={'entity_x'}
-              type={'number'}
+              min={0}
+              max={level.width - 1}
               value={entity.x}
-              onChange={x => updateEntity({ x: parseInt(x) })}
+              onChange={x => updateEntity({ x })}
             />
           </td>
         </tr>
@@ -58,11 +62,12 @@ function Inspector ({ entity }) {
             <label htmlFor={'entity_y'}>y</label>
           </td>
           <td>
-            <Input
+            <ValidatedIntegerInput
               id={'entity_y'}
-              type={'number'}
+              min={0}
+              max={level.height - 1}
               value={entity.y}
-              onChange={y => updateEntity({ y: parseInt(y) })}
+              onChange={y => updateEntity({ y })}
             />
           </td>
         </tr>

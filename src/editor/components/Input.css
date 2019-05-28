@@ -3,3 +3,7 @@
   height: 24px;
   padding: 0 4px;
 }
+
+.error {
+  border: 1px solid #e20014;
+}

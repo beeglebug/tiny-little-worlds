@@ -4,10 +4,14 @@ export const currentToolSelector = state => state.currentTool
 
 export const selectedEntitySelector = state => {
   if (state.selectedEntity === null) return null
+  const level = currentLevelSelector(state)
+  return level.entities.find(entity => entity.id === state.selectedEntity)
+}
+
+export const currentLevelSelector = state => {
   const game = state.game
   const currentLevel = state.currentLevel
-  const level = game.levels[currentLevel]
-  return level.entities.find(entity => entity.id === state.selectedEntity)
+  return game.levels[currentLevel]
 }
 
 export const gameSelector = state => state.game

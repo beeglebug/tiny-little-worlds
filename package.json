@@ -9,7 +9,8 @@
     "lint": "eslint src",
     "start": "webpack-dev-server",
     "test": "jest",
-    "analyze": "webpack --mode=production --json > webpack-stats.json && webpack-bundle-analyzer webpack-stats.json"
+    "analyze": "webpack --mode=production --json > webpack-stats.json && webpack-bundle-analyzer webpack-stats.json",
+    "storybook": "start-storybook -p 6006"
   },
   "devDependencies": {
     "@babel/core": "^7.1.6",
@@ -44,7 +45,11 @@
     "webpack-bundle-analyzer": "^3.3.2",
     "webpack-cli": "^3.1.2",
     "webpack-dev-server": "^3.1.10",
-    "webpack-glsl-loader": "^1.0.1"
+    "webpack-glsl-loader": "^1.0.1",
+    "@storybook/react": "^5.0.11",
+    "@storybook/addon-actions": "^5.0.11",
+    "@storybook/addon-links": "^5.0.11",
+    "@storybook/addons": "^5.0.11"
   },
   "dependencies": {
     "@bugsnag/js": "^6.2.0",
