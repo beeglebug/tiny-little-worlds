@@ -5,7 +5,7 @@ import {
   clearMapEntityAction,
   setMapEntityAction,
   setMapTileAction,
-  setSelectedEntityAction
+  setSelectedEntityAction, updateEntityAction
 } from '../state/actions'
 import drawTiles from './drawTiles'
 import drawGrid from './drawGrid'
@@ -42,6 +42,9 @@ export default class Editor {
     this.panning = false
     this.panStart = new Vector2()
     this.panOffsetStart = new Vector2()
+
+    // drag selected
+    this.dragging = false
 
     this.currentTileIndex = null
 
@@ -91,6 +94,14 @@ export default class Editor {
     this.mouseTilePosition.x = Math.floor((this.mousePosition.x - this.offset.x) / SIZE)
     this.mouseTilePosition.y = Math.floor((this.mousePosition.y - this.offset.y) / SIZE)
 
+    if (this.dragging) {
+      const position = { x: this.mouseTilePosition.x, y: this.mouseTilePosition.y }
+      // avoid thrashing redux on mousemove
+      if (position.x !== this.dragging.x || position.y !== this.dragging.y) {
+        this.dispatch(updateEntityAction(this.dragging.id, position))
+      }
+    }
+
     if (this.panning) {
 
       const dx = this.mousePosition.x - this.panStart.x
@@ -128,16 +139,21 @@ export default class Editor {
   }
 
   handleMouseDown = (e) => {
+
     this.mouseDown[e.button] = true
+
     if (e.button === MOUSE_LEFT) {
       if (this.currentTileIndex !== null) {
         if (this.currentTool === TOOLS.PAINT || this.currentTool === TOOLS.ERASE) {
           this.paintOrEraseCurrent()
         } else if (this.currentTool === TOOLS.SELECT) {
           this.selectCurrent()
+          const { x, y } = this.mouseTilePosition
+          this.dragging = this.getEntityAt(x, y)
         }
       }
     }
+
     if (e.button === MOUSE_MIDDLE) {
       this.panning = true
       this.panStart.copy(this.mousePosition)
@@ -146,7 +162,13 @@ export default class Editor {
   }
 
   handleMouseUp = (e) => {
+
     this.mouseDown[e.button] = false
+
+    if (e.button === MOUSE_LEFT) {
+      this.dragging = false
+    }
+
     if (e.button === MOUSE_MIDDLE) {
       this.panning = false
     }
@@ -253,6 +275,7 @@ export default class Editor {
     }
 
     if (this.currentTileIndex !== null) {
+
       drawCursor(
         this.ctx,
         this.mouseTilePosition.x * SIZE,

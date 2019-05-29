@@ -2,24 +2,25 @@ import { SIZE } from '../consts'
 
 export default function drawEntities (ctx, map, assets) {
 
-  map.entities.forEach(entity => {
+  map.entities.forEach(entity => drawEntity(ctx, entity, assets))
+}
 
-    const { x, y, type } = entity
+export function drawEntity (ctx, entity, assets) {
 
-    const dx = x * SIZE
-    const dy = y * SIZE
+  const { x, y, type } = entity
 
-    const image = assets[type]
+  const dx = x * SIZE
+  const dy = y * SIZE
 
-    if (!image) return
+  const image = assets[type]
 
-    ctx.drawImage(
-      image,
-      dx,
-      dy,
-      SIZE,
-      SIZE
-    )
+  if (!image) return
 
-  })
+  ctx.drawImage(
+    image,
+    dx,
+    dy,
+    SIZE,
+    SIZE
+  )
 }
