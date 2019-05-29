@@ -1,2 +1,8 @@
 [build]
-functions = "./functions"
+    command = "npm run build"
+    functions = "functions"
+
+[dev]
+    command = "npm run start"
+    port = 8080
+    publish = "dist"

@@ -1,8 +1,14 @@
 .idea/
+
 node_modules/
+
 yarn-error.log
+webpack-stats.json
+
 .DS_Store
 _temp/
+
 dist/
 functions/
-webpack-stats.json
+.env
+.netlify/
