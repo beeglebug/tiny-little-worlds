@@ -16,8 +16,6 @@ exports.handler = async function (event, context) {
 
   const { slug } = event.queryStringParameters
 
-  console.log(event)
-
   const game = await Game.findOne({ slug })
 
   if (game === null) {
