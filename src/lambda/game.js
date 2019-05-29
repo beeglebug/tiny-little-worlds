@@ -12,11 +12,11 @@ const gameSchema = new mongoose.Schema({})
 
 const Game = mongoose.model('Game', gameSchema)
 
-exports.handler = async function (event, context) {
+exports.handler = async (event, context) => {
 
   const { slug } = event.queryStringParameters
 
-  const game = await Game.findOne({ slug })
+  const game = await Game.findOne({ slug }).exec()
 
   if (game === null) {
     return { statusCode: 404, body: 'Not found' }
