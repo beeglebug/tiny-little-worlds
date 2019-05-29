@@ -39,9 +39,9 @@ export default class Editor {
     this.loadAssets().then(() => this.render())
 
     // handle middle mouse pan
-    this.dragging = false
-    this.dragStart = new Vector2()
-    this.dragOffsetStart = new Vector2()
+    this.panning = false
+    this.panStart = new Vector2()
+    this.panOffsetStart = new Vector2()
 
     this.currentTileIndex = null
 
@@ -91,13 +91,13 @@ export default class Editor {
     this.mouseTilePosition.x = Math.floor((this.mousePosition.x - this.offset.x) / SIZE)
     this.mouseTilePosition.y = Math.floor((this.mousePosition.y - this.offset.y) / SIZE)
 
-    if (this.dragging) {
+    if (this.panning) {
 
-      const dx = this.mousePosition.x - this.dragStart.x
-      const dy = this.mousePosition.y - this.dragStart.y
+      const dx = this.mousePosition.x - this.panStart.x
+      const dy = this.mousePosition.y - this.panStart.y
 
-      this.offset.x = this.dragOffsetStart.x + dx
-      this.offset.y = this.dragOffsetStart.y + dy
+      this.offset.x = this.panOffsetStart.x + dx
+      this.offset.y = this.panOffsetStart.y + dy
 
     } else {
 
@@ -139,16 +139,16 @@ export default class Editor {
       }
     }
     if (e.button === MOUSE_MIDDLE) {
-      this.dragging = true
-      this.dragStart.copy(this.mousePosition)
-      this.dragOffsetStart.copy(this.offset)
+      this.panning = true
+      this.panStart.copy(this.mousePosition)
+      this.panOffsetStart.copy(this.offset)
     }
   }
 
   handleMouseUp = (e) => {
     this.mouseDown[e.button] = false
     if (e.button === MOUSE_MIDDLE) {
-      this.dragging = false
+      this.panning = false
     }
   }
 
