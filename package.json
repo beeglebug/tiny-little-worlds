@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "build": "npm run build:app && build:standalone && npm run build:lambda",
+    "build": "npm run build:app && npm run build:standalone && npm run build:lambda",
     "build:app": "webpack --mode=production",
     "build:standalone": "webpack --config=webpack.standalone.config.js",
     "build:lambda": "netlify-lambda build src/lambda",

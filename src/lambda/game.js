@@ -8,15 +8,15 @@ const db = mongoose.connection
 
 db.on('error', error => console.error('MongoDB connection error:', error))
 
-const gameSchema = new mongoose.Schema({
-  slug: String,
-})
+const gameSchema = new mongoose.Schema({})
 
 const Game = mongoose.model('Game', gameSchema)
 
 exports.handler = async function (event, context) {
 
-  const slug = 'examples/getting-started'
+  const { slug } = event.queryStringParameters
+
+  console.log(event)
 
   const game = await Game.findOne({ slug })
 
