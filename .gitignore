@@ -9,6 +9,4 @@ webpack-stats.json
 _temp/
 
 dist/
-functions/
 .env
-.netlify/
