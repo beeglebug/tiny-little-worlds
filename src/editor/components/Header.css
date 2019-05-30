@@ -12,3 +12,9 @@
 .title {
     font-size: 18px;
 }
+
+.right {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
