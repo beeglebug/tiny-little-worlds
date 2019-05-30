@@ -24,6 +24,8 @@ const strategy = new TwitterStrategy(
   },
   function (token, tokenSecret, profile, done) {
     console.log(token, tokenSecret, profile)
+    const user = {}
+    done(null, user)
     // User.findOrCreate(..., function(err, user) {
     //   if (err) { return done(err); }
     // done(null, user)
@@ -49,6 +51,6 @@ app.get('/login', function (request, response) {
 app.get('/api/game/:slug', getGame)
 app.post('/api/game/:slug', postGame)
 
-// app.use(express.static('dist'))
+app.use(express.static('dist'))
 
 app.listen(port, () => console.log('listening on port', port)) /* eslint-disable-line no-console */
