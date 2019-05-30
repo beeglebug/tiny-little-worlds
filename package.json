@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "build": "npm run build:app && build:standalone && npm run build:server",
+    "build": "npm run build:app && npm run build:standalone && npm run build:server",
     "build:app": "webpack --mode=production",
     "build:standalone": "webpack --mode=production --config=webpack.standalone.config.js",
     "build:server": "webpack --mode=production --config=webpack.server.config.js",
