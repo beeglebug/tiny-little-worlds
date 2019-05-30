@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 
-const url = process.env.DB_URL
+const url = process.env.MONGO_URL
 
 export function connect () {
 
