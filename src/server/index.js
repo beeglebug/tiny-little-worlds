@@ -23,14 +23,26 @@ const strategy = new TwitterStrategy(
     callbackURL: 'http://tiny-little-world.herokuapp.com/auth/twitter/callback',
   },
   function (token, tokenSecret, profile, done) {
-    console.log(token, tokenSecret, profile)
-    const user = {}
-    done(null, user)
+    const { username } = profile
+    const user = { username }
+
+    // TODO check this user in the database, create if they dont exist
     // User.findOrCreate(..., function(err, user) {
     //   if (err) { return done(err); }
     // done(null, user)
+    done(null, user)
   }
 )
+
+passport.serializeUser(function (user, done) {
+  done(null, user.username)
+})
+
+passport.deserializeUser(function (username, done) {
+  // TODO find user from mongoDB
+  const user = { username }
+  done(null, user)
+})
 
 passport.use(strategy)
 
