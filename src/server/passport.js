@@ -1,7 +1,6 @@
-import express from 'express'
 import passport from 'passport'
 import TwitterStrategy from 'passport-twitter'
-import User from '../models/User'
+import User from './models/User'
 
 const config = {
   consumerKey: process.env.TWITTER_CONSUMER_KEY,
@@ -22,13 +21,15 @@ async function verify (token, tokenSecret, profile, done) {
   done(null, user)
 }
 
-export const strategy = new TwitterStrategy(config, verify)
+const strategy = new TwitterStrategy(config, verify)
 
-export const router = express.Router()
+passport.serializeUser(function (user, done) {
+  done(null, user.username)
+})
 
-router.get('/auth/twitter', passport.authenticate('twitter'))
+passport.deserializeUser(async function (username, done) {
+  const user = await User.findOne({ username }).exec()
+  done(null, user)
+})
 
-router.get('/auth/twitter/callback', passport.authenticate('twitter', {
-  successRedirect: '/',
-  failureRedirect: '/login',
-}))
+passport.use(strategy)

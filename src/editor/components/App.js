@@ -16,6 +16,7 @@ import AboutWindow from './windows/AboutWindow'
 import ResizeLevelModal from './modals/ResizeLevelModal'
 import styles from './App.css'
 import InspectorWindow from './windows/InspectorWindow'
+import LoginModal from './modals/LoginModal'
 
 export default function App () {
 
@@ -57,6 +58,7 @@ export default function App () {
         </PseudoSuspense>
       </div>
       {!loading && <ResizeLevelModal />}
+      <LoginModal />
       <div className={styles.footer}>
         <ExternalLink href={'https://github.com/beeglebug/tiny-little-worlds'}>{`v${__VERSION}`}</ExternalLink>
       </div>

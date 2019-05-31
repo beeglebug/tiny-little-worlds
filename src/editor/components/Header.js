@@ -1,8 +1,10 @@
 import React from 'react'
+import useModalVisibility from '../hooks/useModalVisibility'
 import styles from './Header.css'
 import WindowMenu from './WindowMenu'
 
 export default function Header () {
+  const [ , setVisible ] = useModalVisibility('login')
   return (
     <div className={styles.container}>
       <div className={styles.left}>
@@ -10,10 +12,7 @@ export default function Header () {
       </div>
       <div className={styles.right}>
         <WindowMenu />
-        <a
-          href="/login"
-          style={{ marginLeft: 10 }}
-        >login</a>
+        <button onClick={setVisible}>Log in</button>
       </div>
     </div>
   )
