@@ -15,7 +15,7 @@ async function verify (token, tokenSecret, profile, done) {
   // TODO handle same username as other user
   let user = await User.findOne({ username }).exec()
   if (!user) {
-    user = new User({ provider, username }).save()
+    user = await new User({ provider, username }).save()
   }
 
   done(null, user)
