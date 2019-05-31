@@ -1,7 +1,7 @@
 import express from 'express'
 import session from 'express-session'
 import passport from 'passport'
-import TwitterStrategy from 'passport-twitter'
+import { strategy, router } from './auth/twitter'
 import { connect } from './database'
 import User from './models/User'
 import getGame from './getGame'
@@ -19,26 +19,6 @@ app.use(session({
   saveUninitialized: true,
 }))
 
-const strategy = new TwitterStrategy(
-  {
-    consumerKey: process.env.TWITTER_CONSUMER_KEY,
-    consumerSecret: process.env.TWITTER_CONSUMER_SECRET,
-    callbackURL: 'http://tiny-little-world.herokuapp.com/auth/twitter/callback',
-  },
-  async function (token, tokenSecret, profile, done) {
-    // TODO make sure this works for things other than twitter
-    const { provider, username } = profile
-
-    // TODO handle same username as other user
-    let user = await User.findOne({ username }).exec()
-    if (!user) {
-      user = new User({ provider, username }).save()
-    }
-
-    done(null, user)
-  }
-)
-
 passport.serializeUser(function (user, done) {
   done(null, user.username)
 })
@@ -53,12 +33,7 @@ passport.use(strategy)
 app.use(passport.initialize())
 app.use(passport.session())
 
-app.get('/auth/twitter', passport.authenticate('twitter'))
-
-app.get('/auth/twitter/callback', passport.authenticate('twitter', {
-  successRedirect: '/',
-  failureRedirect: '/login',
-}))
+app.use(router)
 
 app.get('/login', function (request, response) {
   return response.send('<a href="/auth/twitter">Sign in with Twitter</a>')
