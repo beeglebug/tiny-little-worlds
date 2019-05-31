@@ -2,9 +2,12 @@ import express from 'express'
 import session from 'express-session'
 import passport from 'passport'
 import TwitterStrategy from 'passport-twitter'
-import { User } from './database'
+import { connect } from './database'
+import User from './models/User'
 import getGame from './getGame'
 import postGame from './postGame'
+
+connect()
 
 const port = process.env.PORT || 3000
 const app = express()

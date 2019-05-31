@@ -1,8 +1,6 @@
-import { connect, Game } from './database'
+import Game from './models/Game'
 
 export default async function (request, response) {
-
-  connect()
 
   const { slug } = request.params
 
