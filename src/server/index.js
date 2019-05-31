@@ -27,17 +27,12 @@ const strategy = new TwitterStrategy(
   },
   async function (token, tokenSecret, profile, done) {
     // TODO make sure this works for things other than twitter
-    console.log(profile)
-    const { id, provider, displayName, emails } = profile
+    const { provider, username } = profile
 
-    let user = await User.findOne({ id }).exec()
+    // TODO handle same username as other user
+    let user = await User.findOne({ username }).exec()
     if (!user) {
-      user = new User({
-        id,
-        provider,
-        displayName,
-        email: emails[0] && emails[0].value,
-      }).save()
+      user = new User({ provider, username }).save()
     }
 
     done(null, user)
@@ -45,11 +40,11 @@ const strategy = new TwitterStrategy(
 )
 
 passport.serializeUser(function (user, done) {
-  done(null, user.id)
+  done(null, user.username)
 })
 
-passport.deserializeUser(async function (id, done) {
-  const user = await User.findOne({ id }).exec()
+passport.deserializeUser(async function (username, done) {
+  const user = await User.findOne({ username }).exec()
   done(null, user)
 })
 
