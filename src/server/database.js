@@ -15,3 +15,7 @@ export function connect () {
 const gameSchema = new mongoose.Schema({})
 
 export const Game = mongoose.model('Game', gameSchema)
+
+const userSchema = new mongoose.Schema({})
+
+export const User = mongoose.model('User', userSchema)
