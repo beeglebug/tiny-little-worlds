@@ -35,17 +35,17 @@ app.use(passport.session())
 
 app.use(router)
 
-app.get('/login', function (request, response) {
+app.get('/login', guest, function (request, response) {
   return response.send('<a href="/auth/twitter">Sign in with Twitter</a>')
 })
 
-app.get('/logout', function (request, response) {
+app.get('/logout', secure, function (request, response) {
   request.logout()
   response.redirect('/')
 })
 
 app.get('/secure', secure, function (request, response) {
-  return response.send('only logged in')
+  return response.send('you are logged in!')
 })
 
 app.get('/api/game/:slug', getGame)
@@ -54,6 +54,11 @@ app.post('/api/game/:slug', postGame)
 app.use(express.static('dist'))
 
 app.listen(port, () => console.log('listening on port', port)) /* eslint-disable-line no-console */
+
+function guest (request, response, next) {
+  if (!request.isAuthenticated()) return next()
+  response.redirect('/')
+}
 
 function secure (request, response, next) {
   if (request.isAuthenticated()) return next()
