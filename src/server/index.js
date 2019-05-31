@@ -31,7 +31,7 @@ const strategy = new TwitterStrategy(
 
     let user = await User.findOne({ username }).exec()
     if (!user) {
-      user = await User.create({ username }).exec()
+      user = new User({ username }).save()
     }
 
     done(null, user)
