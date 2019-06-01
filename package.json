@@ -8,7 +8,7 @@
     "build:app": "webpack --mode=production",
     "build:standalone": "webpack --mode=production --config=webpack.standalone.config.js",
     "build:server": "webpack --mode=production --config=webpack.server.config.js",
-    "deploy": "git push heroku heroku:master",
+    "deploy": "git push heroku master",
     "lint": "eslint src",
     "start": "node dist/server.js",
     "dev": "webpack-dev-server",
