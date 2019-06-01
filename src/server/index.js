@@ -13,11 +13,11 @@ app.use(session)
 app.use(passport.initialize())
 app.use(passport.session())
 
+app.use(express.static('dist'))
+
 app.use(authRouter)
 app.use(gameRouter)
 app.use(userRouter)
-
-app.use(express.static('dist'))
 
 app.get('/', function (request, response) {
   response.sendFile('/dist/index.html')
