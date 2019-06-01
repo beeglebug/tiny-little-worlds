@@ -1,9 +1,14 @@
 import mongoose from 'mongoose'
 
-const schema = new mongoose.Schema({
-  // TODO define schema
+const { Schema, model } = mongoose
+
+const schema = new Schema({
+  slug: String,
+  name: String,
+  description: String,
+  user: { type: Schema.Types.ObjectId, ref: 'User' },
 })
 
-const Game = mongoose.model('Game', schema)
+const Game = model('Game', schema)
 
 export default Game
