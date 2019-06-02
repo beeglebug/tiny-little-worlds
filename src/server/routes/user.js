@@ -1,13 +1,14 @@
 import React from 'react'
 import { renderToString } from 'react-dom/server'
 import { Provider } from 'react-redux'
+import { createStore } from 'redux'
 import StyleContext from 'isomorphic-style-loader/StyleContext'
 import express from 'express'
 import User from '../models/User'
 import Game from '../models/Game'
 import html from '../templates/index.html'
 import UserPage from '../components/UserPage'
-import { createStore } from 'redux'
+import stats from '../../../dist/stats.json'
 
 const router = express.Router()
 
@@ -41,9 +42,19 @@ async function getUser (request, response) {
 
   const state = store.getState()
 
-  response.send(html(content, state, css))
+  const scripts = chunksByEntry(stats.assetsByChunkName, 'user')
+
+  response.send(html(content, state, scripts, css))
 }
 
 router.get('/:username', getUser)
 
 export default router
+
+function chunksByEntry (chunks, name) {
+  return Object.entries(chunks)
+    .filter(([key]) => {
+      return (key === name || (key.startsWith('vendors') && key.includes(`~${name}`)))
+    })
+    .map(([, value]) => value)
+}

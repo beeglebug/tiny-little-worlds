@@ -1,4 +1,4 @@
-export default (content, preloadedState, css) => `
+export default (content, preloadedState, scripts, css) => `
 <!DOCTYPE html>
 <html>
 <head>
@@ -37,10 +37,14 @@ export default (content, preloadedState, css) => `
   <style>${[...css].join('')}</style>
 </head>
 <body>
-  ${content}
+  <div id="root">${content}</div>
   <script>
     window.__PRELOADED_STATE__ = ${JSON.stringify(preloadedState)}
   </script>
+  ${scripts.map(toScriptTag).join('')}
 </body>
-</html>
-`
+</html>`
+
+function toScriptTag (src) {
+  return `<script src="${src}"></script>`
+}

@@ -4,6 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
+const { StatsWriterPlugin } = require('webpack-stats-plugin')
 const packageJson = require('./package.json')
 
 const outputDirectory = path.resolve(__dirname, 'dist')
@@ -15,6 +16,7 @@ module.exports = (env, argv) => {
     entry: {
       editor: path.resolve(__dirname, './src/editor/index.js'),
       player: path.resolve(__dirname, './src/engine/index.js'),
+      user: path.resolve(__dirname, './src/client/pages/user/index.js'),
     },
     output: {
       path: outputDirectory,
@@ -95,6 +97,9 @@ module.exports = (env, argv) => {
         { from: './src/output', to: '' },
       ]),
       new webpack.HashedModuleIdsPlugin(),
+      new StatsWriterPlugin({
+        filename: 'stats.json',
+      }),
     ],
     devtool: DEV ? 'cheap-module-eval-source-map' : 'none',
     devServer: {
