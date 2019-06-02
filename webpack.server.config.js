@@ -30,6 +30,20 @@ module.exports = {
           },
         },
       },
+      {
+        test: /\.css$/,
+        use: [
+          'isomorphic-style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              modules: true,
+              camelCase: true,
+              localIdentName: '[name]__[local]',
+            },
+          },
+        ],
+      },
     ],
   },
 }

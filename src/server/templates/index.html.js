@@ -1,4 +1,4 @@
-export default (content) => `
+export default (content, preloadedState, css) => `
 <!DOCTYPE html>
 <html>
 <head>
@@ -34,9 +34,13 @@ export default (content) => `
       overflow: hidden;
     }
   </style>
+  <style>${[...css].join('')}</style>
 </head>
 <body>
   ${content}
+  <script>
+    window.__PRELOADED_STATE__ = ${JSON.stringify(preloadedState)}
+  </script>
 </body>
 </html>
 `
