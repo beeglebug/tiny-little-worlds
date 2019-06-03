@@ -1,11 +1,9 @@
 import React, { useEffect } from 'react'
-import useStyles from 'isomorphic-style-loader/useStyles'
-import styles from './Modal.css'
+import { createPortal } from 'react-dom'
+import css from 'styled-jsx/css'
 import Window from './Window'
 
 export default function Modal ({ visible, title, children, onClose }) {
-
-  useStyles(styles)
 
   useEffect(() => {
     const closeIfEscape = (event) => {
@@ -27,20 +25,35 @@ export default function Modal ({ visible, title, children, onClose }) {
     event.stopPropagation()
   }
 
-  return (
+  return createPortal((
     <div
-      className={styles.container}
+      className={'modal-background'}
       onMouseDown={onClose}
     >
       <div onMouseDown={capture}>
         <Window
           title={title}
           onClose={onClose}
-          className={styles.windowOverride}
         >
           {children}
         </Window>
       </div>
+      <style jsx>{styles}</style>
     </div>
-  )
+  ), document.body)
 }
+
+const styles = css`
+.modal-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-height: 100vh;
+}
+`

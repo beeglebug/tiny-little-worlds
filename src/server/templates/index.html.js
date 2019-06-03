@@ -1,4 +1,4 @@
-export default (content, preloadedState, scripts, css) => `
+export default (content, preloadedState, scripts, styles) => `
 <!DOCTYPE html>
 <html>
 <head>
@@ -34,7 +34,7 @@ export default (content, preloadedState, scripts, css) => `
       overflow: hidden;
     }
   </style>
-  <style>${[...css].join('')}</style>
+  ${styles}
 </head>
 <body>
   <div id="root">${content}</div>

@@ -4,7 +4,7 @@ import { Provider } from 'react-redux'
 import { combineReducers, createStore } from 'redux'
 import StyleContext from 'isomorphic-style-loader/StyleContext'
 import UserPage from '../../../server/components/UserPage'
-import modals from '../../state/reducers'
+import { modals, user } from '../../state/reducers'
 
 const preloadedState = window.__PRELOADED_STATE__
 
@@ -13,7 +13,7 @@ delete window.__PRELOADED_STATE__
 const store = createStore(
   combineReducers({
     modals,
-    user: (state = {}) => state,
+    user,
     games: (state = []) => state,
   }),
   preloadedState,
