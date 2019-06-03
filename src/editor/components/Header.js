@@ -1,5 +1,5 @@
 import React from 'react'
-import useModalVisibility from '../hooks/useModalVisibility'
+import useModalVisibility from '../../client/hooks/useModalVisibility'
 import styles from './Header.css'
 import WindowMenu from './WindowMenu'
 

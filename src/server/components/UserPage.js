@@ -1,7 +1,13 @@
 import React from 'react'
-import Header from '../../ui/components/Header'
+import { useSelector } from 'react-redux'
+import Header from '../../client/components/Header'
+import LoginModal from '../../client/components/modals/LoginModal'
 
-export default function UserPage ({ user, games }) {
+export default function UserPage () {
+
+  const user = useSelector(state => state.user)
+  const games = useSelector(state => state.games)
+
   return (
     <div>
       <Header />
@@ -13,6 +19,7 @@ export default function UserPage ({ user, games }) {
           </li>
         ))}
       </ul>
+      <LoginModal />
     </div>
   )
 }

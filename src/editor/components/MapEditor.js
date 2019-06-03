@@ -3,7 +3,7 @@ import { useStore } from 'react-redux'
 import { setShowGridAction } from '../state/actions'
 import { showGridSelector } from '../state/selectors'
 import Editor from '../canvas/Editor'
-import useReduxState from '../hooks/useReduxState'
+import useReduxState from '../../client/hooks/useReduxState'
 import styles from './MapEditor.css'
 
 export default function MapEditor () {

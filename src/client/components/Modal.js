@@ -1,15 +1,17 @@
 import React, { useEffect } from 'react'
+import useStyles from 'isomorphic-style-loader/useStyles'
 import styles from './Modal.css'
-import { Window } from './Panel'
+import Window from './Window'
 
 export default function Modal ({ visible, title, children, onClose }) {
 
-  const closeIfEscape = (event) => {
-    if (event.keyCode !== 27) return
-    onClose()
-  }
+  useStyles(styles)
 
   useEffect(() => {
+    const closeIfEscape = (event) => {
+      if (event.keyCode !== 27) return
+      onClose()
+    }
     if (visible) {
       document.body.classList.add('modal-open')
       document.addEventListener('keydown', closeIfEscape, false)
@@ -17,7 +19,7 @@ export default function Modal ({ visible, title, children, onClose }) {
       document.body.classList.remove('modal-open')
       document.removeEventListener('keydown', closeIfEscape, false)
     }
-  }, [visible])
+  }, [onClose, visible])
 
   if (!visible) return null
 

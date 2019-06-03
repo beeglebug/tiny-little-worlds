@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { setGameAction } from '../state/actions'
+import LoginModal from '../../client/components/modals/LoginModal'
 import validateGame from '../util/validateGame'
 import PalettePanel from './PalettePanel'
 import ToolsPanel from './ToolsPanel'
@@ -16,7 +17,6 @@ import AboutWindow from './windows/AboutWindow'
 import ResizeLevelModal from './modals/ResizeLevelModal'
 import styles from './App.css'
 import InspectorWindow from './windows/InspectorWindow'
-import LoginModal from './modals/LoginModal'
 
 export default function App () {
 

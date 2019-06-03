@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import Modal from '../Modal'
+import Modal from '../../../client/components/Modal'
+import useModalVisibility from '../../../client/hooks/useModalVisibility'
 import Button from '../Button'
 import { resizeMapAction } from '../../state/actions'
-import useModalVisibility from '../../hooks/useModalVisibility'
 import styles from './ResizeLevelModal.css'
 
 export default function ResizeLevelModal () {

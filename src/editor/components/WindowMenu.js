@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react'
 import useOnClickOutside from '../hooks/useOnClickOutside'
-import useReduxState from '../hooks/useReduxState'
+import useReduxState from '../../client/hooks/useReduxState'
 import { windowVisibilitySelector } from '../state/selectors'
 import { setWindowVisibilityAction } from '../state/actions'
 import styles from './WindowMenu.css'

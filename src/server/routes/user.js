@@ -16,26 +16,29 @@ async function getUser (request, response) {
 
   const { username } = request.params
 
+  // TODO only get a subset of fields
   const user = await User.findOne({ username }).exec()
 
   if (user === null) {
     return response.sendStatus(404)
   }
 
+  // TODO only get a subset of fields
   const games = await Game.find({ user: user._id }).exec()
 
   const css = new Set()
   const insertCss = (...styles) => styles.forEach(style => css.add(style._getCss()))
 
-  const store = createStore(state => state, { modals: {} })
+  const store = createStore(state => state, {
+    modals: {},
+    user,
+    games,
+  })
 
   const content = renderToString(
     <Provider store={store}>
       <StyleContext.Provider value={{ insertCss }}>
-        <UserPage
-          user={user}
-          games={games}
-        />
+        <UserPage />
       </StyleContext.Provider>
     </Provider>
   )

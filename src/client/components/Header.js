@@ -1,6 +1,6 @@
 import React from 'react'
 import useStyles from 'isomorphic-style-loader/useStyles'
-import useModalVisibility from '../../editor/hooks/useModalVisibility'
+import useModalVisibility from '../hooks/useModalVisibility'
 import styles from './Header.css'
 
 export default function Header () {
@@ -15,7 +15,7 @@ export default function Header () {
         <h1 className={styles.title}>Tiny Little Worlds</h1>
       </div>
       <div className={styles.right}>
-        <button onClick={setVisible}>Log in</button>
+        <button onClick={() => setVisible(true)}>Log in</button>
       </div>
     </div>
   )
