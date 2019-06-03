@@ -1,10 +1,11 @@
 import React from 'react'
+import classNames from 'classnames'
 import css from 'styled-jsx/css'
 
-export default function Window ({ title, onClose, children }) {
+export default function Window ({ title, onClose, children, className }) {
 
   return (
-    <div className={'window'}>
+    <div className={classNames('window', className)}>
       <div className={'header'}>
         <h2>{title}</h2>
         <button
@@ -34,11 +35,6 @@ const styles = css`
   .window {
     width: 100%;
   }
-}
-
-// TODO work out how to use resolve
-.modal .window {
-  box-shadow: none;
 }
 
 .header {

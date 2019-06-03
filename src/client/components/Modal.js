@@ -34,16 +34,18 @@ export default function Modal ({ visible, title, children, onClose }) {
         <Window
           title={title}
           onClose={onClose}
+          className={windowCss.className}
         >
           {children}
         </Window>
       </div>
-      <style jsx>{styles}</style>
+      <style jsx>{backgroundStyles}</style>
+      {windowCss.styles}
     </div>
   ), document.body)
 }
 
-const styles = css`
+const backgroundStyles = css`
 .modal-background {
   position: absolute;
   top: 0;
@@ -56,4 +58,10 @@ const styles = css`
   justify-content: center;
   max-height: 100vh;
 }
+`
+
+const windowCss = css.resolve`
+  .window {
+    box-shadow: none;
+  }
 `
