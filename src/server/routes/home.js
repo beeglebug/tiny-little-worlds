@@ -16,9 +16,12 @@ const router = express.Router()
 router.get('/', async function (request, response) {
 
   // TODO only get a subset of fields
-  const games = await Game.find().exec()
+  const games = await Game
+    .find({})
+    .populate('user')
+    .exec()
 
-  const store = createStore(state => state, { games })
+  const store = createStore(state => state, { games: games.map(game => game.toObject()), modals: {} })
 
   const styles = flushToHTML()
 

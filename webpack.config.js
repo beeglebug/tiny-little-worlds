@@ -90,9 +90,6 @@ module.exports = (env, argv) => {
         __ENVIRONMENT: JSON.stringify(argv.mode || 'development'),
       }),
       new CleanWebpackPlugin(['dist']),
-      new HtmlWebpackPlugin({
-        template: 'src/assets/index.html',
-      }),
       new ScriptExtHtmlWebpackPlugin({ defaultAttribute: 'defer' }),
       new CopyPlugin([
         { from: './src/assets', to: '' },

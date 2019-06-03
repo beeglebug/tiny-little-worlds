@@ -10,8 +10,8 @@
     "build:server": "webpack --mode=production --config=webpack.server.config.js",
     "deploy": "git push heroku master",
     "lint": "eslint src",
-    "start": "node dist/server.js",
-    "dev": "webpack-dev-server",
+    "dev:server": "webpack --mode=development --config=webpack.server.config.js --watch",
+    "start:server": "nodemon --exec \"node -r dotenv/config\" dist/server.js",
     "test": "jest",
     "analyze": "webpack --mode=production --json > webpack-stats.json && webpack-bundle-analyzer webpack-stats.json",
     "storybook": "start-storybook -p 6006"

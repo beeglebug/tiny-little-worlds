@@ -3,6 +3,7 @@ import passport from 'passport'
 import authRouter from './routes/auth'
 import gameRouter from './routes/game'
 import userRouter from './routes/user'
+import homeRouter from './routes/home'
 import session from './session'
 import './database'
 import './passport'
@@ -18,11 +19,8 @@ app.use(express.static('dist'))
 app.use(authRouter)
 app.use(gameRouter)
 app.use(userRouter)
+app.use(homeRouter)
 
-app.get('/', function (request, response) {
-  response.sendFile('/dist/index.html')
-})
-
-const port = process.env.PORT || 3000
+const port = process.env.PORT || 5000
 
 app.listen(port, () => console.log('listening on port', port)) /* eslint-disable-line no-console */

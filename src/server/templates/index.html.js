@@ -20,7 +20,6 @@ export default (content, preloadedState, scripts, styles) => `
     }
     h1, h2, h3 {
       margin: 0;
-      font-size: 14px;
     }
     #root {
       height: 100%;
