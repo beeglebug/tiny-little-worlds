@@ -1,6 +1,5 @@
 const path = require('path')
 const webpack = require('webpack')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
@@ -17,7 +16,7 @@ module.exports = (env, argv) => {
       // editor: path.resolve(__dirname, './src/editor/index.js'),
       // player: path.resolve(__dirname, './src/engine/index.js'),
       home: path.resolve(__dirname, './src/client/pages/home/index.js'),
-      // game: path.resolve(__dirname, './src/client/pages/game/index.js'),
+      game: path.resolve(__dirname, './src/client/pages/game/index.js'),
       // user: path.resolve(__dirname, './src/client/pages/user/index.js'),
     },
     output: {
@@ -90,7 +89,6 @@ module.exports = (env, argv) => {
         __ENVIRONMENT: JSON.stringify(argv.mode || 'development'),
       }),
       new CleanWebpackPlugin(['dist']),
-      new ScriptExtHtmlWebpackPlugin({ defaultAttribute: 'defer' }),
       new CopyPlugin([
         { from: './src/assets', to: '' },
         { from: './src/output', to: '' },

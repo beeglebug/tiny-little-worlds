@@ -1,9 +1,9 @@
 import express from 'express'
 import passport from 'passport'
 import authRouter from './routes/auth'
-import gameRouter from './routes/game'
+import home from './routes/home'
+import game from './routes/game'
 import userRouter from './routes/user'
-import homeRouter from './routes/home'
 import session from './session'
 import './database'
 import './passport'
@@ -16,10 +16,11 @@ app.use(passport.session())
 
 app.use(express.static('dist'))
 
+app.get('/', home)
+app.get('/:userSlug/:gameSlug', game)
+
 app.use(authRouter)
-app.use(gameRouter)
 app.use(userRouter)
-app.use(homeRouter)
 
 const port = process.env.PORT || 5000
 

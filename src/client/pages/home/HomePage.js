@@ -1,19 +1,15 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
 import css from 'styled-jsx/css'
 import Header from '../../components/Header'
 
-export default function HomePage () {
-
-  const worlds = useSelector(state => state.games)
-
+export default function HomePage ({ games = [] }) {
   return (
     <div>
       <Header />
       <main className={'container'}>
-        <h2>latestest worlds</h2>
+        <h2>latest worlds</h2>
         <div>
-          {worlds.map(world => (
+          {games.map(world => (
             <WorldPreview
               key={world._id}
               {...world}

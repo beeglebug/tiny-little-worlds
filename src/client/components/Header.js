@@ -19,7 +19,9 @@ export default function Header () {
   return (
     <div className={'container'}>
       <div className={'left'}>
-        <h1 className={'title'}>Tiny Little Worlds</h1>
+        <h1 className={'title'}>
+          <a href={'/'}>Tiny Little Worlds</a>
+        </h1>
       </div>
       <div className={'right'}>
         {user && (
