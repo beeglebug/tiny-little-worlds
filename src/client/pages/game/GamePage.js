@@ -11,7 +11,6 @@ export default function GamePage ({ user, game }) {
         <small>by <a href={`/${user.slug}`}>{user.username}</a></small>
       </h2>
       <p>{game.description}</p>
-      <a href={`/${user.slug}/${game.slug}/edit`}>edit this game</a>
     </div>
   )
 }
