@@ -10,6 +10,7 @@ export default function WorldPage ({ author, world }) {
         <small>by <a href={`/${author.slug}`}>{author.username}</a></small>
       </h2>
       <p>{world.description}</p>
+      <a href={`/${author.slug}/${world.slug}/edit`}>edit</a>
     </Page>
   )
 }
