@@ -10,8 +10,8 @@
     "build:standalone": "webpack --mode=production --config=webpack.standalone.js",
     "deploy": "git push heroku master",
     "lint": "eslint src",
-    "server:dev": "nodemon --exec babel-node src/server/index.js",
     "start": "node dist/server.js",
+    "start:dev": "nodemon --exec babel-node src/server/index.js",
     "test": "jest",
     "analyze": "webpack --mode=production --json > webpack-stats.json && webpack-bundle-analyzer webpack-stats.json",
     "storybook": "start-storybook -p 6006"
