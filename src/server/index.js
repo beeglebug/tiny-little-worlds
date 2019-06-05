@@ -1,6 +1,6 @@
 import express from 'express'
 import passport from 'passport'
-import authRouter from './routes/auth'
+import authRoutes from './routes/auth'
 import home from './routes/home'
 import world from './routes/world'
 import author from './routes/author'
@@ -17,13 +17,13 @@ app.use(passport.session())
 
 app.use(express.static('dist'))
 
+app.use(authRoutes)
+
 // main public pages
 app.get('/', home)
 app.get('/:authorSlug/:worldSlug', world)
 app.get('/:authorSlug/:worldSlug/edit', edit)
 app.get('/:authorSlug', author)
-
-app.use(authRouter)
 
 const port = process.env.PORT || 5000
 
