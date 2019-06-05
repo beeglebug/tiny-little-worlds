@@ -4,14 +4,14 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "build": "npm run build:app && npm run build:server",
+    "build": "npm run build:client && npm run build:server",
     "build:client": "webpack --mode=production --config=webpack.client.js",
     "build:server": "webpack --mode=production --config=webpack.server.js",
     "build:standalone": "webpack --mode=production --config=webpack.standalone.js",
     "deploy": "git push heroku master",
     "lint": "eslint src",
-    "dev:server": "webpack --mode=development --config=webpack.server.js --watch",
-    "start:server": "nodemon --exec babel-node src/server/index.js",
+    "server:dev": "nodemon --exec babel-node src/server/index.js",
+    "start": "nodemon dist/server.js",
     "test": "jest",
     "analyze": "webpack --mode=production --json > webpack-stats.json && webpack-bundle-analyzer webpack-stats.json",
     "storybook": "start-storybook -p 6006"
