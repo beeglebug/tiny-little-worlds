@@ -1,11 +1,9 @@
 import React from 'react'
-import Header from '../components/Header'
 import Page from '../components/Page'
 
 export default function WorldPage ({ author, world }) {
   return (
     <Page>
-      <Header />
       <img src={'/640x400.png'} />
       <h2>
         {world.name}

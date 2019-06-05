@@ -12,7 +12,7 @@ export default function Window ({ title, onClose, children, className }) {
           onClick={onClose}
           className={'close-button'}
         >
-          <img src={'icon-cross.png'} />
+          <img src={'/icon-cross.png'} />
         </button>
       </div>
       <div className={'body'}>

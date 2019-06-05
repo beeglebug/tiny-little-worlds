@@ -1,4 +1,4 @@
-export default (content, styles = '') => `
+export default (content, scripts = [], styles = '') => `
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,6 +9,11 @@ export default (content, styles = '') => `
   ${styles}
 </head>
 <body>
-  <div id="root">${content}</div>
+  ${content}
+  ${scripts.map(toScriptTag)}
 </body>
 </html>`
+
+function toScriptTag (src) {
+  return `<script src="/${src}"></script>`
+}

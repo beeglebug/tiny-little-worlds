@@ -1,9 +1,13 @@
 import React from 'react'
 import css from 'styled-jsx/css'
+import Header from './Header'
 
 export default function Page ({ children }) {
   return (
     <div className={'page'}>
+      <div id={'mount'}>
+        <Header />
+      </div>
       {children}
       <style jsx>{styles}</style>
       <style jsx>{bodyStyles}</style>

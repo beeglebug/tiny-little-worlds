@@ -1,10 +1,11 @@
 import React from 'react'
 import { renderToString } from 'react-dom/server'
+import { flushToHTML } from 'styled-jsx/server'
 import User from '../models/User'
 import World from '../models/World'
 import EditPage from '../../client/pages/EditPage'
-import { flushToHTML } from 'styled-jsx/server'
 import html from '../templates/index.html'
+import getAssetsForEntry from '../util/getAssetsForEntry'
 
 export default async function (request, response) {
 
@@ -27,6 +28,7 @@ export default async function (request, response) {
   )
 
   const styles = flushToHTML()
+  const scripts = getAssetsForEntry('header')
 
-  response.send(html(content, styles))
+  response.send(html(content, scripts, styles))
 }

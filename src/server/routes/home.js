@@ -4,6 +4,7 @@ import { flushToHTML } from 'styled-jsx/server'
 import World from '../models/World'
 import html from '../templates/index.html'
 import HomePage from '../../client/pages/HomePage'
+import getAssetsForEntry from '../util/getAssetsForEntry'
 
 export default async function (request, response) {
 
@@ -20,6 +21,7 @@ export default async function (request, response) {
   )
 
   const styles = flushToHTML()
+  const scripts = getAssetsForEntry('header')
 
-  response.send(html(content, styles))
+  response.send(html(content, scripts, styles))
 }

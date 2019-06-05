@@ -15,9 +15,7 @@ module.exports = (env, argv) => {
     entry: {
       // editor: path.resolve(__dirname, './src/editor/index.js'),
       // player: path.resolve(__dirname, './src/engine/index.js'),
-      home: path.resolve(__dirname, './src/client/pages/home/index.js'),
-      game: path.resolve(__dirname, './src/client/pages/game/index.js'),
-      user: path.resolve(__dirname, './src/client/pages/user/index.js'),
+      header: path.resolve(__dirname, './src/client/index.js'),
     },
     output: {
       path: outputDirectory,
