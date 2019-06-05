@@ -2,8 +2,9 @@ import express from 'express'
 import passport from 'passport'
 import authRouter from './routes/auth'
 import home from './routes/home'
-import game from './routes/game'
-import user from './routes/user'
+import world from './routes/world'
+import author from './routes/author'
+import edit from './routes/edit'
 import session from './session'
 import './database'
 import './passport'
@@ -16,9 +17,11 @@ app.use(passport.session())
 
 app.use(express.static('dist'))
 
+// main public pages
 app.get('/', home)
-app.get('/:userSlug/:gameSlug', game)
-app.get('/:slug', user)
+app.get('/:authorSlug/:worldSlug', world)
+app.get('/:authorSlug/:worldSlug/edit', edit)
+app.get('/:authorSlug', author)
 
 app.use(authRouter)
 

@@ -1,20 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import css from 'styled-jsx/css'
 import { logoutAction } from '../state/actions'
 import useModalVisibility from '../hooks/useModalVisibility'
 import LoginModal from './modals/LoginModal'
 
-export default function Header () {
+export default function Header ({ user }) {
 
-  const [ , setVisible ] = useModalVisibility('login')
-
-  const user = useSelector(state => state.user)
-  const dispatch = useDispatch()
-
-  function logout () {
-    dispatch(logoutAction())
-  }
+  const [ visible, setVisible ] = useState(false)
 
   return (
     <div className={'container'}>
@@ -26,16 +19,15 @@ export default function Header () {
       <div className={'right'}>
         {user && (
           <div>
-            <a href={'/dashboard'}>{user.username}</a>
-            <a
-              onClick={logout}
-              href={'/auth/logout'}
-            >Log out</a>
+            <a href={'/auth/logout'}>Log out</a>
           </div>
         )}
         {!user && <button onClick={() => setVisible(true)}>Log in</button>}
       </div>
-      <LoginModal />
+      <LoginModal
+        visible={visible}
+        onClose={() => setVisible(false)}
+      />
       <style jsx>{styles}</style>
     </div>
   )

@@ -6,9 +6,9 @@ const schema = new Schema({
   slug: String,
   name: String,
   description: String,
-  user: { type: Schema.Types.ObjectId, ref: 'User' },
+  author: { type: Schema.Types.ObjectId, ref: 'User' },
 })
 
-const Game = model('Game', schema)
+const World = model('World', schema)
 
-export default Game
+export default World
