@@ -1,8 +1,0 @@
-{
-  "env": {
-    "TWITTER_CONSUMER_KEY": "ZRkI9ofU4OIaS0L5cWrmfjRQb",
-    "TWITTER_CONSUMER_SECRET": "2wBGkprvSqRiwE5AGqolGzXqOBjevTjUgLRBZKuk5OBhzJ3zbg",
-    "MONGO_URL": "mongodb+srv://tiny-bot:prHmBf92B4ErlFx9@tiny-dev-onvom.mongodb.net/tiny-little-worlds?retryWrites=true",
-    "SESSION_SECRET": "PLfFG@M3eIXs"
-  }
-}

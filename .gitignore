@@ -10,3 +10,4 @@ _temp/
 
 dist/
 .env
+nodemon.json
