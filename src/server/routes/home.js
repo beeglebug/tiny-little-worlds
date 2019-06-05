@@ -1,12 +1,8 @@
 import React from 'react'
 import { renderToString } from 'react-dom/server'
 import { flushToHTML } from 'styled-jsx/server'
-import { Provider } from 'react-redux'
-import { createStore } from 'redux'
 import World from '../models/World'
 import html from '../templates/index.html'
-import stats from '../../../dist/stats.json'
-import getAssetsForEntry from '../util/getAssetsForEntry'
 import HomePage from '../../client/pages/HomePage'
 
 export default async function (request, response) {
@@ -23,5 +19,7 @@ export default async function (request, response) {
     <HomePage worlds={worlds} />
   )
 
-  response.send(content)
+  const styles = flushToHTML()
+
+  response.send(html(content, styles))
 }

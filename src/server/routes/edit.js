@@ -3,6 +3,8 @@ import { renderToString } from 'react-dom/server'
 import User from '../models/User'
 import World from '../models/World'
 import EditPage from '../../client/pages/EditPage'
+import { flushToHTML } from 'styled-jsx/server'
+import html from '../templates/index.html'
 
 export default async function (request, response) {
 
@@ -24,5 +26,7 @@ export default async function (request, response) {
     <EditPage world={world} />
   )
 
-  response.send(content)
+  const styles = flushToHTML()
+
+  response.send(html(content, styles))
 }

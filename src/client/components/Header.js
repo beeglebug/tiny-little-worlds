@@ -1,8 +1,5 @@
 import React, { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 import css from 'styled-jsx/css'
-import { logoutAction } from '../state/actions'
-import useModalVisibility from '../hooks/useModalVisibility'
 import LoginModal from './modals/LoginModal'
 
 export default function Header ({ user }) {

@@ -1,11 +1,12 @@
 import React from 'react'
 import Header from '../components/Header'
+import Page from '../components/Page'
 
 export default function EditPage ({ world }) {
   return (
-    <div>
+    <Page>
       <Header />
       Editor for {world.name}
-    </div>
+    </Page>
   )
 }

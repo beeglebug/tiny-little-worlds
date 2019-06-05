@@ -1,9 +1,10 @@
 import React from 'react'
 import Header from '../components/Header'
+import Page from '../components/Page'
 
 export default function WorldPage ({ author, world }) {
   return (
-    <div>
+    <Page>
       <Header />
       <img src={'/640x400.png'} />
       <h2>
@@ -11,6 +12,6 @@ export default function WorldPage ({ author, world }) {
         <small>by <a href={`/${author.slug}`}>{author.username}</a></small>
       </h2>
       <p>{world.description}</p>
-    </div>
+    </Page>
   )
 }
