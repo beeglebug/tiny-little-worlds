@@ -5,9 +5,9 @@ import home from './routes/home'
 import world from './routes/world'
 import author from './routes/author'
 import edit from './routes/edit'
-import session from './session'
 import './database'
 import './passport'
+import session from './session'
 
 const app = express()
 

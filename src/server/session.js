@@ -1,8 +1,14 @@
 import session from 'express-session'
+import connectMongo from 'connect-mongo'
+import mongoose from 'mongoose'
+
+const MongoStore = connectMongo(session)
 
 export default session({
-  secret: 'lolwut',
-  cookie: {},
+  secret: process.env.SESSION_SECRET,
+  store: new MongoStore({ mongooseConnection: mongoose.connection }),
+  name: 'session-id',
+  saveUninitialized: false,
   resave: false,
-  saveUninitialized: true,
+  // cookie: { secure: true },
 })
