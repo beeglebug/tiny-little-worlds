@@ -5,5 +5,5 @@ export function guest (request, response, next) {
 
 export function secure (request, response, next) {
   if (request.isAuthenticated()) return next()
-  response.redirect('/login')
+  response.redirect('/')
 }

@@ -24,12 +24,12 @@ async function verify (token, tokenSecret, profile, done) {
 const strategy = new TwitterStrategy(config, verify)
 
 passport.serializeUser(function (user, done) {
-  done(null, user.username)
+  done(null, user._id)
 })
 
-passport.deserializeUser(async function (username, done) {
-  const user = await User.findOne({ username }).exec()
-  done(null, user)
+passport.deserializeUser(async function (_id, done) {
+  const user = await User.findOne({ _id }).exec()
+  done(null, user.toObject())
 })
 
 passport.use(strategy)

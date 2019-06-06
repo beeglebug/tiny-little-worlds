@@ -1,4 +1,5 @@
 import React from 'react'
+import css from 'styled-jsx/css'
 
 export default function WorldPreview ({ author, name, description, slug }) {
   return (
@@ -15,6 +16,15 @@ export default function WorldPreview ({ author, name, description, slug }) {
         <h3>{name}</h3>
       </a>
       <div>{description}</div>
+      <style jsx>{styles}</style>
     </div>
   )
 }
+
+const styles = css`
+  img {
+    width: 250px;
+    height: 200px;
+    background-color: #666;
+  }
+`

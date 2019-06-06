@@ -16,7 +16,7 @@ export default function Header ({ user }) {
       <div className={'right'}>
         {user && (
           <div>
-            <div>{user.username}</div>
+            <a href={'/dashboard'}>{user.username}</a>
             <a href={'/auth/logout'}>Log out</a>
           </div>
         )}

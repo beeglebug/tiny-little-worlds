@@ -11,7 +11,7 @@ export default (content, props, scripts = [], styles = '') => `
 <body>
   ${content}
   <script>window.__PRELOADED_PROPS__ = ${JSON.stringify(props)}</script>
-  ${scripts.map(toScriptTag)}
+  ${scripts.map(toScriptTag).join('')}
 </body>
 </html>`
 

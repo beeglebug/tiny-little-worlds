@@ -1,4 +1,5 @@
 import React from 'react'
+import css from 'styled-jsx/css'
 import Page from '../components/Page'
 
 export default function WorldPage ({ user, author, world }) {
@@ -11,6 +12,15 @@ export default function WorldPage ({ user, author, world }) {
       </h2>
       <p>{world.description}</p>
       <a href={`/${author.slug}/${world.slug}/edit`}>edit</a>
+      <style jsx>{styles}</style>
     </Page>
   )
 }
+
+const styles = css`
+  img {
+    width: 640px;
+    height: 400px;
+    background-color: #666;
+  }
+`
