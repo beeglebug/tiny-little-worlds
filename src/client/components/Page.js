@@ -2,14 +2,13 @@ import React from 'react'
 import css from 'styled-jsx/css'
 import Header from './Header'
 
-export default function Page ({ children }) {
+export default function Page ({ user, children }) {
   return (
     <div className={'page'}>
       <div id={'mount'}>
-        <Header />
+        <Header user={user} />
       </div>
       {children}
-      <style jsx>{styles}</style>
       <style jsx>{bodyStyles}</style>
     </div>
   )
@@ -41,10 +40,4 @@ const bodyStyles = css.global`
   body.modal-open {
     overflow: hidden;
   }
-`
-
-const styles = css`
-.page {
-  height: 100%;
-}
 `

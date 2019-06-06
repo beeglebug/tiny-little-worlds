@@ -8,20 +8,25 @@ import getAssetsForEntry from '../util/getAssetsForEntry'
 
 export default async function (request, response) {
 
+  const { user } = request
+
   // TODO only get a subset of fields
-  let worlds = await World
+  const worlds = await World
     .find({})
     .populate('author')
     .exec()
 
-  worlds = worlds.map(world => world.toObject())
+  const props = {
+    user,
+    worlds: worlds.map(world => world.toObject()),
+  }
 
   const content = renderToString(
-    <HomePage worlds={worlds} />
+    <HomePage {...props} />
   )
 
-  const styles = flushToHTML()
   const scripts = getAssetsForEntry('header')
+  const styles = flushToHTML()
 
-  response.send(html(content, scripts, styles))
+  response.send(html(content, props, scripts, styles))
 }

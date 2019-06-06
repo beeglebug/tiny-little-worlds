@@ -9,32 +9,31 @@ import getAssetsForEntry from '../util/getAssetsForEntry'
 
 export default async function (request, response) {
 
-  const { authorSlug, worldSlug } = request.params
+  const { user, params } = request
+  const { authorSlug, worldSlug } = params
 
-  let author = await User.findOne({ slug: authorSlug }).exec()
+  const author = await User.findOne({ slug: authorSlug }).exec()
 
   if (author === null) {
     return response.sendStatus(404)
   }
 
-  let world = await World.findOne({ slug: worldSlug, author: author._id }).exec()
+  const world = await World.findOne({ slug: worldSlug, author: author._id }).exec()
 
   if (world === null) {
     return response.sendStatus(404)
   }
 
-  author = author.toObject()
-  world = world.toObject()
+  const props = {
+    user,
+    author: author.toObject(),
+    world: world.toObject(),
+  }
 
-  const content = renderToString(
-    <WorldPage
-      author={author}
-      world={world}
-    />
-  )
+  const content = renderToString(<WorldPage {...props} />)
 
-  const styles = flushToHTML()
   const scripts = getAssetsForEntry('header')
+  const styles = flushToHTML()
 
-  response.send(html(content, scripts, styles))
+  response.send(html(content, props, scripts, styles))
 }

@@ -1,9 +1,9 @@
 import React from 'react'
 import Page from '../components/Page'
 
-export default function EditPage ({ world }) {
+export default function EditPage ({ user, world }) {
   return (
-    <Page>
+    <Page user={user}>
       Editor for {world.name}
     </Page>
   )

@@ -2,9 +2,9 @@ import React from 'react'
 import WorldPreview from '../components/WorldPreview'
 import Page from '../components/Page'
 
-export default function HomePage ({ worlds = [] }) {
+export default function HomePage ({ user, worlds = [] }) {
   return (
-    <Page>
+    <Page user={user}>
       <h2>latest worlds</h2>
       <div>
         {worlds.map(world => (
