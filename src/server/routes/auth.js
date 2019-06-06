@@ -11,7 +11,7 @@ router.get('/auth/twitter/callback', passport.authenticate('twitter', {
   failureRedirect: '/',
 }))
 
-router.get('/auth/logout', secure, function (request, response) {
+router.get('/logout', secure, function (request, response) {
   request.logout()
   response.redirect('/')
 })

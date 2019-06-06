@@ -8,12 +8,12 @@ export default function Window ({ title, onClose, children, className }) {
     <div className={classNames('window', className)}>
       <div className={'header'}>
         <h2>{title}</h2>
-        <button
+        {onClose && <button
           onClick={onClose}
           className={'close-button'}
         >
           <img src={'/icon-cross.png'} />
-        </button>
+        </button>}
       </div>
       <div className={'body'}>
         {children}
@@ -51,6 +51,7 @@ const styles = css`
 
 .header h2 {
   font-weight: normal;
+  font-size: 14px;
 }
 
 .body {

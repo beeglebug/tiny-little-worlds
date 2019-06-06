@@ -5,7 +5,6 @@ import User from '../models/User'
 import World from '../models/World'
 import EditPage from '../../client/pages/EditPage'
 import html from '../templates/index.html'
-import getAssetsForEntry from '../util/getAssetsForEntry'
 
 export default async function (request, response) {
 
@@ -34,8 +33,7 @@ export default async function (request, response) {
     <EditPage {...props} />
   )
 
-  const scripts = getAssetsForEntry('header')
   const styles = flushToHTML()
 
-  response.send(html(content, props, scripts, styles))
+  response.send(html(content, styles))
 }

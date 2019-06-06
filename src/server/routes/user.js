@@ -3,7 +3,6 @@ import { renderToString } from 'react-dom/server'
 import { flushToHTML } from 'styled-jsx/server'
 import World from '../models/World'
 import html from '../templates/index.html'
-import getAssetsForEntry from '../util/getAssetsForEntry'
 import UserPage from '../../client/pages/UserPage'
 
 export default async function (request, response) {
@@ -24,8 +23,7 @@ export default async function (request, response) {
     <UserPage {...props} />
   )
 
-  const scripts = getAssetsForEntry('header')
   const styles = flushToHTML()
 
-  response.send(html(content, props, scripts, styles))
+  response.send(html(content, styles))
 }

@@ -1,11 +1,7 @@
-import React, { useState } from 'react'
+import React from 'react'
 import css from 'styled-jsx/css'
-import LoginModal from './modals/LoginModal'
 
 export default function Header ({ user }) {
-
-  const [ visible, setVisible ] = useState(false)
-
   return (
     <div className={'container'}>
       <div className={'left'}>
@@ -17,15 +13,11 @@ export default function Header ({ user }) {
         {user && (
           <div>
             <a href={'/dashboard'}>{user.username}</a>
-            <a href={'/auth/logout'}>Log out</a>
+            <a href={'/logout'}>Log out</a>
           </div>
         )}
-        {!user && <button onClick={() => setVisible(true)}>Log in</button>}
+        {!user && <a href={'/login'}>Log in</a>}
       </div>
-      <LoginModal
-        visible={visible}
-        onClose={() => setVisible(false)}
-      />
       <style jsx>{styles}</style>
     </div>
   )

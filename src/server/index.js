@@ -2,6 +2,7 @@ import express from 'express'
 import passport from 'passport'
 import authRoutes from './routes/auth'
 import home from './routes/home'
+import login from './routes/login'
 import user from './routes/user'
 import world from './routes/world'
 import edit from './routes/edit'
@@ -9,7 +10,7 @@ import author from './routes/author'
 import './database'
 import './passport'
 import session from './session'
-import { secure } from './middleware/auth'
+import { guest, secure } from './middleware/auth'
 
 const app = express()
 
@@ -23,6 +24,7 @@ app.use(authRoutes)
 
 // main public pages
 app.get('/', home)
+app.get('/login', guest, login)
 app.get('/dashboard', secure, user)
 app.get('/:authorSlug/:worldSlug', world)
 app.get('/:authorSlug/:worldSlug/edit', edit)

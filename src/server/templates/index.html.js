@@ -1,4 +1,4 @@
-export default (content, props, scripts = [], styles = '') => `
+export default (content, styles = '') => `
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,11 +10,5 @@ export default (content, props, scripts = [], styles = '') => `
 </head>
 <body>
   ${content}
-  <script>window.__PRELOADED_PROPS__ = ${JSON.stringify(props)}</script>
-  ${scripts.map(toScriptTag).join('')}
 </body>
 </html>`
-
-function toScriptTag (src) {
-  return `<script src="/${src}"></script>`
-}

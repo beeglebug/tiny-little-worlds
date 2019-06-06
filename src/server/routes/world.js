@@ -5,7 +5,7 @@ import User from '../models/User'
 import World from '../models/World'
 import html from '../templates/index.html'
 import WorldPage from '../../client/pages/WorldPage'
-import getAssetsForEntry from '../util/getAssetsForEntry'
+
 
 export default async function (request, response) {
 
@@ -32,8 +32,7 @@ export default async function (request, response) {
 
   const content = renderToString(<WorldPage {...props} />)
 
-  const scripts = getAssetsForEntry('header')
   const styles = flushToHTML()
 
-  response.send(html(content, props, scripts, styles))
+  response.send(html(content, styles))
 }
