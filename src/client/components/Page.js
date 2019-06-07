@@ -5,9 +5,7 @@ import Header from './Header'
 export default function Page ({ user, children }) {
   return (
     <div className={'page'}>
-      <div id={'mount'}>
-        <Header user={user} />
-      </div>
+      <Header user={user} />
       {children}
       <style jsx>{bodyStyles}</style>
     </div>
