@@ -10,6 +10,7 @@ export default function Header ({ user }) {
         </h1>
       </div>
       <div className={'right'}>
+        <a href={'/create'}>{'new world'}</a>
         {user && (
           <div>
             <a href={'/dashboard'}>{user.username}</a>

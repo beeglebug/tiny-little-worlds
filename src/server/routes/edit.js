@@ -35,5 +35,8 @@ export default async function (request, response) {
 
   const styles = flushToHTML()
 
-  response.send(html(content, styles))
+  // TODO this will be editor.js
+  const scripts = ''
+
+  response.send(html(content, styles, scripts))
 }

@@ -7,6 +7,7 @@ import user from './routes/user'
 import world from './routes/world'
 import edit from './routes/edit'
 import author from './routes/author'
+import create from './routes/create'
 import './database'
 import './passport'
 import session from './session'
@@ -22,9 +23,10 @@ app.use(express.static('dist'))
 
 app.use(authRoutes)
 
-// main public pages
+// public pages
 app.get('/', home)
 app.get('/login', guest, login)
+app.get('/create', create)
 app.get('/dashboard', secure, user)
 app.get('/:authorSlug/:worldSlug', world)
 app.get('/:authorSlug/:worldSlug/edit', edit)

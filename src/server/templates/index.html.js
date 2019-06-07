@@ -1,4 +1,4 @@
-export default (content, styles = '') => `
+export default (content, styles = '', scripts = '') => `
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,5 +10,6 @@ export default (content, styles = '') => `
 </head>
 <body>
   ${content}
+  ${scripts}
 </body>
 </html>`
