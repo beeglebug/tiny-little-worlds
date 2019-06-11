@@ -144,7 +144,7 @@ export default class CharacterController extends Object3D {
     }
 
     if (this.interactionTarget && Input.getButtonDown(this.controls.interact)) {
-      console.log('interacting with', this.interactionTarget)
+      this.interactionTarget.interact(this)
     }
   }
 }

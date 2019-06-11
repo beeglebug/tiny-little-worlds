@@ -114,7 +114,8 @@
           "billboard": true,
           "collider": ["circle", 0.5],
           "shadow": 0.7,
-          "interactive": true
+          "interactive": true,
+          "dialogue": "Hi. I'm a skeleton."
         }
       ]
     }

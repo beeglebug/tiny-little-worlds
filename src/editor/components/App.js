@@ -42,9 +42,9 @@ export default function App () {
       <Header />
       <div className={styles.body}>
         <PseudoSuspense loading={loading}>
-          <Row>
-            <AboutWindow />
-          </Row>
+          {/*<Row>*/}
+          {/*  <AboutWindow />*/}
+          {/*</Row>*/}
           <Row>
             <MapEditorPanel />
             <InspectorWindow />

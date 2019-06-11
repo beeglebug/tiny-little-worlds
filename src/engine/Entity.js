@@ -47,6 +47,7 @@ export default class Entity extends Object3D {
     }
 
     this.interactive = Boolean(props.interactive)
+    this.dialogue = props.dialogue || null
   }
 
   // pass through to child
@@ -76,6 +77,13 @@ export default class Entity extends Object3D {
   update (engine) {
     if (this.isCameraFacing) {
       this.children[0].rotation.y = Math.PI + engine.controller.rotation.y
+    }
+  }
+
+  interact (source) {
+    if (this.dialogue) {
+      // TODO global (probably redux)
+      // Dialogue.show(this.dialogue)
     }
   }
 }

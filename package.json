@@ -14,7 +14,8 @@
     "start:dev": "nodemon --exec babel-node src/server/index.js",
     "test": "jest",
     "analyze": "webpack --mode=production --json > webpack-stats.json && webpack-bundle-analyzer webpack-stats.json",
-    "storybook": "start-storybook -p 6006"
+    "storybook": "start-storybook -p 6006",
+    "watch:client": "webpack --mode=development --config=webpack.client.js --watch"
   },
   "devDependencies": {
     "@babel/cli": "^7.4.4",

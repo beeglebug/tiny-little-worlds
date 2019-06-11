@@ -9,8 +9,8 @@ import createContent from './createContent'
 import loadAssets from './loadAssets'
 import Physics from './Physics'
 import renderReticle from './2d/renderReticle'
-import renderText from './2d/renderText'
 import createCanvas from './util/createCanvas'
+import createUI from './ui'
 
 export default class Engine {
 
@@ -30,8 +30,12 @@ export default class Engine {
     this.ctx = this.canvas2d.getContext('2d')
     this.ctx.imageSmoothingEnabled = false
 
+    const { element, ref } = createUI()
+    this.ui = ref
+
     this.container.appendChild(this.canvas3d)
     this.container.appendChild(this.canvas2d)
+    this.container.appendChild(element)
 
     this.setupPointerLock(this.canvas3d)
 
@@ -115,13 +119,19 @@ export default class Engine {
     Input.clear()
   }
 
+  handleInteraction = (source, target) => {
+    // TODO move to an interactionManager
+    // TODO decide how to handle interactions
+    // TODO lock controller
+
+    this.ui.current.showDialogue('hello')
+  }
+
   render () {
     this.renderer.render(this.scene, this.camera)
 
     // 2d rendering
     renderReticle(this.ctx, this.controller)
-
-    // renderText(this.ctx, 'hello')
   }
 
   setupPointerLock (domElement) {
