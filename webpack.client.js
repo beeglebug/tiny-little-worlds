@@ -1,6 +1,5 @@
 const path = require('path')
 const webpack = require('webpack')
-const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const { StatsWriterPlugin } = require('webpack-stats-plugin')
@@ -13,9 +12,7 @@ module.exports = (env, argv) => {
   const DEV = argv.mode === 'development'
   return {
     entry: {
-      // editor: path.resolve(__dirname, './src/editor/index.js'),
-      // player: path.resolve(__dirname, './src/engine/index.js'),
-      header: path.resolve(__dirname, './src/client/index.js'),
+      editor: path.resolve(__dirname, './src/editor/index.js'),
     },
     output: {
       path: outputDirectory,
@@ -68,7 +65,7 @@ module.exports = (env, argv) => {
         {
           test: /\.css$/,
           use: [
-            'isomorphic-style-loader',
+            'style-loader',
             {
               loader: 'css-loader',
               options: {
@@ -94,6 +91,7 @@ module.exports = (env, argv) => {
       new webpack.HashedModuleIdsPlugin(),
       new StatsWriterPlugin({
         filename: 'stats.json',
+        transform: data => JSON.stringify(data.assetsByChunkName),
       }),
     ],
     devtool: DEV ? 'cheap-module-eval-source-map' : 'none',
@@ -104,6 +102,7 @@ module.exports = (env, argv) => {
       splitChunks: {
         chunks: 'all',
       },
+      runtimeChunk: true,
     },
   }
 }

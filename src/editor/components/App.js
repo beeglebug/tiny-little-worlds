@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { setGameAction } from '../state/actions'
-import LoginModal from '../../client/components/modals/LoginModal'
 import validateGame from '../util/validateGame'
 import PalettePanel from './PalettePanel'
 import ToolsPanel from './ToolsPanel'
@@ -58,7 +57,6 @@ export default function App () {
         </PseudoSuspense>
       </div>
       {!loading && <ResizeLevelModal />}
-      <LoginModal />
       <div className={styles.footer}>
         <ExternalLink href={'https://github.com/beeglebug/tiny-little-worlds'}>{`v${__VERSION}`}</ExternalLink>
       </div>

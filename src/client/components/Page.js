@@ -2,9 +2,12 @@ import React from 'react'
 import css from 'styled-jsx/css'
 import Header from './Header'
 
-export default function Page ({ user, children }) {
+export default function Page ({ id, user, children }) {
   return (
-    <div className={'page'}>
+    <div
+      id={id}
+      className={'page'}
+    >
       <Header user={user} />
       {children}
       <style jsx>{bodyStyles}</style>

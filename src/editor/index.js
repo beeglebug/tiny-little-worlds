@@ -3,6 +3,6 @@ import { render } from 'react-dom'
 import './analytics'
 import AppContainer from './components/AppContainer'
 
-const container = document.getElementById('root')
+const container = document.getElementById('editor')
 
 render(<AppContainer />, container)
