@@ -17,7 +17,7 @@ export default async function (request, response) {
 
   const styles = flushToHTML()
 
-  const scripts = getChunksByName('editor').map(toScript)
+  const scripts = getChunksByName('editor').map(toScript).join('')
 
   response.send(html(content, styles, scripts))
 }
