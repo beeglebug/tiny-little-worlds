@@ -4,13 +4,16 @@ import { TILE_SIZE } from './consts'
 import Rect from './physics/geometry/Rect'
 import Circle from './physics/geometry/Circle'
 import isPixelTransparent from './isPixelTransparent'
-import Dialogue from './ui/Dialogue'
+import Dialogue from './ui'
+import { START_DIALOGUE } from './events'
 
 // TODO split into two classes for billboard / mesh
 export default class Entity extends Object3D {
 
-  constructor (props, assets) {
+  constructor (props, assets, engine) {
     super()
+
+    this.engine = engine
 
     this.position.set(
       props.x * TILE_SIZE,
@@ -83,7 +86,7 @@ export default class Entity extends Object3D {
 
   interact (source) {
     if (this.dialogue) {
-      Dialogue.show(this.dialogue)
+      this.engine.emit(START_DIALOGUE, this.dialogue)
     }
   }
 }

@@ -1,0 +1,1 @@
+export const START_DIALOGUE = 'START_DIALOGUE'

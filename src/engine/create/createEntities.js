@@ -1,7 +1,7 @@
 import { ENTITY_TYPE, TILE_SIZE } from '../consts'
 import Entity from '../Entity'
 
-export default function createEntities (map, palette, assets, controller) {
+export default function createEntities (map, palette, assets, engine) {
 
   const entities = []
 
@@ -12,11 +12,13 @@ export default function createEntities (map, palette, assets, controller) {
     if (instance.type === ENTITY_TYPE.PLAYER) {
       // just set player position, nothing to add to world
       // TODO player orientation?
-      controller.position.set(instance.x * TILE_SIZE, 0, instance.y * TILE_SIZE)
+      engine.controller.position.set(instance.x * TILE_SIZE, 0, instance.y * TILE_SIZE)
       return
     }
 
-    const entity = new Entity({ ...definition, ...instance }, assets)
+    const props = { ...definition, ...instance }
+
+    const entity = new Entity(props, assets, engine)
     entities.push(entity)
   })
 

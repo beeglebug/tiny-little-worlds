@@ -65,6 +65,7 @@
     "@bugsnag/plugin-react": "^6.2.0",
     "classnames": "^2.2.6",
     "connect-mongo": "^2.0.3",
+    "eventemitter3": "^3.1.2",
     "express": "^4.17.1",
     "express-session": "^1.16.1",
     "file-saver": "^2.0.2",

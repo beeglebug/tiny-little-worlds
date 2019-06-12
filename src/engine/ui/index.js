@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { combineReducers, createStore } from 'redux'
 import { Provider } from 'react-redux'
+import { START_DIALOGUE } from '../events'
 import UI from './components/UI'
 
 const SET_DIALOGUE = 'SET_DIALOGUE'
@@ -23,23 +24,20 @@ const store = createStore(
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__({ name: 'UI' }),
 )
 
-export default {
+export default (engine) => {
 
-  init: () => {
-
-    const element = document.createElement('div')
-
-    ReactDOM.render((
-      <Provider store={store}>
-        <UI />
-      </Provider>
-    ), element)
-
-    return element
-  },
-
-  show: (text) => {
+  engine.addListener(START_DIALOGUE, (text) => {
     store.dispatch({ type: SET_DIALOGUE, payload: text })
     store.dispatch({ type: SET_VISIBLE, payload: true })
-  },
+  })
+
+  const element = document.createElement('div')
+
+  ReactDOM.render((
+    <Provider store={store}>
+      <UI />
+    </Provider>
+  ), element)
+
+  return element
 }

@@ -54,6 +54,14 @@ export default class CharacterController extends Object3D {
     }
   }
 
+  enable () {
+    this.enabled = true
+  }
+
+  disable () {
+    this.enabled = false
+  }
+
   resetRotation (y, x) {
     this.rotation.y = y
     this.pitch.rotation.x = x

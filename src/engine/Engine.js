@@ -1,3 +1,4 @@
+import EventEmitter from 'eventemitter3'
 import { WebGLRenderer } from 'three/src/renderers/WebGLRenderer'
 import { PerspectiveCamera } from 'three/src/cameras/PerspectiveCamera'
 import { Object3D } from 'three/src/core/Object3D'
@@ -10,11 +11,14 @@ import loadAssets from './loadAssets'
 import Physics from './Physics'
 import renderReticle from './2d/renderReticle'
 import createCanvas from './util/createCanvas'
-import Dialogue from './ui/Dialogue'
+import createUI from './ui'
+import { START_DIALOGUE } from './events'
 
-export default class Engine {
+export default class Engine extends EventEmitter {
 
   constructor (container, width, height) {
+
+    super()
 
     this.container = container
     this.container.style.position = 'relative'
@@ -30,7 +34,7 @@ export default class Engine {
     this.ctx = this.canvas2d.getContext('2d')
     this.ctx.imageSmoothingEnabled = false
 
-    const element = Dialogue.init()
+    const element = createUI(this)
 
     this.container.appendChild(this.canvas3d)
     this.container.appendChild(this.canvas2d)
@@ -43,6 +47,11 @@ export default class Engine {
     this.camera = new PerspectiveCamera(45, width / height, 0.1, 1000)
     this.controller = new CharacterController(this.camera)
     this.scene.add(this.controller)
+
+    // bind stuff via events
+    this.addListener(START_DIALOGUE, () => {
+      this.controller.disable()
+    })
   }
 
   load (game) {
@@ -53,7 +62,7 @@ export default class Engine {
 
     this.world = new Object3D()
 
-    const [ tiles, entities ] = createContent(game, assets, this.controller)
+    const [ tiles, entities ] = createContent(game, assets, this)
 
     if (tiles.length) this.world.add(...tiles)
     if (entities.length) this.world.add(...entities)

@@ -1,7 +1,7 @@
 import createTiles from './create/createTiles'
 import createEntities from './create/createEntities'
 
-export default function createContent (game, assets, controller) {
+export default function createContent (game, assets, engine) {
 
   // TODO more than first level
   const map = game.levels[0]
@@ -9,7 +9,7 @@ export default function createContent (game, assets, controller) {
 
   const tiles = createTiles(map, palette, assets)
 
-  const entities = createEntities(map, palette, assets, controller)
+  const entities = createEntities(map, palette, assets, engine)
 
   return [ tiles, entities ]
 }
