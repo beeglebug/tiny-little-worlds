@@ -15,7 +15,7 @@ export default function (game) {
   folder.file('readme.txt', generateReadme(game))
   folder.file('game.js', generateJS(game))
   folder.file(player, fetch(player).then(response => response.text()))
-  folder.file('index.html', generateHtml(game))
+  folder.file('Dialogue.js.html', generateHtml(game))
 
   // TODO more than first level
   const level = game.levels[0]

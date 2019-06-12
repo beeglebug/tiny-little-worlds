@@ -4,6 +4,7 @@ import { TILE_SIZE } from './consts'
 import Rect from './physics/geometry/Rect'
 import Circle from './physics/geometry/Circle'
 import isPixelTransparent from './isPixelTransparent'
+import Dialogue from './ui/Dialogue'
 
 // TODO split into two classes for billboard / mesh
 export default class Entity extends Object3D {
@@ -82,8 +83,7 @@ export default class Entity extends Object3D {
 
   interact (source) {
     if (this.dialogue) {
-      // TODO global (probably redux)
-      // Dialogue.show(this.dialogue)
+      Dialogue.show(this.dialogue)
     }
   }
 }

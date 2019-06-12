@@ -10,7 +10,7 @@ import loadAssets from './loadAssets'
 import Physics from './Physics'
 import renderReticle from './2d/renderReticle'
 import createCanvas from './util/createCanvas'
-import createUI from './ui'
+import Dialogue from './ui/Dialogue'
 
 export default class Engine {
 
@@ -30,8 +30,7 @@ export default class Engine {
     this.ctx = this.canvas2d.getContext('2d')
     this.ctx.imageSmoothingEnabled = false
 
-    const { element, ref } = createUI()
-    this.ui = ref
+    const element = Dialogue.init()
 
     this.container.appendChild(this.canvas3d)
     this.container.appendChild(this.canvas2d)
@@ -117,14 +116,6 @@ export default class Engine {
     this.render()
 
     Input.clear()
-  }
-
-  handleInteraction = (source, target) => {
-    // TODO move to an interactionManager
-    // TODO decide how to handle interactions
-    // TODO lock controller
-
-    this.ui.current.showDialogue('hello')
   }
 
   render () {

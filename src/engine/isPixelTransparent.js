@@ -6,6 +6,8 @@
  */
 export default function isPixelTransparent (uv, map) {
 
+  if (!map) return false
+
   const { width, height } = map.image
 
   if (!map.raycastCache) {
