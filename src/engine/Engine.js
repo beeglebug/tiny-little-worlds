@@ -12,7 +12,8 @@ import Physics from './Physics'
 import renderReticle from './2d/renderReticle'
 import createCanvas from './util/createCanvas'
 import createUI from './ui'
-import { START_DIALOGUE } from './events'
+import { START_DIALOGUE, STOP_DIALOGUE } from './events'
+import KeyCode from './input/KeyCode'
 
 export default class Engine extends EventEmitter {
 
@@ -45,12 +46,27 @@ export default class Engine extends EventEmitter {
     this.scene = createScene()
     this.renderer = new WebGLRenderer({ canvas: this.canvas3d })
     this.camera = new PerspectiveCamera(45, width / height, 0.1, 1000)
-    this.controller = new CharacterController(this.camera)
+
+    // TODO from config
+    this.controls = {
+      forward: Input.createButton('forward', KeyCode.W, KeyCode.UpArrow),
+      back: Input.createButton('back', KeyCode.S, KeyCode.DownArrow),
+      left: Input.createButton('left', KeyCode.A, KeyCode.LeftArrow),
+      right: Input.createButton('right', KeyCode.D, KeyCode.RightArrow),
+      interact: Input.createButton('interact', KeyCode.E),
+      // run: Input.createButton('run', KeyCode.LeftShift),
+    }
+
+    this.controller = new CharacterController(this.camera, this.controls)
     this.scene.add(this.controller)
 
     // bind stuff via events
     this.addListener(START_DIALOGUE, () => {
       this.controller.disable()
+    })
+
+    this.addListener(STOP_DIALOGUE, () => {
+      this.controller.enable()
     })
   }
 

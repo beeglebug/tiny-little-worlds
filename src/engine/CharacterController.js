@@ -2,7 +2,6 @@ import { Object3D } from 'three/src/core/Object3D'
 import { Vector3 } from 'three/src/math/Vector3'
 import { Vector2 } from 'three/src/math/Vector2'
 import { Raycaster } from 'three/src/core/Raycaster'
-import KeyCode from './input/KeyCode'
 import Input from './input/Input'
 import clamp from './maths/clamp'
 import Circle from './physics/geometry/Circle'
@@ -27,7 +26,7 @@ export default class CharacterController extends Object3D {
   // an entity in front of us which we could interact with
   interactionTarget = null
 
-  constructor (camera) {
+  constructor (camera, controls) {
     super()
 
     this.camera = camera
@@ -43,15 +42,7 @@ export default class CharacterController extends Object3D {
     this.raycaster = new Raycaster()
     this.raycaster.far = INTERACTION_RANGE
 
-    // TODO from config
-    this.controls = {
-      forward: Input.createButton('forward', KeyCode.W, KeyCode.UpArrow),
-      back: Input.createButton('back', KeyCode.S, KeyCode.DownArrow),
-      left: Input.createButton('left', KeyCode.A, KeyCode.LeftArrow),
-      right: Input.createButton('right', KeyCode.D, KeyCode.RightArrow),
-      interact: Input.createButton('interact', KeyCode.E),
-      // run: Input.createButton('run', KeyCode.LeftShift),
-    }
+    this.controls = controls
   }
 
   enable () {

@@ -2,19 +2,18 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { combineReducers, createStore } from 'redux'
 import { Provider } from 'react-redux'
-import { START_DIALOGUE } from '../events'
+import { START_DIALOGUE, STOP_DIALOGUE } from '../events'
 import UI from './components/UI'
-
-const SET_DIALOGUE = 'SET_DIALOGUE'
-const SET_VISIBLE = 'SET_VISIBLE'
 
 const reducers = {
   visible: (state = false, action) => {
-    if (action.type === SET_VISIBLE) return action.payload
+    if (action.type === START_DIALOGUE) return true
+    if (action.type === STOP_DIALOGUE) return false
     return state
   },
-  dialogue: (state = '', action) => {
-    if (action.type === SET_DIALOGUE) return action.payload
+  dialogue: (state = null, action) => {
+    if (action.type === START_DIALOGUE) return action.payload
+    if (action.type === START_DIALOGUE) return null
     return state
   },
 }
@@ -26,9 +25,12 @@ const store = createStore(
 
 export default (engine) => {
 
-  engine.addListener(START_DIALOGUE, (text) => {
-    store.dispatch({ type: SET_DIALOGUE, payload: text })
-    store.dispatch({ type: SET_VISIBLE, payload: true })
+  engine.addListener(START_DIALOGUE, text => {
+    store.dispatch({ type: START_DIALOGUE, payload: text })
+  })
+
+  engine.addListener(STOP_DIALOGUE, () => {
+    store.dispatch({ type: STOP_DIALOGUE })
   })
 
   const element = document.createElement('div')

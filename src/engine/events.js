@@ -1,1 +1,2 @@
 export const START_DIALOGUE = 'START_DIALOGUE'
+export const STOP_DIALOGUE = 'STOP_DIALOGUE'
