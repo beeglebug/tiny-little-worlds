@@ -1,17 +1,23 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
+import icon from '../../../assets/arrow-down-white.png'
+import useTypewriterAnimation from '../hooks/useTypewriterAnimation'
+import useBlink from '../hooks/useBlink'
 import styles from './DialogueWindow.css'
 
-export default function DialogueWindow () {
+export default function DialogueWindow ({ visible, dialogue, controls }) {
 
-  const visible = useSelector(state => state.visible)
-  const dialogue = useSelector(state => state.dialogue)
+  const [ word, animating ] = useTypewriterAnimation(dialogue, 50)
+  const [ showIcon ] = useBlink(true, animating ? null : 1000)
 
   if (!visible) return null
 
   return (
     <div className={styles.container}>
-      {dialogue}
+      {word}
+      {!animating && showIcon && <img
+        className={styles.icon}
+        src={icon}
+      />}
     </div>
   )
 }

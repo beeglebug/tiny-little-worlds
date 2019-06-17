@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { combineReducers, createStore } from 'redux'
 import { Provider } from 'react-redux'
-import { START_DIALOGUE, STOP_DIALOGUE } from '../events'
+import { NEXT_DIALOGUE, START_DIALOGUE, STOP_DIALOGUE } from '../events'
 import UI from './components/UI'
 
 const reducers = {
@@ -37,7 +37,7 @@ export default (engine) => {
 
   ReactDOM.render((
     <Provider store={store}>
-      <UI />
+      <UI controls={engine.controls} />
     </Provider>
   ), element)
 
