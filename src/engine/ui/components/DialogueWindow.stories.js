@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { storiesOf } from '@storybook/react'
 import Input from '../../input/Input'
 import KeyCode from '../../input/KeyCode'
@@ -12,10 +12,24 @@ storiesOf('DialogueWindow', module)
   .add('default', () => {
     const dialogue = 'hello this is some text'
     return (
-      <DialogueWindow
-        visible={true}
+      <WithState
         dialogue={dialogue}
         controls={controls}
       />
     )
   })
+
+function WithState ({ dialogue, controls }) {
+
+  const [ visible, setVisible ] = useState(true)
+
+  if (!visible) return null
+
+  return (
+    <DialogueWindow
+      dialogue={dialogue}
+      controls={controls}
+      onFinish={() => setVisible(false)}
+    />
+  )
+}

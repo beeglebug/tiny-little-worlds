@@ -101,29 +101,28 @@ const getAxis = axis => {
 }
 
 const createButton = (name, ...keyCodes) => {
-  buttons[name] = keyCodes
-  return name
+  const button = { name, keyCodes }
+  buttons[name] = button
+  return button
 }
 
-const getButton = name => {
+const getButton = ({ name }) => {
   const button = buttons[name]
   if (!button) return false
-  return button.some(getKey)
+  return button.keyCodes.some(getKey)
 }
 
-const getButtonDown = name => {
+const getButtonDown = ({ name }) => {
   const button = buttons[name]
   if (!button) return false
-  return button.some(getKeyDown)
+  return button.keyCodes.some(getKeyDown)
 }
 
-const getButtonUp = name => {
+const getButtonUp = ({ name }) => {
   const button = buttons[name]
   if (!button) return false
-  return button.some(getKeyUp)
+  return button.keyCodes.some(getKeyUp)
 }
-
-const isButton = (keyCode, name) => buttons[name] && buttons[name].includes(keyCode)
 
 export default {
   bind,
@@ -135,7 +134,6 @@ export default {
   getButton,
   getButtonDown,
   getButtonUp,
-  isButton,
   mousePosition,
   MouseX,
   MouseY,

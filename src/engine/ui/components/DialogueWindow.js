@@ -1,23 +1,45 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import icon from '../../../assets/arrow-down-white.png'
 import useTypewriterAnimation from '../hooks/useTypewriterAnimation'
-import useBlink from '../hooks/useBlink'
 import styles from './DialogueWindow.css'
 
-export default function DialogueWindow ({ visible, dialogue, controls }) {
+export default function DialogueWindow ({ dialogue, controls, onFinish }) {
 
-  const [ word, animating ] = useTypewriterAnimation(dialogue, 50)
-  const [ showIcon ] = useBlink(true, animating ? null : 1000)
+  const [ currentLine, nextLine ] = useDialogue(dialogue, onFinish)
 
-  if (!visible) return null
+  useEffect(() => {
+    function handleKeyUp (e) {
+      const key = e.keyCode
+      if (controls.interact.keyCodes.includes(key)) {
+        nextLine()
+      }
+    }
+    document.addEventListener('keyup', handleKeyUp)
+    return () => document.removeEventListener('keyup', handleKeyUp)
+  }, [controls, nextLine])
 
   return (
+    <AnimatedDialogue text={currentLine} />
+  )
+}
+
+// TODO multiline
+function useDialogue (dialogue, onFinish) {
+  const currentLine = dialogue
+  function next () {
+    onFinish()
+  }
+  return [ currentLine, next ]
+}
+
+// keep this one level down so the keyboard input hook doesnt keep triggering
+function AnimatedDialogue ({ text }) {
+  const [currentText] = useTypewriterAnimation(text, 50)
+  const showIcon = currentText === text
+  return (
     <div className={styles.container}>
-      {word}
-      {!animating && showIcon && <img
-        className={styles.icon}
-        src={icon}
-      />}
+      {currentText}
+      {showIcon && <img src={icon} />}
     </div>
   )
 }
