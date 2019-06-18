@@ -41,11 +41,12 @@ function useDialogue (dialogue, onFinish) {
 // keep this one level down so the keyboard input hook doesnt keep triggering
 function AnimatedDialogue ({ text }) {
   const currentText = useTypewriterAnimation(text, 50)
+  const textWithBreaks = currentText.split('\n')
   const showIcon = currentText === text
   return (
     <div className={styles.container}>
-      {currentText}
-      {showIcon && <img src={icon} />}
+      {textWithBreaks.map((line, index) => (<p key={index}>{line}</p>))}
+      {showIcon && <img className={styles.icon} src={icon} />}
     </div>
   )
 }

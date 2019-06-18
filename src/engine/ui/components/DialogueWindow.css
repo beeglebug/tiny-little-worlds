@@ -6,8 +6,23 @@
     bottom: 0;
     left: 0;
     right: 0;
-    padding: 20px;
+    padding: 16px;
+}
+
+.container p {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
+    margin: 0 0 8px 0;
+    min-height: 24px;
+    align-items: flex-end;
+}
+
+.container p:last-of-type {
+    margin: 0;
+}
+
+.icon {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    padding: 16px;
 }

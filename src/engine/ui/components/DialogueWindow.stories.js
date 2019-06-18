@@ -18,9 +18,21 @@ storiesOf('DialogueWindow', module)
       />
     )
   })
-  .add('multi line', () => {
+  .add('multiple lines', () => {
     const dialogue = `short first line
 and now a longer second line`
+    return (
+      <WithState
+        dialogue={dialogue}
+        controls={controls}
+      />
+    )
+  })
+  .add('multiple sets', () => {
+    const dialogue = `Hello...
+this is my second line.
+
+Surprise!`
     return (
       <WithState
         dialogue={dialogue}
