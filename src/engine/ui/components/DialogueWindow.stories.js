@@ -9,8 +9,18 @@ const controls = {
 }
 
 storiesOf('DialogueWindow', module)
-  .add('default', () => {
+  .add('single line', () => {
     const dialogue = 'hello this is some text'
+    return (
+      <WithState
+        dialogue={dialogue}
+        controls={controls}
+      />
+    )
+  })
+  .add('multi line', () => {
+    const dialogue = `short first line
+and now a longer second line`
     return (
       <WithState
         dialogue={dialogue}
